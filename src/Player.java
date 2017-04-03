@@ -1,5 +1,5 @@
 /**
- * Class that represents a player of the game.
+ * Abstract class that represents a player of the game.
  * 
  * @author echan
  */
