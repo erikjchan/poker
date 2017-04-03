@@ -14,7 +14,6 @@ public class Card implements Comparable<Card> {
 
 	/**
 	 * Constructor class.
-	 * 
 	 */
 	public Card(int rank, Suit suit) {
 		this.rank = rank;
