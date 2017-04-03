@@ -1,5 +1,3 @@
-import Card.Suit;
-
 /**
  * Class that represents a playing card.
  * 
