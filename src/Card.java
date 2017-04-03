@@ -22,6 +22,8 @@ public class Card implements Comparable<Card> {
 
 	/**
 	 * Get the rank of the card.
+	 * 
+	 * @return the rank of the card
 	 */
 	public int getRank() {
 		return this.rank;
@@ -29,6 +31,8 @@ public class Card implements Comparable<Card> {
 
 	/**
 	 * Get the suit of the card.
+	 * 
+	 * @return the suit of the card
 	 */
 	public Suit getSuit() {
 		return this.suit;
