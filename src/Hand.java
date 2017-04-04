@@ -262,4 +262,25 @@ public class Hand {
 		}
 	}
 
+	/**
+	 * Searches for a flush in the set of cards from both the hand and the
+	 * community.
+	 */
+	public void flush() {
+		for (Card.Suit suit : Card.Suit.values()) {
+			int numberMatches = 0;
+			for (int i = 0; i < allCards.size(); i++) {
+				if (allCards.get(i).getSuit() == suit) {
+					ranks.add(allCards.get(i).getRank());
+					numberMatches++;
+				}
+				if (numberMatches > 4) {
+					score = 600;
+					scoreCalculated = true;
+					break;
+				}
+			}
+		}
+	}
+
 }
