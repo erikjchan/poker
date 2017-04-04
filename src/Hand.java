@@ -200,6 +200,7 @@ public class Hand {
 					ranks.add(rank - 3);
 					ranks.add(rank - 4);
 					scoreCalculated = true;
+					break;
 				}
 			}
 		}
@@ -222,6 +223,7 @@ public class Hand {
 				ranks.add(rank);
 				ranks.add(rank);
 				scoreCalculated = true;
+				break;
 			}
 		}
 	}
@@ -320,6 +322,7 @@ public class Hand {
 				ranks.add(rank);
 				ranks.add(rank);
 				scoreCalculated = true;
+				break;
 			}
 		}
 	}
@@ -343,8 +346,26 @@ public class Hand {
 						ranks.add(secondRank);
 						ranks.add(secondRank);
 						scoreCalculated = true;
+						break;
 					}
 				}
+			}
+		}
+	}
+
+	/**
+	 * Searches for a one pair in the set of cards from both the hand and the
+	 * community.
+	 */
+	public void onePair() {
+		for (int i = 0; i < allCards.size() - 1; i++) {
+			int rank = allCards.get(i).getRank();
+			if (allCards.get(i + 1).getRank() == rank) {
+				score = 200;
+				ranks.add(rank);
+				ranks.add(rank);
+				scoreCalculated = true;
+				break;
 			}
 		}
 	}
