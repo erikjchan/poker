@@ -32,6 +32,7 @@ public class Hand {
 		allCards.add(firstCard);
 		allCards.add(secondCard);
 		allCards.addAll(communityCards);
+		sortCards();
 	}
 
 	/**
@@ -89,6 +90,7 @@ public class Hand {
 	 */
 	public void setCommunityCards(ArrayList<Card> communityCards) {
 		this.communityCards = communityCards;
+		allCards.addAll(communityCards);
 	}
 
 	/**
@@ -146,7 +148,8 @@ public class Hand {
 	 *            the highest score of the hand
 	 */
 	public void calculateScore() {
-		this.score = 0;
+		score = 0;
+		sortCards();
 		if (!scoreCalculated) {
 			straightFlush();
 		}
@@ -163,7 +166,7 @@ public class Hand {
 			straight();
 		}
 		if (!scoreCalculated) {
-			threeKind();
+			threeOfAKind();
 		}
 		if (!scoreCalculated) {
 			twoPair();
@@ -300,6 +303,23 @@ public class Hand {
 				ranks.add(rank - 4);
 				scoreCalculated = true;
 				break;
+			}
+		}
+	}
+
+	/**
+	 * Searches for a three of a kind in the set of cards from both the hand and
+	 * the community.
+	 */
+	public void threeOfAKind() {
+		for (int i = 0; i < allCards.size() - 2; i++) {
+			int rank = allCards.get(i).getRank();
+			if (allCards.get(i + 1).getRank() == rank && allCards.get(i + 2).getRank() == rank) {
+				score = 400;
+				ranks.add(rank);
+				ranks.add(rank);
+				ranks.add(rank);
+				scoreCalculated = true;
 			}
 		}
 	}
