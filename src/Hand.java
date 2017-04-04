@@ -11,7 +11,9 @@ public class Hand {
 	private Card secondCard;
 	private ArrayList<Card> communityCards;
 	private ArrayList<Card> allCards;
+	private ArrayList<Integer> ranks;
 	private int score;
+	private boolean scoreCalculated;
 
 	/**
 	 * Constructor class.
@@ -90,26 +92,26 @@ public class Hand {
 	}
 
 	/**
-	 * Get the cards from both the hand and the community.
+	 * Get the set of cards from both the hand and the community.
 	 * 
-	 * @return the cards from both the hand and the community
+	 * @return the set of cards from both the hand and the community
 	 */
 	public ArrayList<Card> getAllCards() {
 		return this.allCards;
 	}
 
 	/**
-	 * Set the cards from both the hand and the community.
+	 * Set the set of cards from both the hand and the community.
 	 * 
 	 * @param allCards
-	 *            the cards from both the hand and the community
+	 *            the set of cards from both the hand and the community
 	 */
 	public void setAllCards(ArrayList<Card> allCards) {
 		this.allCards = allCards;
 	}
 
 	/**
-	 * Sort the cards from both the hand and the community.
+	 * Sort the set of cards from both the hand and the community.
 	 * 
 	 * @return the sorted cards from both the hand and the community
 	 */
@@ -144,7 +146,61 @@ public class Hand {
 	 *            the highest score of the hand
 	 */
 	public void calculateScore() {
-
 		this.score = 0;
+		// If score is set, algorithm doesnt check for other combinations
+		if (!scoreCalculated) {
+			straightFlush();
+		}
+		if (!scoreCalculated) {
+			fourKind();
+		}
+		if (!scoreCalculated) {
+			fullHouse();
+		}
+		if (!scoreCalculated) {
+			flush();
+		}
+		if (!scoreCalculated) {
+			straight();
+		}
+		if (!scoreCalculated) {
+			threeKind();
+		}
+		if (!scoreCalculated) {
+			twoPair();
+		}
+		if (!scoreCalculated) {
+			onePair();
+		}
+		scoreCalculated = true;
+		highCard();
+		scoreCalculated = false;
 	}
+
+	/**
+	 * Searches for a straight flush in the set of cards from both the hand and
+	 * the community.
+	 */
+	public void straightFlush() {
+		for (int i = 0; i < allCards.size() - 4; i++) {
+			int rank = allCards.get(i).getRank();
+			// Checks for straight
+			if (allCards.get(i + 1).getRank() == rank - 1 && allCards.get(i + 2).getRank() == rank - 2
+					&& allCards.get(i + 3).getRank() == rank - 3 && allCards.get(i + 4).getRank() == rank - 4) {
+				// Checks for flush
+				if (allCards.get(i + 1).getSuit() == allCards.get(i + 2).getSuit()
+						&& allCards.get(i + 3).getSuit() == allCards.get(i + 4).getSuit()
+						&& allCards.get(i + 1).getSuit() == allCards.get(i + 4).getSuit()) {
+					score = 900;
+					ranks.add(rank);
+					ranks.add(rank - 1);
+					ranks.add(rank - 2);
+					ranks.add(rank - 3);
+					ranks.add(rank - 4);
+					scoreCalculated = true;
+				}
+			}
+		}
+	}
+
 }
