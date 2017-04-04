@@ -175,7 +175,7 @@ public class Hand {
 			onePair();
 		}
 		scoreCalculated = true;
-		highCard();
+		updateScore();
 		scoreCalculated = false;
 	}
 
@@ -367,6 +367,24 @@ public class Hand {
 				scoreCalculated = true;
 				break;
 			}
+		}
+	}
+
+	/**
+	 * Updates the score based on the card ranks.
+	 */
+	public void updateScore() {
+		if (ranks.isEmpty()) {
+			for (int i = 0; i < 5; i++) {
+				ranks.add(allCards.get(i).getRank());
+			}
+		}
+
+		for (int i = 0; i < ranks.size(); i++) {
+			if (ranks.get(i) == 1) {
+				ranks.set(i, 14);
+			}
+			score += ranks.get(i);
 		}
 	}
 
