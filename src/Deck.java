@@ -59,7 +59,7 @@ public class Deck {
 	 * 
 	 * @return the first card from the deck
 	 */
-	public Card dealCard() {
+	public Card drawCard() {
 		if (!cards.isEmpty()) {
 			return cards.remove(0);
 
@@ -67,5 +67,27 @@ public class Deck {
 			System.out.println("The deck is empty.");
 			return null;
 		}
+	}
+
+	/**
+	 * Remove and deal the first n cards from the deck.
+	 * 
+	 * @param n
+	 *            the number of cards to draw from the deck
+	 * 
+	 * @return the first n cards from the deck
+	 */
+	public ArrayList<Card> drawCards(int n) {
+		ArrayList<Card> drawnCards = new ArrayList<Card>();
+		for (int i = 0; i < n; i++) {
+			if (!cards.isEmpty()) {
+				drawnCards.add(cards.remove(0));
+
+			} else {
+				System.out.println("The deck is too small.");
+				return null;
+			}
+		}
+		return drawnCards;
 	}
 }

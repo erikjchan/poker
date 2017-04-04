@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Abstract class that represents a player of the game.
  * 
@@ -5,6 +7,11 @@
  */
 public abstract class Player {
 	private String name;
+	private int money;
+	private int bet;
+	private Card firstCard;
+	private Card secondCard;
+	private ArrayList<Card> communityCards;
 	private Hand hand;
 	private boolean hasFolded;
 
@@ -35,5 +42,145 @@ public abstract class Player {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * Get the money of the player.
+	 * 
+	 * @return the money of the player
+	 */
+	public int getMoney() {
+		return this.money;
+	}
+
+	/**
+	 * Set the money of the player.
+	 * 
+	 * @param money
+	 *            the new money of the player
+	 */
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
+	/**
+	 * Get the best of the player.
+	 * 
+	 * @return the bet of the player
+	 */
+	public int getBet() {
+		return this.bet;
+	}
+
+	/**
+	 * Set the bet of the player.
+	 * 
+	 * @param bet
+	 *            the new bet of the player
+	 */
+	public void setBet(int bet) {
+		if (bet < this.money) {
+			this.bet = bet;
+			money -= bet;
+
+		} else {
+			this.bet = money;
+			money = 0;
+		}
+	}
+
+	/**
+	 * Get the first card of the player.
+	 * 
+	 * @return the first card of the player
+	 */
+	public Card getFirstCard() {
+		return this.firstCard;
+	}
+
+	/**
+	 * Set the first card of the player.
+	 * 
+	 * @param firstCard
+	 *            the new first card of the player
+	 */
+	public void setFirstCard(Card firstCard) {
+		this.firstCard = firstCard;
+	}
+
+	/**
+	 * Get the second card of the player.
+	 * 
+	 * @return the second card of the player
+	 */
+	public Card getSecondCard() {
+		return this.secondCard;
+	}
+
+	/**
+	 * Set the second card of the player.
+	 * 
+	 * @param secondCard
+	 *            the new second card of the player
+	 */
+	public void setSecondCard(Card secondCard) {
+		this.secondCard = secondCard;
+	}
+
+	/**
+	 * Get the community cards of the player.
+	 * 
+	 * @return the community cards of the player
+	 */
+	public ArrayList<Card> getCommunityCards() {
+		return this.communityCards;
+	}
+
+	/**
+	 * Set the community cards of the player.
+	 * 
+	 * @param communityCards
+	 *            the new community cards of the player
+	 */
+	public void setCommunityCards(ArrayList<Card> communityCards) {
+		this.communityCards = communityCards;
+	}
+
+	/**
+	 * Get the hand of the player.
+	 * 
+	 * @return the hand of the player
+	 */
+	public Hand getHand() {
+		return this.hand;
+	}
+
+	/**
+	 * Set the hand of the player.
+	 * 
+	 * @param hand
+	 *            the new hand of the player
+	 */
+	public void setHand(Hand hand) {
+		this.hand = hand;
+	}
+
+	/**
+	 * Get whether the player has folded.
+	 * 
+	 * @return whether the player has folded
+	 */
+	public boolean hasFolded() {
+		return this.hasFolded;
+	}
+
+	/**
+	 * Set whether the player has folded.
+	 * 
+	 * @param hasFolded
+	 *            whether the player has folded
+	 */
+	public void setFolded(boolean hasFolded) {
+		this.hasFolded = hasFolded;
 	}
 }
