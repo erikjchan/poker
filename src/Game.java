@@ -137,7 +137,7 @@ public class Game extends JFrame {
 		communityCards.addAll(deck.drawCards(n));
 		for (int i = 0; i < 4; i++) {
 			players.get(i).setCommunityCards(communityCards);
-			players.get(i).setHand(null);
+			players.get(i).updateHand(communityCards);
 		}
 	}
 
