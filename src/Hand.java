@@ -183,10 +183,10 @@ public class Hand {
 	public void straightFlush() {
 		for (int i = 0; i < allCards.size() - 4; i++) {
 			int rank = allCards.get(i).getRank();
-			// Checks for straight
+			// checks if hand is straight
 			if (allCards.get(i + 1).getRank() == rank - 1 && allCards.get(i + 2).getRank() == rank - 2
 					&& allCards.get(i + 3).getRank() == rank - 3 && allCards.get(i + 4).getRank() == rank - 4) {
-				// Checks for flush
+				// checks if hand is flush
 				if (allCards.get(i + 1).getSuit() == allCards.get(i + 2).getSuit()
 						&& allCards.get(i + 3).getSuit() == allCards.get(i + 4).getSuit()
 						&& allCards.get(i + 1).getSuit() == allCards.get(i + 4).getSuit()) {
@@ -209,7 +209,7 @@ public class Hand {
 	public void fourOfAKind() {
 		for (int i = 0; i < allCards.size() - 3; i++) {
 			int rank = allCards.get(i).getRank();
-			// Checks if four cards have similar number
+			// checks if hand has four cards of same rank
 			if (allCards.get(i + 1).getRank() == rank && allCards.get(i + 2).getRank() == rank
 					&& allCards.get(i + 3).getRank() == rank) {
 				score = 800;
@@ -220,6 +220,45 @@ public class Hand {
 				ranks.add(rank);
 				scoreCalculated = true;
 			}
+		}
+	}
+
+	/**
+	 * Searches for a full house in the set of cards from both the hand and the
+	 * community.
+	 */
+	public void fullHouse() {
+		// checks if hand has three of a kind
+		boolean hasThreeOfAKind = false;
+		int firstRank = 0;
+		for (int i = 0; i < allCards.size() - 2; i++) {
+			firstRank = allCards.get(i).getRank();
+			if (allCards.get(i + 1).getRank() == firstRank && allCards.get(i + 2).getRank() == firstRank) {
+				hasThreeOfAKind = true;
+				break;
+			}
+		}
+
+		// checks if hand has pair
+		boolean hasPair = false;
+		int secondRank = 0;
+		for (int j = 0; j < allCards.size() - 1; j++) {
+			secondRank = allCards.get(j).getRank();
+			if ((allCards.get(j + 1).getRank() == secondRank) && (secondRank != firstRank)) {
+				hasPair = true;
+				break;
+			}
+		}
+
+		// checks if hand has both three of a kind and pair
+		if (hasThreeOfAKind && hasPair) {
+			score = 700;
+			ranks.add(firstRank);
+			ranks.add(firstRank);
+			ranks.add(firstRank);
+			ranks.add(secondRank);
+			ranks.add(secondRank);
+			scoreCalculated = true;
 		}
 	}
 
