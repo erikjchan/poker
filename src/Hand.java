@@ -15,6 +15,13 @@ public class Hand {
 
 	/**
 	 * Constructor class.
+	 * 
+	 * @param firstCard
+	 *            the first card of the hand
+	 * @param secondCard
+	 *            the second card of the hand
+	 * @param communityCards
+	 *            the community cards of the hand
 	 */
 	public Hand(Card firstCard, Card secondCard, ArrayList<Card> communityCards) {
 		this.firstCard = firstCard;
