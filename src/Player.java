@@ -5,6 +5,8 @@
  */
 public abstract class Player {
 	private String name;
+	private Hand hand;
+	private boolean hasFolded;
 
 	/**
 	 * Constructor class.
