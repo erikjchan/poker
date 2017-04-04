@@ -324,4 +324,29 @@ public class Hand {
 		}
 	}
 
+	/**
+	 * Searches for a two pair in the set of cards from both the hand and the
+	 * community.
+	 */
+	public void twoPair() {
+		// checks if hand has pair
+		for (int i = 0; i < allCards.size() - 3; i++) {
+			int firstRank = allCards.get(i).getRank();
+			if (allCards.get(i + 1).getRank() == firstRank) {
+				// checks if hand has second pair
+				for (int j = i + 2; j < allCards.size() - 1; j++) {
+					int secondRank = allCards.get(j).getRank();
+					if (allCards.get(j + 1).getRank() == secondRank) {
+						score = 300;
+						ranks.add(firstRank);
+						ranks.add(firstRank);
+						ranks.add(secondRank);
+						ranks.add(secondRank);
+						scoreCalculated = true;
+					}
+				}
+			}
+		}
+	}
+
 }
