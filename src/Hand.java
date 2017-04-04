@@ -283,4 +283,25 @@ public class Hand {
 		}
 	}
 
+	/**
+	 * Searches for a straight in the set of cards from both the hand and the
+	 * community.
+	 */
+	public void straight() {
+		for (int i = 0; i < allCards.size() - 4; i++) {
+			int rank = allCards.get(i).getRank();
+			if (allCards.get(i + 1).getRank() == rank - 1 && allCards.get(i + 2).getRank() == rank - 2
+					&& allCards.get(i + 3).getRank() == rank - 3 && allCards.get(i + 4).getRank() == rank - 4) {
+				score = 500;
+				ranks.add(rank);
+				ranks.add(rank - 1);
+				ranks.add(rank - 2);
+				ranks.add(rank - 3);
+				ranks.add(rank - 4);
+				scoreCalculated = true;
+				break;
+			}
+		}
+	}
+
 }
