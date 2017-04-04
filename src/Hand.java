@@ -147,12 +147,11 @@ public class Hand {
 	 */
 	public void calculateScore() {
 		this.score = 0;
-		// If score is set, algorithm doesnt check for other combinations
 		if (!scoreCalculated) {
 			straightFlush();
 		}
 		if (!scoreCalculated) {
-			fourKind();
+			fourOfAKind();
 		}
 		if (!scoreCalculated) {
 			fullHouse();
@@ -199,6 +198,27 @@ public class Hand {
 					ranks.add(rank - 4);
 					scoreCalculated = true;
 				}
+			}
+		}
+	}
+
+	/**
+	 * Searches for a four of a kind in the set of cards from both the hand and
+	 * the community.
+	 */
+	public void fourOfAKind() {
+		for (int i = 0; i < allCards.size() - 3; i++) {
+			int rank = allCards.get(i).getRank();
+			// Checks if four cards have similar number
+			if (allCards.get(i + 1).getRank() == rank && allCards.get(i + 2).getRank() == rank
+					&& allCards.get(i + 3).getRank() == rank) {
+				score = 800;
+				ranks.add(rank);
+				ranks.add(rank);
+				ranks.add(rank);
+				ranks.add(rank);
+				ranks.add(rank);
+				scoreCalculated = true;
 			}
 		}
 	}
