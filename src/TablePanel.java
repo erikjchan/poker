@@ -13,9 +13,12 @@ public class TablePanel extends JPanel {
 	public static final int HEIGHT = 600;
 	public static final int WIDTH = 1000;
 
-	/** Const: square at (x, y). Red/green? Parity of x+y. */
+	/**
+	 * Constructor class.
+	 */
 	public TablePanel() {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		// use repaint for new cards
 	}
 
 	/*
