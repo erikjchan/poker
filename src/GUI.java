@@ -6,16 +6,18 @@ import javax.swing.JFrame;
  * @author echan
  */
 public class GUI {
-	private JFrame frame;
+	private Table table;
 
 	/**
 	 * Constructor class.
 	 */
 	public GUI() {
-		frame = new JFrame();
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		table = new Table();
+		table.pack();
+		table.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// table.getContentPane().add(emptyLabel, BorderLayout.CENTER);
+		table.pack();
+		table.setVisible(true);
 	}
 
 	/**
@@ -24,6 +26,6 @@ public class GUI {
 	 * @return the frame of the GUI
 	 */
 	public JFrame getFrame() {
-		return this.frame;
+		return this.table;
 	}
 }

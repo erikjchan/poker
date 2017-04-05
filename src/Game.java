@@ -17,8 +17,8 @@ public class Game {
 	private ArrayList<Card> communityCards = new ArrayList<Card>();
 
 	public static void main(String args[]) {
-		gui = new GUI();
 		Game game = new Game();
+		gui = new GUI();
 		game.run(1);
 	}
 
