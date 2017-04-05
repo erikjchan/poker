@@ -154,7 +154,7 @@ public abstract class Player {
 	public Hand getHand() {
 		return this.hand;
 	}
-	
+
 	/**
 	 * Set the hand of the player.
 	 * 
@@ -172,8 +172,13 @@ public abstract class Player {
 	 *            the new community cards of the player
 	 */
 	public void updateHand(ArrayList<Card> communityCards) {
-		hand.setCommunityCards(communityCards);
-		hand.calculateScore();
+		if (hand == null) {
+			hand = new Hand(firstCard, secondCard, communityCards);
+
+		} else {
+			hand.setCommunityCards(communityCards);
+			hand.calculateScore();
+		}
 	}
 
 	/**

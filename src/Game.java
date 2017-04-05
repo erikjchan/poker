@@ -1,14 +1,12 @@
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
 /**
  * Top-level class that represents the Poker game.
  * 
  * @author echan
  */
-@SuppressWarnings("serial")
-public class Game extends JFrame {
+public class Game {
+	private static GUI gui;
 	private Deck deck;
 	private int turn;
 	private int currentBet;
@@ -19,9 +17,9 @@ public class Game extends JFrame {
 	private ArrayList<Card> communityCards = new ArrayList<Card>();
 
 	public static void main(String args[]) {
+		gui = new GUI();
 		Game game = new Game();
-		game.setVisible(true);
-		game.run(3);
+		game.run(1);
 	}
 
 	/**
@@ -168,7 +166,7 @@ public class Game extends JFrame {
 	 * End the game, and determine the game winner.
 	 */
 	public void endGame() {
-		this.setVisible(false);
+		gui.getFrame().setVisible(false);
 		System.exit(0);
 	}
 

@@ -11,7 +11,7 @@ public class Hand {
 	private Card secondCard;
 	private ArrayList<Card> communityCards;
 	private ArrayList<Card> allCards;
-	private ArrayList<Integer> ranks;
+	private ArrayList<Integer> ranks = new ArrayList<Integer>();
 	private int score;
 	private boolean scoreCalculated;
 
@@ -29,6 +29,7 @@ public class Hand {
 		this.firstCard = firstCard;
 		this.secondCard = secondCard;
 		this.communityCards = communityCards;
+		allCards = new ArrayList<Card>();
 		allCards.add(firstCard);
 		allCards.add(secondCard);
 		allCards.addAll(communityCards);
@@ -272,15 +273,22 @@ public class Hand {
 	 * community.
 	 */
 	public void flush() {
+		ArrayList<Integer> matchRanks = new ArrayList<Integer>();
+		matchRanks.add(0);
+		matchRanks.add(0);
+		matchRanks.add(0);
+		matchRanks.add(0);
+		matchRanks.add(0);
 		for (Card.Suit suit : Card.Suit.values()) {
 			int numberMatches = 0;
 			for (int i = 0; i < allCards.size(); i++) {
 				if (allCards.get(i).getSuit() == suit) {
-					ranks.add(allCards.get(i).getRank());
+					matchRanks.set(numberMatches, allCards.get(i).getRank());
 					numberMatches++;
 				}
 				if (numberMatches > 4) {
 					score = 600;
+					ranks = matchRanks;
 					scoreCalculated = true;
 					break;
 				}
