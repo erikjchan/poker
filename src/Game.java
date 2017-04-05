@@ -42,6 +42,8 @@ public class Game {
 		for (int i = 0; i < n; i++) {
 			// initialize the round
 			startRound();
+			gui.getFrame().setTitle("Round " + (i + 1));
+			pause();
 
 			// set initial bets
 			startBets();
@@ -60,6 +62,15 @@ public class Game {
 
 		// determine the game winner
 		endGame();
+	}
+
+	public void pause() {
+		try {
+			Thread.sleep(25000);
+
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
 	}
 
 	/**
