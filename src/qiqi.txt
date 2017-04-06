@@ -32,3 +32,9 @@ End of Game:
 	display: blahblahblah won. 
 	
 Also at start of Game, we can define number of rounds. 
+
+
+Display phase on the top
+i.e. Round 1-5 (Phase: _____)
+
+Add a console to Right Hand Side of the game to keep track of all players actions. 
