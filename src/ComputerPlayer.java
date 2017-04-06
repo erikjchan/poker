@@ -25,6 +25,7 @@ public class ComputerPlayer extends Player {
 	// Hulk - random 
 	
 	//if player is 
+	// genetic algorithms
 	
 	/* if (phase = start) {
 	 * 	pay the blind

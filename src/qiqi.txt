@@ -46,3 +46,9 @@ NOTE:
 A2345 is a straight
 but 2AKQJ is not a straight
 must account for this. 
+
+
+At the end, add what type of hand (i.e. flush, strait, three of a kind) each player has. 
+
+
+Poker: Start with 300 coins, small blind = 5. Big blind = 10
