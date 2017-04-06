@@ -94,7 +94,7 @@ public class Game {
 
 			// determine the round winner
 			endRound();
-			table.updateRound(i + 1, n, "End Phase", true);
+			table.updateRound(i + 1, n, "Showdown", true);
 			table.getContentPane().repaint();
 			table.awaitClick();
 		}

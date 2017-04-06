@@ -36,7 +36,10 @@ public class TablePanel extends JPanel {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		// game information
+		g.setColor(Color.white);
+		g.fillRect(430, 25, 140, 100);
 		g.setColor(Color.black);
+		g.drawRect(430, 25, 140, 100);
 		g.drawString("Pot: 1000", 450, 50);
 		g.drawString("Current Bet: 500", 450, 70);
 		g.drawString("Small Blind: 25", 450, 90);
@@ -91,7 +94,8 @@ public class TablePanel extends JPanel {
 				g.drawImage(ImageIO.read(new File(players.get(0).getSecondCard().getPath())), 140, 25 + 25, this);
 			}
 			if (!communityCards.isEmpty()) {
-				g.drawString("Score: " + players.get(0).getHand().getScore(), 25, 175 + 45);
+				g.drawString("Hand: " + players.get(0).getHand().getHandType(), 25, 175 + 45);
+				g.drawString("Score: " + players.get(0).getHand().getScore(), 25, 175 + 60);
 			}
 
 			// player 2
@@ -107,7 +111,8 @@ public class TablePanel extends JPanel {
 			} else {
 				g.drawImage(ImageIO.read(new File(players.get(1).getFirstCard().getPath())), 790, 25 + 25, this);
 				g.drawImage(ImageIO.read(new File(players.get(1).getSecondCard().getPath())), 890, 25 + 25, this);
-				g.drawString("Score: " + players.get(1).getHand().getScore(), 775, 175 + 45);
+				g.drawString("Hand: " + players.get(1).getHand().getHandType(), 775, 175 + 45);
+				g.drawString("Score: " + players.get(1).getHand().getScore(), 775, 175 + 60);
 			}
 
 			// player 3
@@ -123,7 +128,8 @@ public class TablePanel extends JPanel {
 			} else {
 				g.drawImage(ImageIO.read(new File(players.get(2).getFirstCard().getPath())), 790, 425 + 25, this);
 				g.drawImage(ImageIO.read(new File(players.get(2).getSecondCard().getPath())), 890, 425 + 25, this);
-				g.drawString("Score: " + players.get(2).getHand().getScore(), 775, 575 + 45);
+				g.drawString("Hand: " + players.get(2).getHand().getHandType(), 775, 575 + 45);
+				g.drawString("Score: " + players.get(2).getHand().getScore(), 775, 575 + 60);
 			}
 
 			// player 4
@@ -139,7 +145,8 @@ public class TablePanel extends JPanel {
 			} else {
 				g.drawImage(ImageIO.read(new File(players.get(3).getFirstCard().getPath())), 40, 425 + 25, this);
 				g.drawImage(ImageIO.read(new File(players.get(3).getSecondCard().getPath())), 140, 425 + 25, this);
-				g.drawString("Score: " + players.get(3).getHand().getScore(), 25, 575 + 45);
+				g.drawString("Hand: " + players.get(3).getHand().getHandType(), 25, 575 + 45);
+				g.drawString("Score: " + players.get(3).getHand().getScore(), 25, 575 + 60);
 			}
 
 		} catch (IOException ex) {

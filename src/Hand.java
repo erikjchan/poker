@@ -12,6 +12,7 @@ public class Hand {
 	private ArrayList<Card> communityCards;
 	private ArrayList<Card> allCards;
 	private ArrayList<Integer> ranks = new ArrayList<Integer>();
+	private String handType;
 	private int score;
 	private boolean scoreCalculated;
 
@@ -126,6 +127,25 @@ public class Hand {
 	}
 
 	/**
+	 * Get the type of the hand.
+	 * 
+	 * @return the type of the hand
+	 */
+	public String getHandType() {
+		return this.handType;
+	}
+
+	/**
+	 * Set the type of the hand.
+	 * 
+	 * @param handType
+	 *            the new type of the hand
+	 */
+	public void setHandType(String handType) {
+		this.handType = handType;
+	}
+	
+	/**
 	 * Get the score of the hand.
 	 * 
 	 * @return the score of the hand
@@ -151,6 +171,7 @@ public class Hand {
 	 *            the highest score of the hand
 	 */
 	public void calculateScore() {
+		handType = "";
 		score = 0;
 		ranks = new ArrayList<Integer>();
 		sortCards();
@@ -178,6 +199,9 @@ public class Hand {
 		if (!scoreCalculated) {
 			onePair();
 		}
+		if (!scoreCalculated) {
+			handType = "High Card";
+		}
 		scoreCalculated = true;
 		updateScore();
 		scoreCalculated = false;
@@ -204,6 +228,7 @@ public class Hand {
 					ranks.add(rank - 2);
 					ranks.add(rank - 3);
 					ranks.add(rank - 4);
+					handType = "Straight Flush";
 					scoreCalculated = true;
 					break;
 				}
@@ -226,6 +251,7 @@ public class Hand {
 				ranks.add(rank);
 				ranks.add(rank);
 				ranks.add(rank);
+				handType = "Four of a Kind";
 				scoreCalculated = true;
 				break;
 			}
@@ -267,6 +293,7 @@ public class Hand {
 			ranks.add(firstRank);
 			ranks.add(secondRank);
 			ranks.add(secondRank);
+			handType = "Full House";
 			scoreCalculated = true;
 		}
 	}
@@ -293,6 +320,7 @@ public class Hand {
 				if (numberMatches > 4) {
 					score = 600;
 					ranks = matchRanks;
+					handType = "Flush";
 					scoreCalculated = true;
 					break;
 				}
@@ -317,6 +345,7 @@ public class Hand {
 				ranks.add(rank - 2);
 				ranks.add(rank - 3);
 				ranks.add(rank - 4);
+				handType = "Straight";
 				scoreCalculated = true;
 				break;
 			}
@@ -335,6 +364,7 @@ public class Hand {
 				ranks.add(rank);
 				ranks.add(rank);
 				ranks.add(rank);
+				handType = "Three of a Kind";
 				scoreCalculated = true;
 				break;
 			}
@@ -359,6 +389,7 @@ public class Hand {
 						ranks.add(firstRank);
 						ranks.add(secondRank);
 						ranks.add(secondRank);
+						handType = "Two Pair";
 						scoreCalculated = true;
 						break;
 					}
@@ -378,6 +409,7 @@ public class Hand {
 				score = 200;
 				ranks.add(rank);
 				ranks.add(rank);
+				handType = "One Pair";
 				scoreCalculated = true;
 				break;
 			}
