@@ -52,3 +52,10 @@ At the end, add what type of hand (i.e. flush, strait, three of a kind) each pla
 
 
 Poker: Start with 300 coins, small blind = 5. Big blind = 10
+
+
+
+Case: 2 pair, the score said 370 but it should have been 342. It had 2 king, 2 eight. 
+
+
+How Aces work...

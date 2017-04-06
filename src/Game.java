@@ -22,7 +22,7 @@ public class Game {
 		Game game = new Game();
 		table = new Table(players, communityCards);
 		table.setTitle("Poker");
-		game.run(5);
+		game.run(15);
 	}
 
 	/**
