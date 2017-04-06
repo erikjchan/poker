@@ -15,6 +15,10 @@ public class ComputerPlayer extends Player {
 		super(name);
 	}
 
+	public String getDecision() {
+		return "meep";
+	}
+	
 	// getFirstCard
 	// getSecondCard
 	
