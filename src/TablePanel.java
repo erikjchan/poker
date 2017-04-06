@@ -10,11 +10,12 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class TablePanel extends JPanel {
-	public static final int HEIGHT = 600;
+	public static final int HEIGHT = 650;
 	public static final int WIDTH = 1000;
 	private ArrayList<Player> players;
 	private ArrayList<Card> communityCards;
 	boolean roundOver;
+	boolean clicked;
 
 	/**
 	 * Constructor class.
@@ -61,14 +62,15 @@ public class TablePanel extends JPanel {
 				g.drawImage(ImageIO.read(new File(communityCards.get(0).getPath())), 265, 225 + 25, this);
 				g.drawImage(ImageIO.read(new File(communityCards.get(1).getPath())), 365, 225 + 25, this);
 				g.drawImage(ImageIO.read(new File(communityCards.get(2).getPath())), 465, 225 + 25, this);
-				g.drawImage(ImageIO.read(new File(communityCards.get(0).getPath())), 565, 225 + 25, this);
-				g.drawImage(ImageIO.read(new File(communityCards.get(1).getPath())), 665, 225 + 25, this);
+				g.drawImage(ImageIO.read(new File(communityCards.get(3).getPath())), 565, 225 + 25, this);
+				g.drawImage(ImageIO.read(new File(communityCards.get(4).getPath())), 665, 225 + 25, this);
 			}
 
 			// player 1
 			g.setColor(Color.black);
 			g.drawRect(25, 25, 200, 150);
 			g.drawString(players.get(0).getName() + " (YOU)", 25, 25 - 10);
+			g.drawString("Money: " + players.get(1).getMoney(), 25, 175 + 15);
 			if (players.get(0).getFirstCard() == null) {
 				g.drawImage(ImageIO.read(new File("img/back.png")), 40, 25 + 25, this);
 				g.drawImage(ImageIO.read(new File("img/back.png")), 140, 25 + 25, this);
@@ -77,11 +79,15 @@ public class TablePanel extends JPanel {
 				g.drawImage(ImageIO.read(new File(players.get(0).getFirstCard().getPath())), 40, 25 + 25, this);
 				g.drawImage(ImageIO.read(new File(players.get(0).getSecondCard().getPath())), 140, 25 + 25, this);
 			}
+			if (!communityCards.isEmpty()) {
+				g.drawString("Score: " + players.get(0).getHand().getScore(), 25, 175 + 30);
+			}
 
 			// player 2
 			g.setColor(Color.black);
 			g.drawRect(775, 25, 200, 150);
 			g.drawString(players.get(1).getName(), 775, 25 - 10);
+			g.drawString("Money: " + players.get(1).getMoney(), 775, 175 + 15);
 			if (players.get(1).getFirstCard() == null || !roundOver) {
 				g.drawImage(ImageIO.read(new File("img/back.png")), 790, 25 + 25, this);
 				g.drawImage(ImageIO.read(new File("img/back.png")), 890, 25 + 25, this);
@@ -89,12 +95,14 @@ public class TablePanel extends JPanel {
 			} else {
 				g.drawImage(ImageIO.read(new File(players.get(1).getFirstCard().getPath())), 790, 25 + 25, this);
 				g.drawImage(ImageIO.read(new File(players.get(1).getSecondCard().getPath())), 890, 25 + 25, this);
+				g.drawString("Score: " + players.get(1).getHand().getScore(), 775, 175 + 30);
 			}
 
 			// player 3
 			g.setColor(Color.black);
 			g.drawRect(775, 425, 200, 150);
 			g.drawString(players.get(2).getName(), 775, 425 - 10);
+			g.drawString("Money: " + players.get(2).getMoney(), 775, 575 + 15);
 			if (players.get(1).getFirstCard() == null || !roundOver) {
 				g.drawImage(ImageIO.read(new File("img/back.png")), 790, 425 + 25, this);
 				g.drawImage(ImageIO.read(new File("img/back.png")), 890, 425 + 25, this);
@@ -102,12 +110,14 @@ public class TablePanel extends JPanel {
 			} else {
 				g.drawImage(ImageIO.read(new File(players.get(2).getFirstCard().getPath())), 790, 425 + 25, this);
 				g.drawImage(ImageIO.read(new File(players.get(2).getSecondCard().getPath())), 890, 425 + 25, this);
+				g.drawString("Score: " + players.get(2).getHand().getScore(), 775, 575 + 30);
 			}
 
 			// player 4
 			g.setColor(Color.black);
 			g.drawRect(25, 425, 200, 150);
 			g.drawString(players.get(3).getName(), 25, 425 - 10);
+			g.drawString("Money: " + players.get(2).getMoney(), 25, 575 + 15);
 			if (players.get(1).getFirstCard() == null || !roundOver) {
 				g.drawImage(ImageIO.read(new File("img/back.png")), 40, 425 + 25, this);
 				g.drawImage(ImageIO.read(new File("img/back.png")), 140, 425 + 25, this);
@@ -115,6 +125,7 @@ public class TablePanel extends JPanel {
 			} else {
 				g.drawImage(ImageIO.read(new File(players.get(3).getFirstCard().getPath())), 40, 425 + 25, this);
 				g.drawImage(ImageIO.read(new File(players.get(3).getSecondCard().getPath())), 140, 425 + 25, this);
+				g.drawString("Score: " + players.get(3).getHand().getScore(), 25, 575 + 30);
 			}
 
 		} catch (IOException ex) {
@@ -134,4 +145,5 @@ public class TablePanel extends JPanel {
 	public void updateRoundOver(boolean roundOver) {
 		this.roundOver = roundOver;
 	}
+
 }

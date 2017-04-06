@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 /**
  * Top-level class that represents the Poker game.
  * 
@@ -20,7 +22,7 @@ public class Game {
 		Game game = new Game();
 		table = new Table(players, communityCards);
 		table.setTitle("Poker");
-		game.run(1);
+		game.run(5);
 	}
 
 	/**
@@ -43,15 +45,18 @@ public class Game {
 		for (int i = 0; i < n; i++) {
 			// initialize the round
 			startRound();
-			table.updateRoundOver(false);
-			pause(2500);
+			table.updateRound(i + 1, n, false);
+			table.updatePlayers(players);
+			table.updateCommunityCards(communityCards);
+			table.getContentPane().repaint();
+			table.awaitClick();
 
 			// set initial bets
 			startBets();
 			table.updatePlayers(players);
 			table.updateCommunityCards(communityCards);
 			table.getContentPane().repaint();
-			pause(2500);
+			table.awaitClick();
 
 			// reveal three cards and run bet round
 			reveal(3);
@@ -61,7 +66,7 @@ public class Game {
 			continueBets();
 			table.updatePlayers(players);
 			table.getContentPane().repaint();
-			pause(2500);
+			table.awaitClick();
 
 			// reveal two more cards and run another bet round
 			reveal(2);
@@ -71,13 +76,13 @@ public class Game {
 			continueBets();
 			table.updatePlayers(players);
 			table.getContentPane().repaint();
-			pause(2500);
+			table.awaitClick();
 
 			// determine the round winner
 			endRound();
-			table.updateRoundOver(true);
+			table.updateRound(i + 1, n, true);
 			table.getContentPane().repaint();
-			pause(25000000);
+			table.awaitClick();
 		}
 
 		// determine the game winner
@@ -113,6 +118,9 @@ public class Game {
 			// Resets players hands and the community cards
 			players.get(i).setFolded(false);
 			communityCards = new ArrayList<Card>();
+			players.get(i).setFirstCard(null);
+			players.get(i).setSecondCard(null);
+			players.get(i).setHand(null);
 			players.get(i).setBet(0);
 		}
 
@@ -177,7 +185,6 @@ public class Game {
 		for (int i = 0; i < 4; i++) {
 			// ask for bet from players who have not folded
 			// AI LOGIC; fold, call or bet
-			System.out.println(currentBet);
 		}
 
 		// reset turn value to zero if it exceeds boud
@@ -192,13 +199,13 @@ public class Game {
 	 */
 	public void endRound() {
 		// if n players have same score, split the plot n ways
-		System.out.println(pot);
 	}
 
 	/**
 	 * End the game, and determine the game winner.
 	 */
 	public void endGame() {
+		JOptionPane.showMessageDialog(null, "Game complete.");
 		table.setVisible(false);
 		System.exit(0);
 	}

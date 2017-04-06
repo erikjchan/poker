@@ -172,10 +172,11 @@ public abstract class Player {
 	 *            the new community cards of the player
 	 */
 	public void updateHand(ArrayList<Card> communityCards) {
-		if (hand == null) {
+		if (hand == null && !communityCards.isEmpty()) {
 			hand = new Hand(firstCard, secondCard, communityCards);
+			hand.calculateScore();
 
-		} else {
+		} else if (!communityCards.isEmpty()) {
 			hand.setCommunityCards(communityCards);
 			hand.calculateScore();
 		}

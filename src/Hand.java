@@ -33,7 +33,6 @@ public class Hand {
 		allCards.add(firstCard);
 		allCards.add(secondCard);
 		allCards.addAll(communityCards);
-		sortCards();
 	}
 
 	/**
@@ -91,6 +90,9 @@ public class Hand {
 	 */
 	public void setCommunityCards(ArrayList<Card> communityCards) {
 		this.communityCards = communityCards;
+		allCards = new ArrayList<Card>();
+		allCards.add(firstCard);
+		allCards.add(secondCard);
 		allCards.addAll(communityCards);
 	}
 
@@ -150,6 +152,7 @@ public class Hand {
 	 */
 	public void calculateScore() {
 		score = 0;
+		ranks = new ArrayList<Integer>();
 		sortCards();
 		if (!scoreCalculated) {
 			straightFlush();
@@ -181,9 +184,10 @@ public class Hand {
 	}
 
 	/**
-	 * Searches for a straight flush in the set of cards from both the hand and
-	 * the community.
+	 * Searches for a straight flush (five cards of sequential rank, all of the
+	 * same suit) in the set of cards from both the hand and the community.
 	 */
+	// TODO: fails for case like 6, 5, 5, 4, 3, 2
 	public void straightFlush() {
 		for (int i = 0; i < allCards.size() - 4; i++) {
 			int rank = allCards.get(i).getRank();
@@ -222,7 +226,6 @@ public class Hand {
 				ranks.add(rank);
 				ranks.add(rank);
 				ranks.add(rank);
-				ranks.add(rank);
 				scoreCalculated = true;
 				break;
 			}
@@ -230,8 +233,8 @@ public class Hand {
 	}
 
 	/**
-	 * Searches for a full house in the set of cards from both the hand and the
-	 * community.
+	 * Searches for a full house (three cards of one rank and two cards of
+	 * another rank) in the set of cards from both the hand and the community.
 	 */
 	public void fullHouse() {
 		// checks if hand has three of a kind
@@ -269,7 +272,8 @@ public class Hand {
 	}
 
 	/**
-	 * Searches for a flush in the set of cards from both the hand and the
+	 * Searches for a flush (five cards all of the same suit, not all of
+	 * sequential rank) in the set of cards from both the hand and the
 	 * community.
 	 */
 	public void flush() {
@@ -297,9 +301,11 @@ public class Hand {
 	}
 
 	/**
-	 * Searches for a straight in the set of cards from both the hand and the
-	 * community.
+	 * Searches for a straight (five cards of sequential rank, not all of the
+	 * same suit) in the set of cards from both the hand and the community.
+	 * 
 	 */
+	// TODO: fails for case like 6, 5, 5, 4, 3, 2
 	public void straight() {
 		for (int i = 0; i < allCards.size() - 4; i++) {
 			int rank = allCards.get(i).getRank();
