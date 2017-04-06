@@ -16,8 +16,33 @@ public class ComputerPlayer extends Player {
 	}
 
 	// getFirstCard
+	// getSecondCard
+	
+	
 	// Thor - God at Poker
 	// Captain America - Really defensive, will fold unless high % of win.
 	// Ironman - you
 	// Hulk - random 
+	
+	//if player is 
+	// genetic algorithms
+	
+	/* if (phase = start) {
+	 * 	pay the blind
+	 * 	
+	 * }
+	 * 
+	 * if (phase = preflop) {
+	 * 	let x = this.getFirstCard;
+	 *  let y = this.getSecondCard;
+	 *  let hole_cards = (x,y);
+	 *  hole_cards.sort(
+	 *
+	 * }
+	 *  then look at your hand
+	 * 
+	 * 
+	 * 
+	 */
+	
 }
