@@ -58,6 +58,43 @@ public class Card implements Comparable<Card> {
 		this.suit = suit;
 	}
 
+	/**
+	 * Get the path of the card.
+	 * 
+	 * @return the path of the card
+	 */
+	public String getPath() {
+		String rankSymbol = "";
+		String suitSymbol = "";
+		if (rank > 1 && rank < 11) {
+			rankSymbol = Integer.toString(rank);
+		} else if (rank == 1) {
+			rankSymbol = "a";
+		} else if (rank == 11) {
+			rankSymbol = "j";
+		} else if (rank == 12) {
+			rankSymbol = "q";
+		} else if (rank == 13) {
+			rankSymbol = "k";
+		}
+
+		switch (suit) {
+		case CLUBS:
+			suitSymbol = "clubs";
+			break;
+		case DIAMONDS:
+			suitSymbol = "diamonds";
+			break;
+		case HEARTS:
+			suitSymbol = "hearts";
+			break;
+		case SPADES:
+			suitSymbol = "spades";
+			break;
+		}
+		return "img/" + rankSymbol + "-" + suitSymbol + ".png";
+	}
+
 	@Override
 	public int compareTo(Card c) {
 		if (this.getRank() > c.getRank()) {

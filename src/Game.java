@@ -13,12 +13,13 @@ public class Game {
 	private int pot;
 	private int smallBlind = 0;
 	private int bigBlind = 0;
-	private ArrayList<Player> players = new ArrayList<Player>();
-	private ArrayList<Card> communityCards = new ArrayList<Card>();
+	private static ArrayList<Player> players = new ArrayList<Player>();
+	private static ArrayList<Card> communityCards = new ArrayList<Card>();
 
 	public static void main(String args[]) {
 		Game game = new Game();
-		table = new Table();
+		table = new Table(players, communityCards);
+		table.setTitle("Poker");
 		game.run(1);
 	}
 
@@ -42,35 +43,50 @@ public class Game {
 		for (int i = 0; i < n; i++) {
 			// initialize the round
 			startRound();
-			table.setTitle("Round " + (i + 1));
-			pause();
+			table.updateRoundOver(false);
+			pause(2500);
 
 			// set initial bets
 			startBets();
-			table.setTitle("Round " + (i + 2));
-			table.updatePlayerName("Test");
+			table.updatePlayers(players);
+			table.updateCommunityCards(communityCards);
 			table.getContentPane().repaint();
-			pause();
+			pause(2500);
 
 			// reveal three cards and run bet round
 			reveal(3);
+			table.updatePlayers(players);
+			table.updateCommunityCards(communityCards);
+			table.getContentPane().repaint();
 			continueBets();
+			table.updatePlayers(players);
+			table.getContentPane().repaint();
+			pause(2500);
 
 			// reveal two more cards and run another bet round
 			reveal(2);
+			table.updatePlayers(players);
+			table.updateCommunityCards(communityCards);
+			table.getContentPane().repaint();
 			continueBets();
+			table.updatePlayers(players);
+			table.getContentPane().repaint();
+			pause(2500);
 
 			// determine the round winner
 			endRound();
+			table.updateRoundOver(true);
+			table.getContentPane().repaint();
+			pause(25000000);
 		}
 
 		// determine the game winner
 		endGame();
 	}
 
-	public void pause() {
+	public void pause(int time) {
 		try {
-			Thread.sleep(250000);
+			Thread.sleep(time);
 
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
@@ -83,12 +99,12 @@ public class Game {
 	public void startRound() {
 		deck = new Deck();
 
-		// Double blinds per round
+		// double blinds per round
 		bigBlind = bigBlind * 4;
 		smallBlind = bigBlind / 2;
 		pot = 0;
 
-		// Used to test for number of bankrupt people
+		// test for number of bankrupt people
 		int numberBankrupt = 0;
 		for (int i = 0; i < 4; i++) {
 			if (players.get(i).getMoney() == 0) {
@@ -100,7 +116,7 @@ public class Game {
 			players.get(i).setBet(0);
 		}
 
-		// Ends game quickly if three players go bankrupt
+		// end game quickly if three players go bankrupt
 		if (numberBankrupt == 3) {
 			endGame();
 		}
