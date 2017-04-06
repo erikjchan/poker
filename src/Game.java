@@ -223,3 +223,5 @@ public class Game {
 	}
 
 }
+
+//one pair tie breaker is to look at the kicker card.

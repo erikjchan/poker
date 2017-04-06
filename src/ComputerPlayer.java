@@ -14,4 +14,10 @@ public class ComputerPlayer extends Player {
 	public ComputerPlayer(String name) {
 		super(name);
 	}
+
+	// getFirstCard
+	// Thor - God at Poker
+	// Captain America - Really defensive, will fold unless high % of win.
+	// Ironman - you
+	// Hulk - random 
 }
