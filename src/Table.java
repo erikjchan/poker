@@ -17,6 +17,8 @@ public class Table extends JFrame implements ActionListener {
 	private int pot;
 	private JButton callButton = new JButton("Call");
 	private JButton foldButton = new JButton("Fold");
+	private JButton raiseButton = new JButton("Raise");
+	private JButton nextButton = new JButton("Next Phase");
 	private boolean clicked;
 
 	/**
@@ -45,11 +47,15 @@ public class Table extends JFrame implements ActionListener {
 		b.add(new JLabel("     "));
 		b.add(foldButton);
 		b.add(new JLabel("     "));
-		b.add(new JButton("Raise"));
+		b.add(raiseButton);
+		b.add(new JLabel("     "));
+		b.add(nextButton);
 		cp.add(b, BorderLayout.SOUTH);
 
 		callButton.addActionListener(this);
 		foldButton.addActionListener(this);
+		raiseButton.addActionListener(this);
+		nextButton.addActionListener(this);
 
 		pack();
 		setVisible(true);
@@ -60,9 +66,12 @@ public class Table extends JFrame implements ActionListener {
 			System.out.println("Call clicked");
 		} else if (e.getSource() == foldButton) {
 			System.out.println("Fold clicked");
+		} else if (e.getSource() == raiseButton) {
+			System.out.println("Raise clicked");
+		} else if (e.getSource() == nextButton) {
+			System.out.println("Next clicked");
+			clicked = true;
 		}
-
-		clicked = true;
 	}
 
 	public void updatePlayers(ArrayList<Player> players) {
@@ -73,8 +82,8 @@ public class Table extends JFrame implements ActionListener {
 		this.tablePanel.updateCommunityCards(communityCards);
 	}
 
-	public void updateRound(int currentRound, int numberRounds, boolean roundOver) {
-		this.roundPanel.updateRounds(currentRound, numberRounds);
+	public void updateRound(int currentRound, int numberRounds, String phase, boolean roundOver) {
+		this.roundPanel.updateRounds(currentRound, numberRounds, phase);
 		this.tablePanel.updateRoundOver(roundOver);
 	}
 

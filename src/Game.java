@@ -45,7 +45,7 @@ public class Game {
 		for (int i = 0; i < n; i++) {
 			// initialize the round
 			startRound();
-			table.updateRound(i + 1, n, false);
+			table.updateRound(i + 1, n, "Start Phase", false);
 			table.updatePlayers(players);
 			table.updateCommunityCards(communityCards);
 			table.getContentPane().repaint();
@@ -68,8 +68,20 @@ public class Game {
 			table.getContentPane().repaint();
 			table.awaitClick();
 
-			// reveal two more cards and run another bet round
-			reveal(2);
+			// reveal one more card and run another bet round
+			reveal(1);
+			table.updateRound(i + 1, n, "Turn", true);
+			table.updatePlayers(players);
+			table.updateCommunityCards(communityCards);
+			table.getContentPane().repaint();
+			continueBets();
+			table.updatePlayers(players);
+			table.getContentPane().repaint();
+			table.awaitClick();
+
+			// reveal one more card and run another bet round
+			reveal(1);
+			table.updateRound(i + 1, n, "River", true);
 			table.updatePlayers(players);
 			table.updateCommunityCards(communityCards);
 			table.getContentPane().repaint();
@@ -80,7 +92,7 @@ public class Game {
 
 			// determine the round winner
 			endRound();
-			table.updateRound(i + 1, n, true);
+			table.updateRound(i + 1, n, "End Phase", true);
 			table.getContentPane().repaint();
 			table.awaitClick();
 		}
