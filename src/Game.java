@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * @author echan
  */
 public class Game {
-	private static GUI gui;
+	private static Table table; // GUI
 	private Deck deck;
 	private int turn;
 	private int currentBet;
@@ -18,7 +18,7 @@ public class Game {
 
 	public static void main(String args[]) {
 		Game game = new Game();
-		gui = new GUI();
+		table = new Table();
 		game.run(1);
 	}
 
@@ -42,17 +42,21 @@ public class Game {
 		for (int i = 0; i < n; i++) {
 			// initialize the round
 			startRound();
-			gui.getFrame().setTitle("Round " + (i + 1));
+			table.setTitle("Round " + (i + 1));
 			pause();
 
 			// set initial bets
 			startBets();
+			table.setTitle("Round " + (i + 2));
+			table.updatePlayerName("Test");
+			table.getContentPane().repaint();
+			pause();
 
 			// reveal three cards and run bet round
 			reveal(3);
 			continueBets();
 
-			// revel two more cards and run another bet round
+			// reveal two more cards and run another bet round
 			reveal(2);
 			continueBets();
 
@@ -66,7 +70,7 @@ public class Game {
 
 	public void pause() {
 		try {
-			Thread.sleep(25000);
+			Thread.sleep(250000);
 
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
@@ -156,6 +160,7 @@ public class Game {
 	public void continueBets() {
 		for (int i = 0; i < 4; i++) {
 			// ask for bet from players who have not folded
+			// AI LOGIC; fold, call or bet
 			System.out.println(currentBet);
 		}
 
@@ -170,6 +175,7 @@ public class Game {
 	 * End the round, and determine the round winner.
 	 */
 	public void endRound() {
+		// if n players have same score, split the plot n ways
 		System.out.println(pot);
 	}
 
@@ -177,7 +183,7 @@ public class Game {
 	 * End the game, and determine the game winner.
 	 */
 	public void endGame() {
-		gui.getFrame().setVisible(false);
+		table.setVisible(false);
 		System.exit(0);
 	}
 

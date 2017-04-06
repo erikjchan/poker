@@ -12,20 +12,22 @@ import javax.swing.JPanel;
 public class TablePanel extends JPanel {
 	public static final int HEIGHT = 600;
 	public static final int WIDTH = 1000;
+	private String playerName;
 
 	/**
 	 * Constructor class.
 	 */
 	public TablePanel() {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		// use repaint for new cards
+		// console to write actions
+		
 	}
 
 	/*
 	 * paint this square using g. System calls paint whenever square has to be
 	 * redrawn.
 	 */
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
 		g.setColor(Color.green);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
@@ -52,7 +54,7 @@ public class TablePanel extends JPanel {
 		// player 1
 		g.setColor(Color.black);
 		g.drawRect(25, 25, 200, 150);
-		g.drawString("Player 1 (YOU)", 25, 25 - 10);
+		g.drawString(playerName + " (YOU)", 25, 25 - 10);
 		g.drawImage(image, 40, 25 + 25, this);
 		g.drawImage(image, 140, 25 + 25, this);
 
@@ -77,5 +79,9 @@ public class TablePanel extends JPanel {
 		g.drawImage(image, 40, 425 + 25, this);
 		g.drawImage(image, 140, 425 + 25, this);
 
+	}
+	
+	public void updatePlayerName(String playerName) {
+		this.playerName = playerName;
 	}
 }

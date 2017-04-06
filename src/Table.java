@@ -6,24 +6,29 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Table extends JFrame {
+	private TablePanel tablePanel;
+	private int pot;
 
 	/**
 	 * Constructor class.
 	 */
 	public Table() {
+		pack();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+
 		Container cp = getContentPane();
 		JLabel roundLabel = new JLabel("Round 1 of 4");
 		cp.add(roundLabel, BorderLayout.NORTH);
 
-		JPanel tablePanel = new TablePanel();
+		tablePanel = new TablePanel();
 		cp.add(tablePanel, BorderLayout.CENTER);
-		
+
 		Box b = new Box(BoxLayout.Y_AXIS);
-		b.add(new JLabel("Pot: 1000"));
+		b.add(new JLabel("Pot: " + pot));
 		b.add(new JLabel("Bet: 360"));
 		b.add(new JButton("Call"));
 		b.add(new JButton("Fold"));
@@ -31,6 +36,10 @@ public class Table extends JFrame {
 
 		pack();
 		setVisible(true);
+	}
+
+	public void updatePlayerName(String playerName) {
+		this.tablePanel.updatePlayerName(playerName);
 	}
 
 }
