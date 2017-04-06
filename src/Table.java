@@ -45,7 +45,7 @@ public class Table extends JFrame implements ActionListener {
 		b.add(new JLabel("     "));
 		b.add(foldButton);
 		b.add(new JLabel("     "));
-		b.add(new JButton("Place Bet"));
+		b.add(new JButton("Raise"));
 		cp.add(b, BorderLayout.SOUTH);
 
 		callButton.addActionListener(this);
