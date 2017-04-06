@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public abstract class Player {
 	private String name;
-	private int money;
+	private int money = 300;
 	private int bet;
 	private Card firstCard;
 	private Card secondCard;

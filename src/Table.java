@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -8,7 +9,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class Table extends JFrame implements ActionListener {
@@ -38,17 +38,13 @@ public class Table extends JFrame implements ActionListener {
 		cp.add(tablePanel, BorderLayout.CENTER);
 
 		Box b = new Box(BoxLayout.X_AXIS);
-		b.add(new JLabel("     "));
-		b.add(new JLabel("Pot: " + pot));
-		b.add(new JLabel("     "));
-		b.add(new JLabel("Bet: 360"));
-		b.add(new JLabel("     "));
+		b.add(Box.createRigidArea(new Dimension(340,0)));
 		b.add(callButton);
-		b.add(new JLabel("     "));
+		b.add(Box.createRigidArea(new Dimension(50,0)));
 		b.add(foldButton);
-		b.add(new JLabel("     "));
+		b.add(Box.createRigidArea(new Dimension(50,0)));
 		b.add(raiseButton);
-		b.add(new JLabel("     "));
+		b.add(Box.createRigidArea(new Dimension(200,0)));
 		b.add(nextButton);
 		cp.add(b, BorderLayout.SOUTH);
 

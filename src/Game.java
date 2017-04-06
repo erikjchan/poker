@@ -13,8 +13,8 @@ public class Game {
 	private int turn;
 	private int currentBet;
 	private int pot;
-	private int smallBlind = 0;
-	private int bigBlind = 0;
+	private int smallBlind = 5;
+	private int bigBlind = 10;
 	private static ArrayList<Player> players = new ArrayList<Player>();
 	private static ArrayList<Card> communityCards = new ArrayList<Card>();
 
@@ -44,7 +44,7 @@ public class Game {
 	public void run(int n) {
 		for (int i = 0; i < n; i++) {
 			// initialize the round
-			startRound();
+			startPhase();
 			table.updateRound(i + 1, n, "Start Phase", false);
 			table.updatePlayers(players);
 			table.updateCommunityCards(communityCards);
@@ -115,7 +115,7 @@ public class Game {
 	/**
 	 * Start a new round with new deck and hands.
 	 */
-	public void startRound() {
+	public void startPhase() {
 		deck = new Deck();
 
 		// double blinds per round
@@ -226,4 +226,4 @@ public class Game {
 
 }
 
-//one pair tie breaker is to look at the kicker card.
+// one pair tie breaker is to look at the kicker card.
