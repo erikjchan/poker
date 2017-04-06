@@ -19,5 +19,5 @@ public class ComputerPlayer extends Player {
 	// Thor - God at Poker
 	// Captain America - Really defensive, will fold unless high % of win.
 	// Ironman - you
-	// Hulk - random
+	// Hulk - random 
 }

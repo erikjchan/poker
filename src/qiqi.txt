@@ -1,0 +1,34 @@
+Blinds:
+
+Pre-flop: IF all the bets are the same or player x has 0 money left and the rest of the players have the same bet.
+		raise: pop-up window and you can put amount. 
+				validator: if not enough, then cannot raise
+		all-in: another button, you cannot call and you cannot raise.
+		
+		add bets to pot	
+		
+Flop:
+		if your money is < the current bet
+			call puts in $equal to the difference
+		else if your money is = current bet
+			call skips ur turn. 
+		
+		graphics: If bet is 0, then could change call -> check in gui.
+		
+		terminate: end the same way
+		player sets the largest bet, and if that same player doesn't set a larger amount then end.
+		
+
+
+
+
+At end of the round
+Will have a button on the right hand side for end turn/continue to next round. 
+At the end of the "phase" then will have a button for next phase.
+	Phases: Start, Preflop, Flop, Turn, River, End
+
+
+End of Game:
+	display: blahblahblah won. 
+	
+Also at start of Game, we can define number of rounds. 
