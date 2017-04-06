@@ -53,6 +53,7 @@ public class Game {
 
 			// set initial bets
 			startBets();
+			table.updateRound(i + 1, n, "Pre-Flop", false);
 			table.updatePlayers(players);
 			table.updateCommunityCards(communityCards);
 			table.getContentPane().repaint();
@@ -60,6 +61,7 @@ public class Game {
 
 			// reveal three cards and run bet round
 			reveal(3);
+			table.updateRound(i + 1, n, "Flop", false);
 			table.updatePlayers(players);
 			table.updateCommunityCards(communityCards);
 			table.getContentPane().repaint();
@@ -70,7 +72,7 @@ public class Game {
 
 			// reveal one more card and run another bet round
 			reveal(1);
-			table.updateRound(i + 1, n, "Turn", true);
+			table.updateRound(i + 1, n, "Turn", false);
 			table.updatePlayers(players);
 			table.updateCommunityCards(communityCards);
 			table.getContentPane().repaint();
@@ -81,7 +83,7 @@ public class Game {
 
 			// reveal one more card and run another bet round
 			reveal(1);
-			table.updateRound(i + 1, n, "River", true);
+			table.updateRound(i + 1, n, "River", false);
 			table.updatePlayers(players);
 			table.updateCommunityCards(communityCards);
 			table.getContentPane().repaint();

@@ -39,7 +39,9 @@ public class TablePanel extends JPanel {
 		g.setColor(Color.black);
 		g.drawString("Pot: 1000", 450, 50);
 		g.drawString("Current Bet: 500", 450, 70);
-		
+		g.drawString("Small Blind: 25", 450, 90);
+		g.drawString("Big Blind: 50", 450, 110);
+
 		// community cards
 		g.setColor(Color.black);
 		g.drawRect(250, 225, 500, 150);
@@ -57,6 +59,13 @@ public class TablePanel extends JPanel {
 				g.drawImage(ImageIO.read(new File(communityCards.get(1).getPath())), 365, 225 + 25, this);
 				g.drawImage(ImageIO.read(new File(communityCards.get(2).getPath())), 465, 225 + 25, this);
 				g.drawImage(ImageIO.read(new File("img/back.png")), 565, 225 + 25, this);
+				g.drawImage(ImageIO.read(new File("img/back.png")), 665, 225 + 25, this);
+
+			} else if (communityCards.size() == 4) {
+				g.drawImage(ImageIO.read(new File(communityCards.get(0).getPath())), 265, 225 + 25, this);
+				g.drawImage(ImageIO.read(new File(communityCards.get(1).getPath())), 365, 225 + 25, this);
+				g.drawImage(ImageIO.read(new File(communityCards.get(2).getPath())), 465, 225 + 25, this);
+				g.drawImage(ImageIO.read(new File(communityCards.get(3).getPath())), 565, 225 + 25, this);
 				g.drawImage(ImageIO.read(new File("img/back.png")), 665, 225 + 25, this);
 
 			} else if (communityCards.size() == 5) {
