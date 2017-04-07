@@ -60,22 +60,18 @@ public class Table extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == callButton) {
-			System.out.println("Call clicked");
 			decision = "call";
 			decisionMade = true;
 
 		} else if (e.getSource() == foldButton) {
-			System.out.println("Fold clicked");
 			decision = "fold";
 			decisionMade = true;
 
 		} else if (e.getSource() == raiseButton) {
-			System.out.println("Raise clicked");
 			decision = "raise";
 			decisionMade = true;
 
 		} else if (e.getSource() == nextButton) {
-			System.out.println("Next clicked");
 			nextPhaseReady = true;
 		}
 	}

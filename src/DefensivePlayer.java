@@ -27,7 +27,6 @@ public class DefensivePlayer extends ComputerPlayer {
 				return "call";
 			}
 		} else {
-			System.out.println(getHand().getScore());
 			double probWin = (double) (getHand().getScore()/100 - (nplayers-1)*0.10);
 			if (probWin > 0.90) {
 				int betmoney = currentBet + (int) (0.50 * pmoney);
