@@ -174,6 +174,17 @@ public class Game {
 			}
 			turn++;
 		}
+		
+		// each active player draws two cards
+		table.updateButtons(players.get(0), currentBet, false, false);
+		for (int i = 0; i < 4; i++) {
+			if (!players.get(i).isBankrupt()) {
+				players.get(i).setFirstCard(deck.drawCard());
+				players.get(i).setSecondCard(deck.drawCard());
+				updateAndRepaint();
+				pause(1);
+			}
+		}
 
 		// additional players pay big blind (or eventually choose to call or
 		// fold)
@@ -229,19 +240,8 @@ public class Game {
 			}
 			turn++;
 		}
-		System.out.println("fail2");
 		currentBet = bigBlind;
 
-		// each active player draws two cards
-		table.updateButtons(players.get(0), currentBet, false, false);
-		for (int i = 0; i < 4; i++) {
-			if (!players.get(i).isBankrupt()) {
-				players.get(i).setFirstCard(deck.drawCard());
-				players.get(i).setSecondCard(deck.drawCard());
-				updateAndRepaint();
-				pause(1);
-			}
-		}
 	}
 
 	/**
