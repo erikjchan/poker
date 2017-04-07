@@ -90,7 +90,11 @@ public class TablePanel extends JPanel {
 
 			} else {
 				g.drawString("Money: " + players.get(0).getMoney(), 25, 175 + 15);
-				g.drawString("Bet: " + players.get(0).getBet(), 25, 175 + 30);
+				if (players.get(0).hasFolded()) {
+					g.drawString("Bet: FOLDED", 25, 175 + 30);
+				} else {
+					g.drawString("Bet: " + players.get(0).getBet(), 25, 175 + 30);
+				}
 			}
 			if (!players.get(0).isBankrupt()) {
 				if (players.get(0).getFirstCard() != null) {
@@ -112,7 +116,11 @@ public class TablePanel extends JPanel {
 
 			} else {
 				g.drawString("Money: " + players.get(1).getMoney(), 775, 175 + 15);
-				g.drawString("Bet: " + players.get(1).getBet(), 775, 175 + 30);
+				if (players.get(1).hasFolded()) {
+					g.drawString("Bet: FOLDED", 775, 175 + 30);
+				} else {
+					g.drawString("Bet: " + players.get(1).getBet(), 775, 175 + 30);
+				}
 				if (players.get(1).getFirstCard() == null) {
 
 				} else if (!roundOver) {
@@ -136,7 +144,11 @@ public class TablePanel extends JPanel {
 
 			} else {
 				g.drawString("Money: " + players.get(2).getMoney(), 775, 575 + 15);
-				g.drawString("Bet: " + players.get(2).getBet(), 775, 575 + 30);
+				if (players.get(2).hasFolded()) {
+					g.drawString("Bet: FOLDED", 775, 575 + 30);
+				} else {
+					g.drawString("Bet: " + players.get(2).getBet(), 775, 575 + 30);
+				}
 				if (players.get(2).getFirstCard() == null) {
 
 				} else if (!roundOver) {
@@ -160,7 +172,11 @@ public class TablePanel extends JPanel {
 
 			} else {
 				g.drawString("Money: " + players.get(3).getMoney(), 25, 575 + 15);
-				g.drawString("Bet: " + players.get(3).getBet(), 25, 575 + 30);
+				if (players.get(3).hasFolded()) {
+					g.drawString("Bet: FOLDED", 25, 575 + 30);
+				} else {
+					g.drawString("Bet: " + players.get(3).getBet(), 25, 575 + 30);
+				}
 				if (players.get(3).getFirstCard() == null) {
 
 				} else if (!roundOver) {

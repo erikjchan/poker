@@ -18,6 +18,7 @@ public class Table extends JFrame implements ActionListener {
 	private JButton foldButton = new JButton("Fold");
 	private JButton raiseButton = new JButton("Raise");
 	private JButton nextButton = new JButton("Next Phase");
+	private String decision = "";
 	private boolean decisionMade;
 	private boolean nextPhaseReady;
 
@@ -60,14 +61,17 @@ public class Table extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == callButton) {
 			System.out.println("Call clicked");
+			decision = "call";
 			decisionMade = true;
 
 		} else if (e.getSource() == foldButton) {
 			System.out.println("Fold clicked");
+			decision = "fold";
 			decisionMade = true;
 
 		} else if (e.getSource() == raiseButton) {
 			System.out.println("Raise clicked");
+			decision = "raise";
 			decisionMade = true;
 
 		} else if (e.getSource() == nextButton) {
@@ -92,7 +96,8 @@ public class Table extends JFrame implements ActionListener {
 		nextButton.setEnabled(roundOver);
 	}
 
-	public void awaitDecision() {
+	public String getDecision() {
+		decision = "";
 		decisionMade = false;
 		while (!decisionMade) {
 			try {
@@ -102,6 +107,7 @@ public class Table extends JFrame implements ActionListener {
 				e.printStackTrace();
 			}
 		}
+		return decision;
 	}
 
 	public void awaitNextPhase() {

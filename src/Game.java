@@ -99,12 +99,12 @@ public class Game {
 			}
 			currentBet = 0;
 			updateAndRepaint();
-			System.out.println("out of paint");
 			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
 			table.updateRound(i + 1, n, "Distribute Pot", true);
 			updateAndRepaint();
 			showdown();
+			updateAndRepaint();
 			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
 		}
@@ -177,12 +177,15 @@ public class Game {
 		for (int i = 0; i < 3; i++) {
 			if (!players.get(turn % 4).isBankrupt() || turn % 4 == 0) {
 				if (turn % 4 == 0) {
-					table.updateButtons(players.get(0), currentBet, false, true);
-					// TODO: bet or set as folded
-					table.awaitDecision();
-					table.updateButtons(players.get(0), currentBet, false, false);
 					if (!players.get(0).isBankrupt()) {
-						players.get(0).setBet(bigBlind);
+						table.updateButtons(players.get(0), currentBet, false, true);
+						String decision = table.getDecision();
+						table.updateButtons(players.get(0), currentBet, false, false);
+						if (decision.equals("call")) {
+							players.get(0).setBet(bigBlind);
+						} else if (decision.equals("fold")) {
+							players.get(0).setFolded(true);
+						}
 					}
 				} else {
 					// TODO: bet or set as folded
@@ -240,11 +243,15 @@ public class Game {
 		for (int i = 0; i < 4; i++) {
 			if ((!players.get(turn % 4).isBankrupt() && !players.get(turn % 4).hasFolded()) || turn % 4 == 0) {
 				if (turn % 4 == 0) {
-					table.updateButtons(players.get(0), currentBet, false, true);
-					table.awaitDecision();
-					table.updateButtons(players.get(0), currentBet, false, false);
 					if (!players.get(0).isBankrupt() && !players.get(0).hasFolded()) {
-						players.get(0).setBet(bigBlind);
+						table.updateButtons(players.get(0), currentBet, false, true);
+						String decision = table.getDecision();
+						table.updateButtons(players.get(0), currentBet, false, false);
+						if (decision.equals("call")) {
+							players.get(0).setBet(bigBlind);
+						} else if (decision.equals("fold")) {
+							players.get(0).setFolded(true);
+						}
 					}
 				} else {
 					players.get(turn % 4).setBet(bigBlind);
