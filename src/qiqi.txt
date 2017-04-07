@@ -1,72 +1,21 @@
-Blinds:
-
-Pre-flop: IF all the bets are the same or player x has 0 money left and the rest of the players have the same bet.
-		raise: pop-up window and you can put amount. 
-				validator: if not enough, then cannot raise
-		all-in: another button, you cannot call and you cannot raise.
-		
-		add bets to pot	
-		
-Flop:
-		if your money is < the current bet
-			call puts in $equal to the difference
-		else if your money is = current bet
-			call skips ur turn. 
-		
-		graphics: If bet is 0, then could change call -> check in gui.
-		
-		terminate: end the same way
-		player sets the largest bet, and if that same player doesn't set a larger amount then end.
-		
-
-
-
-
-At end of the round
-Will have a button on the right hand side for end turn/continue to next round. 
-At the end of the "phase" then will have a button for next phase.
-	Phases: Start, Preflop, Flop, Turn, River, End
-
-
-End of Game:
-	display: blahblahblah won. 
+Important
+	Also at start of Game, we can define number of rounds. 
+	NOTE:
+	10JQKA is a straight
+	A2345 is a straight
+	but 2AKQJ is not a straight
+	must account for this. 
+	-How Aces work...
+	if all other players have folded except for you, you should not be able to fold.
 	
-Also at start of Game, we can define number of rounds. 
-
-
-Display phase on the top
-i.e. Round 1-5 (Phase: _____)
-
-Add a console to Right Hand Side of the game to keep track of all players actions. 
-
-
-
-NOTE:
-10JQKA is a straight
-A2345 is a straight
-but 2AKQJ is not a straight
-must account for this. 
-
-
-At the end, add what type of hand (i.e. flush, strait, three of a kind) each player has. 
-
-
-Poker: Start with 300 coins, small blind = 5. Big blind = 10
-
-
-
-Case: 2 pair, the score said 370 but it should have been 342. It had 2 king, 2 eight. 
-
-
-How Aces work...
 
 
 
 
+Non-important
+	raise enter value: have options of all-in
+	graphics: If bet is 0, then could change call -> check in gui.
+	split pots
 
 
-Blinds -> Cards -> Actions
 
-The boxes can be "highlighted" for each players turns.
-
-if all other players have folded except for you, you should not be able to fold.
