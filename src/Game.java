@@ -424,7 +424,7 @@ public class Game {
 	}
 
 	public void updateAndRepaint() {
-		table.updateTablePanel(players, communityCards, pot, currentBet);
+		table.updateTablePanel(players, communityCards, pot, currentBet, turn);
 		table.getContentPane().repaint();
 	}
 

@@ -80,8 +80,8 @@ public class Table extends JFrame implements ActionListener {
 		}
 	}
 
-	public void updateTablePanel(ArrayList<Player> players, ArrayList<Card> communityCards, int pot, int currentBet) {
-		this.tablePanel.update(players, communityCards, pot, currentBet);
+	public void updateTablePanel(ArrayList<Player> players, ArrayList<Card> communityCards, int pot, int currentBet, int turn) {
+		this.tablePanel.update(players, communityCards, pot, currentBet, turn);
 	}
 
 	public void updateRound(int currentRound, int numberRounds, String phase, boolean roundOver) {

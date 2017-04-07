@@ -16,6 +16,7 @@ public class TablePanel extends JPanel {
 	private ArrayList<Card> communityCards;
 	int pot;
 	int currentBet;
+	int turn;
 	boolean roundOver;
 	boolean clicked;
 
@@ -26,6 +27,8 @@ public class TablePanel extends JPanel {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.players = players;
 		this.communityCards = communityCards;
+		this.pot = pot;
+		this.currentBet = currentBet;
 		// console to write actions
 	}
 
@@ -83,7 +86,11 @@ public class TablePanel extends JPanel {
 
 			// player 1
 			g.setColor(Color.black);
+			if (turn % 4 == 0) {
+				g.setColor(Color.green);	
+			}
 			g.drawRect(25, 25, 200, 150);
+			g.setColor(Color.black);
 			g.drawString(players.get(0).getName() + " (YOU)", 25, 25 - 10);
 			if (players.get(0).isBankrupt()) {
 				g.drawString("Money: BANKRUPT", 25, 175 + 15);
@@ -109,7 +116,11 @@ public class TablePanel extends JPanel {
 
 			// player 2
 			g.setColor(Color.black);
+			if (turn % 4 == 1) {
+				g.setColor(Color.green);	
+			}
 			g.drawRect(775, 25, 200, 150);
+			g.setColor(Color.black);
 			g.drawString(players.get(1).getName(), 775, 25 - 10);
 			if (players.get(1).isBankrupt()) {
 				g.drawString("Money: BANKRUPT", 775, 175 + 15);
@@ -137,7 +148,11 @@ public class TablePanel extends JPanel {
 
 			// player 3
 			g.setColor(Color.black);
+			if (turn % 4 == 2) {
+				g.setColor(Color.green);	
+			}
 			g.drawRect(775, 425, 200, 150);
+			g.setColor(Color.black);
 			g.drawString(players.get(2).getName(), 775, 425 - 10);
 			if (players.get(2).isBankrupt()) {
 				g.drawString("Money: BANKRUPT", 775, 575 + 15);
@@ -165,7 +180,11 @@ public class TablePanel extends JPanel {
 
 			// player 4
 			g.setColor(Color.black);
+			if (turn % 4 == 3) {
+				g.setColor(Color.green);	
+			}
 			g.drawRect(25, 425, 200, 150);
+			g.setColor(Color.black);
 			g.drawString(players.get(3).getName(), 25, 425 - 10);
 			if (players.get(3).isBankrupt()) {
 				g.drawString("Money: BANKRUPT", 25, 575 + 15);
@@ -203,11 +222,12 @@ public class TablePanel extends JPanel {
 		this.roundOver = roundOver;
 	}
 
-	public void update(ArrayList<Player> players, ArrayList<Card> communityCards, int pot, int currentBet) {
+	public void update(ArrayList<Player> players, ArrayList<Card> communityCards, int pot, int currentBet, int turn) {
 		this.players = players;
 		this.communityCards = communityCards;
 		this.pot = pot;
 		this.currentBet = currentBet;
+		this.turn = turn;
 	}
 
 }
