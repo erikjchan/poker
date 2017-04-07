@@ -174,7 +174,7 @@ public class Game {
 			}
 			turn++;
 		}
-		
+
 		// each active player draws two cards
 		table.updateButtons(players.get(0), currentBet, false, false);
 		for (int i = 0; i < 4; i++) {
@@ -189,13 +189,15 @@ public class Game {
 		// additional players pay big blind (or eventually choose to call or
 		// fold)
 		// TODO: figure out while loop logic
-		while (((players.get(0).getBet() != currentBet && !players.get(0).isBankrupt()) || players.get(0).isBankrupt())
-				|| ((players.get(1).getBet() != currentBet && !players.get(1).isBankrupt())
-						|| players.get(1).isBankrupt())
-				|| ((players.get(2).getBet() != currentBet && !players.get(2).isBankrupt())
-						|| players.get(2).isBankrupt())
-				|| ((players.get(3).getBet() != currentBet && !players.get(3).isBankrupt())
-						|| players.get(3).isBankrupt())) {
+
+		while (((players.get(0).getBet() != currentBet && !players.get(0).isBankrupt() && !players.get(0).hasFolded()
+				&& players.get(0).getMoney() != 0))
+				|| ((players.get(1).getBet() != currentBet && !players.get(1).isBankrupt()
+						&& !players.get(1).hasFolded() && players.get(1).getMoney() != 0))
+				|| ((players.get(2).getBet() != currentBet && !players.get(2).isBankrupt()
+						&& !players.get(2).hasFolded() && players.get(2).getMoney() != 0))
+				|| ((players.get(3).getBet() != currentBet && !players.get(3).isBankrupt()
+						&& !players.get(3).hasFolded() && players.get(3).getMoney() != 0))) {
 			System.out.println(players.get(0).getBet() != currentBet);
 			System.out.println(players.get(0).getMoney() != 0);
 			System.out.println(!players.get(0).isBankrupt());
@@ -272,17 +274,21 @@ public class Game {
 		currentBet = 0;
 		updateAndRepaint();
 		pause(1);
+		int nturns = 0;
 		// TODO: fix if all players have no money or if some went all in and
 		// thus don't match bet; currently stuck when money = 0
-		while (currentBet == 0
-				|| ((players.get(0).getBet() != currentBet && !players.get(0).isBankrupt()
-						&& !players.get(0).hasFolded()) || players.get(0).isBankrupt())
+		while (((players.get(0).getBet() != currentBet && !players.get(0).isBankrupt() && !players.get(0).hasFolded()
+				&& players.get(0).getMoney() != 0))
 				|| ((players.get(1).getBet() != currentBet && !players.get(1).isBankrupt()
-						&& !players.get(1).hasFolded()) || players.get(1).isBankrupt())
+						&& !players.get(1).hasFolded() && players.get(1).getMoney() != 0))
 				|| ((players.get(2).getBet() != currentBet && !players.get(2).isBankrupt()
-						&& !players.get(2).hasFolded()) || players.get(2).isBankrupt())
+						&& !players.get(2).hasFolded() && players.get(2).getMoney() != 0))
 				|| ((players.get(3).getBet() != currentBet && !players.get(3).isBankrupt()
-						&& !players.get(3).hasFolded()) || players.get(3).isBankrupt())) {
+						&& !players.get(3).hasFolded() && players.get(3).getMoney() != 0)) || nturns < 5) {
+				nturns ++;
+			if (nturns > 4 && currentBet == 0) {
+				break;
+			}
 			if ((!players.get(turn % 4).isBankrupt() && !players.get(turn % 4).hasFolded()) || turn % 4 == 0) {
 				if (turn % 4 == 0) {
 					if (!players.get(0).isBankrupt() && !players.get(0).hasFolded()) {
