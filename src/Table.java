@@ -18,7 +18,7 @@ public class Table extends JFrame implements ActionListener {
 	private JButton foldButton = new JButton("Fold");
 	private JButton raiseButton = new JButton("Raise");
 	private JButton nextButton = new JButton("Next Phase");
-	private boolean clicked;
+	private boolean decisionMade;
 	private boolean nextPhaseReady;
 
 	/**
@@ -60,10 +60,16 @@ public class Table extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == callButton) {
 			System.out.println("Call clicked");
+			decisionMade = true;
+
 		} else if (e.getSource() == foldButton) {
 			System.out.println("Fold clicked");
+			decisionMade = true;
+
 		} else if (e.getSource() == raiseButton) {
 			System.out.println("Raise clicked");
+			decisionMade = true;
+
 		} else if (e.getSource() == nextButton) {
 			System.out.println("Next clicked");
 			nextPhaseReady = true;
@@ -79,9 +85,16 @@ public class Table extends JFrame implements ActionListener {
 		this.tablePanel.updateRoundOver(roundOver);
 	}
 
-	public void awaitClick() {
-		clicked = false;
-		while (!clicked) {
+	public void updateButtons(Player player, int currentBet, boolean roundOver) {
+		callButton.setEnabled(!roundOver);
+		foldButton.setEnabled(!roundOver);
+		raiseButton.setEnabled(!roundOver && player.getMoney() > currentBet);
+		nextButton.setEnabled(roundOver);
+	}
+
+	public void awaitDecision() {
+		decisionMade = false;
+		while (!decisionMade) {
 			try {
 				Thread.sleep(200);
 

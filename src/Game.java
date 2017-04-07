@@ -48,6 +48,7 @@ public class Game {
 			table.updateRound(i + 1, n, "Start Phase", false);
 			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
+			table.updateButtons(players.get(0), currentBet, true);
 			table.awaitNextPhase();
 
 			// set initial bets
@@ -55,6 +56,7 @@ public class Game {
 			table.updateRound(i + 1, n, "Pre-Flop", false);
 			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
+			table.updateButtons(players.get(0), currentBet, true);
 			table.awaitNextPhase();
 
 			// reveal three cards and run bet phase
@@ -63,6 +65,7 @@ public class Game {
 			table.updateRound(i + 1, n, "Flop", false);
 			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
+			table.updateButtons(players.get(0), currentBet, true);
 			table.awaitNextPhase();
 
 			// reveal one more card and run another bet round
@@ -71,6 +74,7 @@ public class Game {
 			table.updateRound(i + 1, n, "Turn", false);
 			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
+			table.updateButtons(players.get(0), currentBet, true);
 			table.awaitNextPhase();
 
 			// reveal one more card and run another bet round
@@ -79,6 +83,7 @@ public class Game {
 			table.updateRound(i + 1, n, "River", false);
 			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
+			table.updateButtons(players.get(0), currentBet, true);
 			table.awaitNextPhase();
 
 			// determine the round winner
@@ -89,6 +94,7 @@ public class Game {
 			showdown();
 			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
+			table.updateButtons(players.get(0), currentBet, true);
 			table.awaitNextPhase();
 		}
 
@@ -180,7 +186,11 @@ public class Game {
 		}
 		currentBet = 0;
 
-		for (int i = 0; i < 4; i++) {
+		table.updateButtons(players.get(0), currentBet, false);
+		table.awaitDecision();
+		players.get(0).setBet(bigBlind);
+
+		for (int i = 1; i < 4; i++) {
 			// ask for bet from players who have not folded
 			// AI LOGIC; fold, call or bet
 			players.get(i).setBet(bigBlind);
