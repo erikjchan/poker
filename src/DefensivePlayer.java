@@ -18,19 +18,18 @@ public class DefensivePlayer extends ComputerPlayer {
 		super(name);
 	}
 	
-	public String getDecisionPreFlop(ArrayList<Player> players, Player name) {
-		int pmoney = name.getMoney();
-		int current_bet = getMaxBet(players);
+	public String getDecisionPreFlop(ArrayList<Player> players, int currentBet) {
+		int pmoney = getMoney();
 		int nplayers = getNumPlayers(players);
-		if (shouldFold(name)) {
+		if (shouldFold()) {
 			return "fold";
 		}
-		double probWin = (double) (name.getHand().getScore()/300 - (nplayers-1)*0.10);
+		double probWin = (double) (getHand().getScore()/300 - (nplayers-1)*0.10);
 		if (probWin > 0.90) {
-			int betmoney = current_bet + (int) (0.50 * pmoney);
+			int betmoney = currentBet + (int) (0.50 * pmoney);
 			return "raise " + betmoney;
 		} else if (probWin > 0.60) {
-			int betmoney = current_bet + (int) (0.10 * pmoney);
+			int betmoney = currentBet + (int) (0.10 * pmoney);
 			return "raise " + betmoney;
 		} else if (probWin > 0.50) {
 			return "call";
@@ -40,9 +39,9 @@ public class DefensivePlayer extends ComputerPlayer {
 		}
 	}
 
-	public Boolean shouldFold(Player name) {
-		Card first = name.getFirstCard();
-		Card second = name.getSecondCard();
+	public Boolean shouldFold() {
+		Card first = getFirstCard();
+		Card second = getSecondCard();
 		int rank1 = first.getRank();
 		int rank2 = second.getRank();
 		//sort first and second in terms of rank, 
