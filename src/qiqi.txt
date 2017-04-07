@@ -68,3 +68,5 @@ How Aces work...
 Blinds -> Cards -> Actions
 
 The boxes can be "highlighted" for each players turns.
+
+if all other players have folded except for you, you should not be able to fold.

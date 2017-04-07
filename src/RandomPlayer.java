@@ -30,7 +30,7 @@ public class RandomPlayer extends ComputerPlayer {
 		} else if (x == 2) {
 			return "call";
 		} else {
-			int max_raise = getMoney();
+			int max_raise = getMoney() + getBet();
 			int min_raise = currentBet + 1;
 			int raise = random.nextInt(max_raise - min_raise + 1) + min_raise;
 			return "raise " + raise;
