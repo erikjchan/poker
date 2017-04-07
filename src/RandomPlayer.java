@@ -35,6 +35,8 @@ public class RandomPlayer extends ComputerPlayer {
 		}
 	}
 	
+	
+	
 	//if it is start round then all players pay some kind of blind.
 	//Start: cannot fold, cannot raise, cannot call
 	//pre-fold: fold, raise, call. 
