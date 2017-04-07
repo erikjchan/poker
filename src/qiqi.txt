@@ -59,3 +59,12 @@ Case: 2 pair, the score said 370 but it should have been 342. It had 2 king, 2 e
 
 
 How Aces work...
+
+
+
+
+
+
+Blinds -> Cards -> Actions
+
+The boxes can be "highlighted" for each players turns.
