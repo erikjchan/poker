@@ -93,12 +93,13 @@ public class Game {
 
 			// determine the round winner and distribute the pot
 			table.updateRound(i + 1, n, "Showdown", true);
-			for (int j = 0; j < 4; i++) {
+			for (int j = 0; j < 4; j++) {
 				pot += players.get(j).getBet();
 				players.get(j).setBet(0);
 			}
 			currentBet = 0;
 			updateAndRepaint();
+			System.out.println("out of paint");
 			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
 			table.updateRound(i + 1, n, "Distribute Pot", true);
@@ -216,8 +217,10 @@ public class Game {
 	public void reveal(int n) {
 		communityCards.addAll(deck.drawCards(n));
 		for (int i = 0; i < 4; i++) {
-			players.get(i).setCommunityCards(communityCards);
-			players.get(i).updateHand(communityCards);
+			if (!players.get(i).isBankrupt()) {
+				players.get(i).setCommunityCards(communityCards);
+				players.get(i).updateHand(communityCards);
+			}
 		}
 	}
 

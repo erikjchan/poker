@@ -44,6 +44,7 @@ public class TablePanel extends JPanel {
 		g.drawRect(430, 25, 140, 100);
 		g.drawString("Pot: " + pot, 450, 50);
 		g.drawString("Current Bet: " + currentBet, 450, 70);
+		g.drawString("Small Blind: 15", 450, 90);
 		g.drawString("Big Blind: 30", 450, 110);
 
 		// community cards
