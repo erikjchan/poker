@@ -31,9 +31,13 @@ public class RandomPlayer extends ComputerPlayer {
 			return "call";
 		} else {
 			int max_raise = getMoney() + getBet();
-			int min_raise = currentBet + 1;
-			int raise = random.nextInt(max_raise - min_raise + 1) + min_raise;
-			return "raise " + raise;
+			int min_raise = currentBet+1;
+			if (min_raise < max_raise) {
+				int raise = random.nextInt(max_raise - min_raise + 1) + min_raise;
+				return "raise " + raise;
+			} else {
+				return "call";
+			}
 		}
 	}
 
