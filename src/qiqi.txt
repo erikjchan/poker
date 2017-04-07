@@ -7,6 +7,7 @@ Important
 	must account for this. 
 	-How Aces work...
 	if all other players have folded except for you, you should not be able to fold.
+	raise increases bet rather than replaces bet
 	
 
 

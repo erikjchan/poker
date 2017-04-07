@@ -87,7 +87,7 @@ public class TablePanel extends JPanel {
 			// player 1
 			g.setColor(Color.black);
 			if (turn % 4 == 0) {
-				g.setColor(Color.green);	
+				g.setColor(Color.green);
 			}
 			g.drawRect(25, 25, 200, 150);
 			g.setColor(Color.black);
@@ -117,7 +117,7 @@ public class TablePanel extends JPanel {
 			// player 2
 			g.setColor(Color.black);
 			if (turn % 4 == 1) {
-				g.setColor(Color.green);	
+				g.setColor(Color.green);
 			}
 			g.drawRect(775, 25, 200, 150);
 			g.setColor(Color.black);
@@ -149,7 +149,7 @@ public class TablePanel extends JPanel {
 			// player 3
 			g.setColor(Color.black);
 			if (turn % 4 == 2) {
-				g.setColor(Color.green);	
+				g.setColor(Color.green);
 			}
 			g.drawRect(775, 425, 200, 150);
 			g.setColor(Color.black);
@@ -181,7 +181,7 @@ public class TablePanel extends JPanel {
 			// player 4
 			g.setColor(Color.black);
 			if (turn % 4 == 3) {
-				g.setColor(Color.green);	
+				g.setColor(Color.green);
 			}
 			g.drawRect(25, 425, 200, 150);
 			g.setColor(Color.black);
