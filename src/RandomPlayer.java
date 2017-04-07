@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author qiqi
  */
 public class RandomPlayer extends ComputerPlayer {
-	
+
 	/**
 	 * Constructor class.
 	 * 
@@ -17,32 +17,32 @@ public class RandomPlayer extends ComputerPlayer {
 	public RandomPlayer(String name) {
 		super(name);
 	}
-	
+
 	public String getDecision(ArrayList<Player> players, int currentBet) {
 		Random random = new Random();
 		int max = 3;
 		int min = 1;
 		int x = random.nextInt(max - min + 1) + min;
-		if (x == 1) {
+		if (x == 1 && getNumPlayers(players) > 1) {
 			return "fold";
+		} else if (x == 1 && getNumPlayers(players) == 1) {
+			return "call";
 		} else if (x == 2) {
 			return "call";
 		} else {
 			int max_raise = getMoney();
-			int min_raise = currentBet+1;
+			int min_raise = currentBet + 1;
 			int raise = random.nextInt(max_raise - min_raise + 1) + min_raise;
 			return "raise " + raise;
 		}
 	}
-	
-	
-	
-	//if it is start round then all players pay some kind of blind.
-	//Start: cannot fold, cannot raise, cannot call
-	//pre-fold: fold, raise, call. 
-	//fold: fold, raise, call
-	//turn: fold, raise, call
-	//river: fold, raise, call
-	//End: cannot fold, cannot raise, cannot call
+
+	// if it is start round then all players pay some kind of blind.
+	// Start: cannot fold, cannot raise, cannot call
+	// pre-fold: fold, raise, call.
+	// fold: fold, raise, call
+	// turn: fold, raise, call
+	// river: fold, raise, call
+	// End: cannot fold, cannot raise, cannot call
 
 }

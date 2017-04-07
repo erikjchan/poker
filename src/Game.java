@@ -32,7 +32,7 @@ public class Game {
 		players.add(new HumanPlayer("Tony"));
 		players.add(new RandomPlayer("Bruce"));
 		players.add(new ComputerPlayer("Thor"));
-		players.add(new ComputerPlayer("Steve"));
+		players.add(new DefensivePlayer("Steve"));
 	}
 
 	/**
@@ -240,6 +240,18 @@ public class Game {
 						players.get(1).setBet(raisedBet);
 						currentBet = players.get(1).getBet();
 					}
+				} else if (turn %4 == 3) {
+					String decision = ((DefensivePlayer) players.get(3)).getDecision(players, currentBet, true);
+					if (decision.equals("call")) {
+						players.get(3).setBet(currentBet);
+					} else if (decision.equals("fold")) {
+						players.get(3).setFolded(true);
+					} else {
+						String[] decisionArray = decision.split(" ");
+						int raisedBet = Integer.parseInt(decisionArray[1]);
+						players.get(3).setBet(raisedBet);
+						currentBet = players.get(3).getBet();
+					}
 				} else {
 					players.get(turn % 4).setBet(currentBet);
 				}
@@ -336,6 +348,18 @@ public class Game {
 						int raisedBet = Integer.parseInt(decisionArray[1]);
 						players.get(1).setBet(raisedBet);
 						currentBet = players.get(1).getBet();
+					}
+				} else if (turn %4 == 3) {
+					String decision = ((DefensivePlayer) players.get(3)).getDecision(players, currentBet, false);
+					if (decision.equals("call")) {
+						players.get(3).setBet(currentBet);
+					} else if (decision.equals("fold")) {
+						players.get(3).setFolded(true);
+					} else {
+						String[] decisionArray = decision.split(" ");
+						int raisedBet = Integer.parseInt(decisionArray[1]);
+						players.get(3).setBet(raisedBet);
+						currentBet = players.get(3).getBet();
 					}
 				} else {
 					if (currentBet == 0) {

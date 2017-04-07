@@ -44,7 +44,7 @@ public class ComputerPlayer extends Player {
 	public Integer getNumPlayers(ArrayList<Player> players) {
 		int nplayers = 0;
 		for (int i = 0; i < players.size() - 1; i++) {
-			if (!players.get(i).hasFolded()) {
+			if (!players.get(i).hasFolded() && !players.get(i).isBankrupt()) {
 				nplayers++;
 			}
 		}

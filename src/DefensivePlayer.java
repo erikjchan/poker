@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.ArrayList;
 
 /**
@@ -18,24 +17,34 @@ public class DefensivePlayer extends ComputerPlayer {
 		super(name);
 	}
 	
-	public String getDecisionPreFlop(ArrayList<Player> players, int currentBet) {
+	public String getDecision(ArrayList<Player> players, int currentBet, boolean isPreFlop) {
 		int pmoney = getMoney();
 		int nplayers = getNumPlayers(players);
-		if (shouldFold()) {
-			return "fold";
-		}
-		double probWin = (double) (getHand().getScore()/300 - (nplayers-1)*0.10);
-		if (probWin > 0.90) {
-			int betmoney = currentBet + (int) (0.50 * pmoney);
-			return "raise " + betmoney;
-		} else if (probWin > 0.60) {
-			int betmoney = currentBet + (int) (0.10 * pmoney);
-			return "raise " + betmoney;
-		} else if (probWin > 0.50) {
-			return "call";
-			//amt should be current_bet - name.getBet()
+		if (isPreFlop) {
+			if (shouldFold()) {
+				return "fold";
+			} else {
+				return "call";
+			}
 		} else {
-			return "fold";
+			System.out.println(getHand().getScore());
+			double probWin = (double) (getHand().getScore()/100 - (nplayers-1)*0.10);
+			if (probWin > 0.90) {
+				int betmoney = currentBet + (int) (0.50 * pmoney);
+				return "raise " + betmoney;
+			} else if (probWin > 0.60) {
+				int betmoney = currentBet + (int) (0.10 * pmoney);
+				return "raise " + betmoney;
+			} else if (probWin > 0.50) {
+				return "call";
+				//amt should be current_bet - name.getBet()
+			} else {
+				if (getNumPlayers(players) > 1) {
+					return "fold";
+				} else {
+					return "fold";
+				}
+			}
 		}
 	}
 
