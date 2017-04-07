@@ -39,7 +39,7 @@ public class DefensivePlayer extends ComputerPlayer {
 			return "fold";
 		}
 	}
-	
+
 	public Boolean shouldFold(Player name) {
 		Card first = name.getFirstCard();
 		Card second = name.getSecondCard();

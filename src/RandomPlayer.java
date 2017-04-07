@@ -18,7 +18,7 @@ public class RandomPlayer extends ComputerPlayer {
 		super(name);
 	}
 	
-	public String getDecision(ArrayList<Player> players, Player name) {
+	public String getDecision(ArrayList<Player> players, int currentBet) {
 		Random random = new Random();
 		int max = 3;
 		int min = 1;
@@ -28,8 +28,8 @@ public class RandomPlayer extends ComputerPlayer {
 		} else if (x == 2) {
 			return "call";
 		} else {
-			int max_raise = name.getMoney();
-			int min_raise = 1;
+			int max_raise = getMoney();
+			int min_raise = currentBet+1;
 			int raise = random.nextInt(max_raise - min_raise + 1) + min_raise;
 			return "raise " + raise;
 		}

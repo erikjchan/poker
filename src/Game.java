@@ -30,7 +30,7 @@ public class Game {
 	 */
 	public Game() {
 		players.add(new HumanPlayer("Tony"));
-		players.add(new ComputerPlayer("Bruce"));
+		players.add(new RandomPlayer("Bruce"));
 		players.add(new ComputerPlayer("Thor"));
 		players.add(new ComputerPlayer("Steve"));
 	}
@@ -65,11 +65,8 @@ public class Game {
 			reveal(3);
 			table.updateRound(i + 1, n, "Flop", false);
 			table.updateButtons(players.get(0), currentBet, false, false);
-			System.out.println("testa");
 			updateAndRepaint();
-			System.out.println("testb");
 			betPhase();
-			System.out.println("testc");
 			updateAndRepaint();
 			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
@@ -198,11 +195,10 @@ public class Game {
 						&& !players.get(2).hasFolded() && players.get(2).getMoney() != 0))
 				|| ((players.get(3).getBet() != currentBet && !players.get(3).isBankrupt()
 						&& !players.get(3).hasFolded() && players.get(3).getMoney() != 0))) {
-			System.out.println(players.get(0).getBet() != currentBet);
-			System.out.println(players.get(0).getMoney() != 0);
-			System.out.println(!players.get(0).isBankrupt());
-			System.out.println("fail");
 			if (!players.get(turn % 4).isBankrupt() || turn % 4 == 0) {
+				System.out.println(turn);
+				System.out.println(turn % 4);
+				System.out.println(turn % 4 == 1);
 				if (turn % 4 == 0) {
 					if (!players.get(0).isBankrupt()) {
 						table.updateButtons(players.get(0), currentBet, false, true);
@@ -233,8 +229,25 @@ public class Game {
 							}
 						}
 					}
-				} else {
+				} else if (turn % 4 == 1) {
 					// TODO: bet or set as folded
+					System.out.println(turn);
+					System.out.println(turn % 4);
+					System.out.println(turn % 4 == 1);
+					String decision = ((RandomPlayer) players.get(1)).getDecision(players, currentBet);
+					System.out.println(decision);
+					if (decision.equals("call")) {
+						players.get(1).setBet(currentBet);
+
+					} else if (decision.equals("fold")) {
+						players.get(1).setFolded(true);
+					} else {
+						String[] decisionArray = decision.split(" ");
+						int raisedBet = Integer.parseInt(decisionArray[1]);
+						players.get(1).setBet(raisedBet);
+						currentBet = players.get(1).getBet();
+					}
+				} else {
 					players.get(turn % 4).setBet(currentBet);
 				}
 				updateAndRepaint();
@@ -242,8 +255,6 @@ public class Game {
 			}
 			turn++;
 		}
-		currentBet = bigBlind;
-
 	}
 
 	/**
@@ -284,8 +295,9 @@ public class Game {
 				|| ((players.get(2).getBet() != currentBet && !players.get(2).isBankrupt()
 						&& !players.get(2).hasFolded() && players.get(2).getMoney() != 0))
 				|| ((players.get(3).getBet() != currentBet && !players.get(3).isBankrupt()
-						&& !players.get(3).hasFolded() && players.get(3).getMoney() != 0)) || nturns < 5) {
-				nturns ++;
+						&& !players.get(3).hasFolded() && players.get(3).getMoney() != 0))
+				|| nturns < 5) {
+			nturns++;
 			if (nturns > 4 && currentBet == 0) {
 				break;
 			}
