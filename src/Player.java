@@ -13,6 +13,7 @@ public abstract class Player {
 	private Card secondCard;
 	private ArrayList<Card> communityCards;
 	private Hand hand;
+	private boolean isBankrupt;
 	private boolean hasFolded;
 
 	/**
@@ -80,8 +81,14 @@ public abstract class Player {
 	 */
 	public void setBet(int bet) {
 		if (bet < this.money) {
-			this.bet = bet;
-			money -= bet;
+			if (bet >= this.bet) {
+				int tempBet = this.bet;
+				this.bet = bet;
+				money -= (bet - tempBet);
+			} else {
+				this.bet = bet;
+				money -= bet;
+			}
 
 		} else {
 			this.bet = money;
@@ -180,6 +187,25 @@ public abstract class Player {
 			hand.setCommunityCards(communityCards);
 			hand.calculateScore();
 		}
+	}
+
+	/**
+	 * Get whether the player is bankrupt.
+	 * 
+	 * @return whether the player is bankrupt
+	 */
+	public boolean isBankrupt() {
+		return this.isBankrupt;
+	}
+
+	/**
+	 * Set whether the player is bankrupt.
+	 * 
+	 * @param isBankrupt
+	 *            whether the player is bankrupt
+	 */
+	public void setBankrupt(boolean isBankrupt) {
+		this.isBankrupt = isBankrupt;
 	}
 
 	/**

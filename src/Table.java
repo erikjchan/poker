@@ -85,10 +85,10 @@ public class Table extends JFrame implements ActionListener {
 		this.tablePanel.updateRoundOver(roundOver);
 	}
 
-	public void updateButtons(Player player, int currentBet, boolean roundOver) {
-		callButton.setEnabled(!roundOver);
-		foldButton.setEnabled(!roundOver);
-		raiseButton.setEnabled(!roundOver && player.getMoney() > currentBet);
+	public void updateButtons(Player player, int currentBet, boolean roundOver, boolean playerTurn) {
+		callButton.setEnabled(!roundOver && playerTurn);
+		foldButton.setEnabled(!roundOver && playerTurn);
+		raiseButton.setEnabled(!roundOver && playerTurn && player.getMoney() > currentBet);
 		nextButton.setEnabled(roundOver);
 	}
 

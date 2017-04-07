@@ -13,8 +13,8 @@ public class Game {
 	private int turn;
 	private static int currentBet;
 	private static int pot;
-	private int smallBlind = 5;
-	private int bigBlind = 10;
+	private int smallBlind = 15;
+	private int bigBlind = 30;
 	private static ArrayList<Player> players = new ArrayList<Player>();
 	private static ArrayList<Card> communityCards = new ArrayList<Card>();
 
@@ -44,57 +44,67 @@ public class Game {
 	public void run(int n) {
 		for (int i = 0; i < n; i++) {
 			// initialize the round
-			startPhase();
 			table.updateRound(i + 1, n, "Start Phase", false);
-			table.updateTablePanel(players, communityCards, pot, currentBet);
-			table.getContentPane().repaint();
-			table.updateButtons(players.get(0), currentBet, true);
+			table.updateButtons(players.get(0), currentBet, false, false);
+			updateAndRepaint();
+			startPhase();
+			updateAndRepaint();
+			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
 
 			// set initial bets
-			preFlop();
 			table.updateRound(i + 1, n, "Pre-Flop", false);
-			table.updateTablePanel(players, communityCards, pot, currentBet);
-			table.getContentPane().repaint();
-			table.updateButtons(players.get(0), currentBet, true);
+			table.updateButtons(players.get(0), currentBet, false, false);
+			updateAndRepaint();
+			preFlop();
+			updateAndRepaint();
+			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
 
 			// reveal three cards and run flop round
 			reveal(3);
-			betPhase();
 			table.updateRound(i + 1, n, "Flop", false);
-			table.updateTablePanel(players, communityCards, pot, currentBet);
-			table.getContentPane().repaint();
-			table.updateButtons(players.get(0), currentBet, true);
+			table.updateButtons(players.get(0), currentBet, false, false);
+			updateAndRepaint();
+			betPhase();
+			updateAndRepaint();
+			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
 
 			// reveal one more card and run turn round
 			reveal(1);
-			betPhase();
 			table.updateRound(i + 1, n, "Turn", false);
-			table.updateTablePanel(players, communityCards, pot, currentBet);
-			table.getContentPane().repaint();
-			table.updateButtons(players.get(0), currentBet, true);
+			table.updateButtons(players.get(0), currentBet, false, false);
+			updateAndRepaint();
+			betPhase();
+			updateAndRepaint();
+			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
 
 			// reveal one more card and run river round
 			reveal(1);
-			betPhase();
 			table.updateRound(i + 1, n, "River", false);
-			table.updateTablePanel(players, communityCards, pot, currentBet);
-			table.getContentPane().repaint();
-			table.updateButtons(players.get(0), currentBet, true);
+			table.updateButtons(players.get(0), currentBet, false, false);
+			updateAndRepaint();
+			betPhase();
+			updateAndRepaint();
+			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
 
 			// determine the round winner and distribute the pot
 			table.updateRound(i + 1, n, "Showdown", true);
-			table.getContentPane().repaint();
+			for (int j = 0; j < 4; i++) {
+				pot += players.get(j).getBet();
+				players.get(j).setBet(0);
+			}
+			currentBet = 0;
+			updateAndRepaint();
+			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
 			table.updateRound(i + 1, n, "Distribute Pot", true);
+			updateAndRepaint();
 			showdown();
-			table.updateTablePanel(players, communityCards, pot, currentBet);
-			table.getContentPane().repaint();
-			table.updateButtons(players.get(0), currentBet, true);
+			table.updateButtons(players.get(0), currentBet, true, false);
 			table.awaitNextPhase();
 		}
 
@@ -111,7 +121,7 @@ public class Game {
 		// test for number of bankrupt people
 		int numberBankrupt = 0;
 		for (int i = 0; i < 4; i++) {
-			if (players.get(i).getMoney() == 0) {
+			if (players.get(i).isBankrupt()) {
 				numberBankrupt++;
 			}
 			// Resets players hands and the community cards
@@ -133,22 +143,67 @@ public class Game {
 	 * Run the start bets.
 	 */
 	public void preFlop() {
-		// first player pays small blind
-		players.get(turn % 4).setBet(smallBlind);
-		turn++;
+		boolean smallBlindPaid = false;
+		boolean bigBlindPaid = false;
+		currentBet = 0;
+		updateAndRepaint();
+
+		// first active player pays small blind
+		while (!smallBlindPaid) {
+			if (!players.get(turn % 4).isBankrupt()) {
+				players.get(turn % 4).setBet(smallBlind);
+				smallBlindPaid = true;
+				updateAndRepaint();
+				pause(1);
+			}
+			turn++;
+		}
+
+		// second active player pays big blind
+		while (!bigBlindPaid) {
+			if (!players.get(turn % 4).isBankrupt()) {
+				players.get(turn % 4).setBet(bigBlind);
+				bigBlindPaid = true;
+				currentBet = bigBlind;
+				updateAndRepaint();
+				pause(1);
+			}
+			turn++;
+		}
 
 		// additional players pay big blind (or eventually choose to call or
 		// fold)
 		for (int i = 0; i < 3; i++) {
-			players.get(turn % 4).setBet(bigBlind);
+			if (!players.get(turn % 4).isBankrupt() || turn % 4 == 0) {
+				if (turn % 4 == 0) {
+					table.updateButtons(players.get(0), currentBet, false, true);
+					// TODO: bet or set as folded
+					table.awaitDecision();
+					table.updateButtons(players.get(0), currentBet, false, false);
+					if (!players.get(0).isBankrupt()) {
+						players.get(0).setBet(bigBlind);
+					}
+				} else {
+					// TODO: bet or set as folded
+					players.get(turn % 4).setBet(bigBlind);
+					currentBet = bigBlind;
+				}
+				updateAndRepaint();
+				pause(1);
+			}
 			turn++;
 		}
 		currentBet = bigBlind;
 
-		// each player draws two cards
+		// each active player draws two cards
+		table.updateButtons(players.get(0), currentBet, false, false);
 		for (int i = 0; i < 4; i++) {
-			players.get(i).setFirstCard(deck.drawCard());
-			players.get(i).setSecondCard(deck.drawCard());
+			if (!players.get(i).isBankrupt()) {
+				players.get(i).setFirstCard(deck.drawCard());
+				players.get(i).setSecondCard(deck.drawCard());
+				updateAndRepaint();
+				pause(1);
+			}
 		}
 	}
 
@@ -176,18 +231,28 @@ public class Game {
 			players.get(i).setBet(0);
 		}
 		currentBet = 0;
+		updateAndRepaint();
 
-		table.updateButtons(players.get(0), currentBet, false);
-		table.awaitDecision();
-		players.get(0).setBet(bigBlind);
-
-		for (int i = 1; i < 4; i++) {
-			// ask for bet from players who have not folded
-			// AI LOGIC; fold, call or bet
-			players.get(i).setBet(bigBlind);
+		pause(1);
+		for (int i = 0; i < 4; i++) {
+			if ((!players.get(turn % 4).isBankrupt() && !players.get(turn % 4).hasFolded()) || turn % 4 == 0) {
+				if (turn % 4 == 0) {
+					table.updateButtons(players.get(0), currentBet, false, true);
+					table.awaitDecision();
+					table.updateButtons(players.get(0), currentBet, false, false);
+					if (!players.get(0).isBankrupt() && !players.get(0).hasFolded()) {
+						players.get(0).setBet(bigBlind);
+					}
+				} else {
+					players.get(turn % 4).setBet(bigBlind);
+					currentBet = bigBlind;
+				}
+				updateAndRepaint();
+				pause(1);
+			}
 			turn++;
 		}
-		currentBet = bigBlind;
+
 	}
 
 	/**
@@ -197,7 +262,7 @@ public class Game {
 		// if n players have same score, split the plot n ways
 		int max = Integer.MIN_VALUE;
 		for (int i = 0; i < 4; i++) {
-			if (!players.get(i).hasFolded()) {
+			if (!players.get(i).isBankrupt() && !players.get(i).hasFolded()) {
 				if (players.get(i).getHand().getScore() > max) {
 					max = players.get(i).getHand().getScore();
 				}
@@ -206,7 +271,7 @@ public class Game {
 
 		int countMax = 0;
 		for (int i = 0; i < 4; i++) {
-			if (!players.get(i).hasFolded()) {
+			if (!players.get(i).isBankrupt() && !players.get(i).hasFolded()) {
 				if (players.get(i).getHand().getScore() == max) {
 					countMax++;
 				}
@@ -214,11 +279,15 @@ public class Game {
 		}
 
 		for (int i = 0; i < 4; i++) {
-			if (!players.get(i).hasFolded()) {
+			if (!players.get(i).isBankrupt() && !players.get(i).hasFolded()) {
 				if (players.get(i).getHand().getScore() == max) {
 					players.get(i).setMoney(players.get(i).getMoney() + pot / countMax);
 				}
 			}
+			if (players.get(i).getMoney() == 0) {
+				players.get(i).setBankrupt(true);
+			}
+
 		}
 		pot = 0;
 	}
@@ -266,13 +335,18 @@ public class Game {
 	 * @param time
 	 *            the number of seconds to pause the game
 	 */
-	public void pause(int time) {
+	public void pause(double time) {
 		try {
-			Thread.sleep(time * 1000);
+			Thread.sleep((int) time * 1000);
 
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
+	}
+
+	public void updateAndRepaint() {
+		table.updateTablePanel(players, communityCards, pot, currentBet);
+		table.getContentPane().repaint();
 	}
 
 }
