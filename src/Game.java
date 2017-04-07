@@ -196,9 +196,6 @@ public class Game {
 				|| ((players.get(3).getBet() != currentBet && !players.get(3).isBankrupt()
 						&& !players.get(3).hasFolded() && players.get(3).getMoney() != 0))) {
 			if (!players.get(turn % 4).isBankrupt() || turn % 4 == 0) {
-				System.out.println(turn);
-				System.out.println(turn % 4);
-				System.out.println(turn % 4 == 1);
 				if (turn % 4 == 0) {
 					if (!players.get(0).isBankrupt()) {
 						table.updateButtons(players.get(0), currentBet, false, true);
@@ -231,11 +228,7 @@ public class Game {
 					}
 				} else if (turn % 4 == 1) {
 					// TODO: bet or set as folded
-					System.out.println(turn);
-					System.out.println(turn % 4);
-					System.out.println(turn % 4 == 1);
 					String decision = ((RandomPlayer) players.get(1)).getDecision(players, currentBet);
-					System.out.println(decision);
 					if (decision.equals("call")) {
 						players.get(1).setBet(currentBet);
 
@@ -329,6 +322,20 @@ public class Game {
 								}
 							}
 						}
+					}
+				} else if (turn % 4 == 1) {
+					// TODO: bet or set as folded
+					String decision = ((RandomPlayer) players.get(1)).getDecision(players, currentBet);
+					if (decision.equals("call")) {
+						players.get(1).setBet(currentBet);
+
+					} else if (decision.equals("fold")) {
+						players.get(1).setFolded(true);
+					} else {
+						String[] decisionArray = decision.split(" ");
+						int raisedBet = Integer.parseInt(decisionArray[1]);
+						players.get(1).setBet(raisedBet);
+						currentBet = players.get(1).getBet();
 					}
 				} else {
 					if (currentBet == 0) {
