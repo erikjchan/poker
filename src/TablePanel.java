@@ -14,13 +14,15 @@ public class TablePanel extends JPanel {
 	public static final int WIDTH = 1000;
 	private ArrayList<Player> players;
 	private ArrayList<Card> communityCards;
+	int pot;
+	int currentBet;
 	boolean roundOver;
 	boolean clicked;
 
 	/**
 	 * Constructor class.
 	 */
-	public TablePanel(ArrayList<Player> players, ArrayList<Card> communityCards) {
+	public TablePanel(ArrayList<Player> players, ArrayList<Card> communityCards, int pot, int currentBet) {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.players = players;
 		this.communityCards = communityCards;
@@ -40,8 +42,8 @@ public class TablePanel extends JPanel {
 		g.fillRect(430, 25, 140, 100);
 		g.setColor(Color.black);
 		g.drawRect(430, 25, 140, 100);
-		g.drawString("Pot: 1000", 450, 50);
-		g.drawString("Current Bet: 500", 450, 70);
+		g.drawString("Pot: " + pot, 450, 50);
+		g.drawString("Current Bet: " + currentBet, 450, 70);
 		g.drawString("Small Blind: 25", 450, 90);
 		g.drawString("Big Blind: 50", 450, 110);
 
@@ -136,8 +138,8 @@ public class TablePanel extends JPanel {
 			g.setColor(Color.black);
 			g.drawRect(25, 425, 200, 150);
 			g.drawString(players.get(3).getName(), 25, 425 - 10);
-			g.drawString("Money: " + players.get(2).getMoney(), 25, 575 + 15);
-			g.drawString("Bet: " + players.get(2).getBet(), 25, 575 + 30);
+			g.drawString("Money: " + players.get(3).getMoney(), 25, 575 + 15);
+			g.drawString("Bet: " + players.get(3).getBet(), 25, 575 + 30);
 			if (players.get(1).getFirstCard() == null || !roundOver) {
 				g.drawImage(ImageIO.read(new File("img/back.png")), 40, 425 + 25, this);
 				g.drawImage(ImageIO.read(new File("img/back.png")), 140, 425 + 25, this);
@@ -155,16 +157,15 @@ public class TablePanel extends JPanel {
 
 	}
 
-	public void updatePlayers(ArrayList<Player> players) {
-		this.players = players;
-	}
-
-	public void updateCommunityCards(ArrayList<Card> communityCards) {
-		this.communityCards = communityCards;
-	}
-
 	public void updateRoundOver(boolean roundOver) {
 		this.roundOver = roundOver;
+	}
+
+	public void update(ArrayList<Player> players, ArrayList<Card> communityCards, int pot, int currentBet) {
+		this.players = players;
+		this.communityCards = communityCards;
+		this.pot = pot;
+		this.currentBet = currentBet;
 	}
 
 }

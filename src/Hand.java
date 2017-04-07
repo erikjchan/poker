@@ -387,10 +387,8 @@ public class Hand {
 					if (allCards.get(j + 1).getRank() == secondRank) {
 						score = 300;
 						ranks.add(firstRank);
-						System.out.println(firstRank);
 						ranks.add(firstRank);
 						ranks.add(secondRank);
-						System.out.println(secondRank);
 						ranks.add(secondRank);
 						handType = "Two Pair";
 						scoreCalculated = true;

@@ -11,8 +11,8 @@ public class Game {
 	private static Table table; // GUI
 	private Deck deck;
 	private int turn;
-	private int currentBet;
-	private int pot;
+	private static int currentBet;
+	private static int pot;
 	private int smallBlind = 5;
 	private int bigBlind = 10;
 	private static ArrayList<Player> players = new ArrayList<Player>();
@@ -20,9 +20,9 @@ public class Game {
 
 	public static void main(String args[]) {
 		Game game = new Game();
-		table = new Table(players, communityCards);
+		table = new Table(players, communityCards, pot, currentBet);
 		table.setTitle("Poker");
-		game.run(15);
+		game.run(5);
 	}
 
 	/**
@@ -46,57 +46,50 @@ public class Game {
 			// initialize the round
 			startPhase();
 			table.updateRound(i + 1, n, "Start Phase", false);
-			table.updatePlayers(players);
-			table.updateCommunityCards(communityCards);
+			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
-			table.awaitClick();
+			table.awaitNextPhase();
 
 			// set initial bets
-			startBets();
+			preFlop();
 			table.updateRound(i + 1, n, "Pre-Flop", false);
-			table.updatePlayers(players);
-			table.updateCommunityCards(communityCards);
+			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
-			table.awaitClick();
+			table.awaitNextPhase();
 
-			// reveal three cards and run bet round
+			// reveal three cards and run bet phase
 			reveal(3);
+			betPhase();
 			table.updateRound(i + 1, n, "Flop", false);
-			table.updatePlayers(players);
-			table.updateCommunityCards(communityCards);
+			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
-			continueBets();
-			table.updatePlayers(players);
-			table.getContentPane().repaint();
-			table.awaitClick();
+			table.awaitNextPhase();
 
 			// reveal one more card and run another bet round
 			reveal(1);
+			betPhase();
 			table.updateRound(i + 1, n, "Turn", false);
-			table.updatePlayers(players);
-			table.updateCommunityCards(communityCards);
+			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
-			continueBets();
-			table.updatePlayers(players);
-			table.getContentPane().repaint();
-			table.awaitClick();
+			table.awaitNextPhase();
 
 			// reveal one more card and run another bet round
 			reveal(1);
+			betPhase();
 			table.updateRound(i + 1, n, "River", false);
-			table.updatePlayers(players);
-			table.updateCommunityCards(communityCards);
+			table.updateTablePanel(players, communityCards, pot, currentBet);
 			table.getContentPane().repaint();
-			continueBets();
-			table.updatePlayers(players);
-			table.getContentPane().repaint();
-			table.awaitClick();
+			table.awaitNextPhase();
 
 			// determine the round winner
-			endRound();
 			table.updateRound(i + 1, n, "Showdown", true);
 			table.getContentPane().repaint();
-			table.awaitClick();
+			table.awaitNextPhase();
+			table.updateRound(i + 1, n, "Distribute Pot", true);
+			showdown();
+			table.updateTablePanel(players, communityCards, pot, currentBet);
+			table.getContentPane().repaint();
+			table.awaitNextPhase();
 		}
 
 		// determine the game winner
@@ -117,11 +110,6 @@ public class Game {
 	 */
 	public void startPhase() {
 		deck = new Deck();
-
-		// double blinds per round
-		bigBlind = bigBlind * 4;
-		smallBlind = bigBlind / 2;
-		pot = 0;
 
 		// test for number of bankrupt people
 		int numberBankrupt = 0;
@@ -147,29 +135,18 @@ public class Game {
 	/**
 	 * Run the start bets.
 	 */
-	public void startBets() {
-		// first player pays big blind
-		players.get(turn).setBet(bigBlind);
-		pot += bigBlind;
+	public void preFlop() {
+		// first player pays small blind
+		players.get(turn % 4).setBet(smallBlind);
 		turn++;
 
-		// reset turn value to zero if it exceeds bound
-		if (turn > 3) {
-			turn = 0;
-		}
-
-		// additional players pay small blind
+		// additional players pay big blind (or eventually choose to call or
+		// fold)
 		for (int i = 0; i < 3; i++) {
-			players.get(turn).setBet(smallBlind);
-			pot += smallBlind;
+			players.get(turn % 4).setBet(bigBlind);
 			turn++;
-
-			// reset turn value to zero if it exceeds bound
-			if (turn > 3) {
-				turn = 0;
-			}
 		}
-		currentBet = smallBlind;
+		currentBet = bigBlind;
 
 		// each player draws two cards
 		for (int i = 0; i < 4; i++) {
@@ -195,31 +172,89 @@ public class Game {
 	/**
 	 * Run intermediate bets.
 	 */
-	public void continueBets() {
+	public void betPhase() {
+		// add bets from previous phase
+		for (int i = 0; i < 4; i++) {
+			pot += players.get(i).getBet();
+			players.get(i).setBet(0);
+		}
+		currentBet = 0;
+
 		for (int i = 0; i < 4; i++) {
 			// ask for bet from players who have not folded
 			// AI LOGIC; fold, call or bet
+			players.get(i).setBet(bigBlind);
+			turn++;
 		}
-
-		// reset turn value to zero if it exceeds boud
-		turn++;
-		if (turn > 3) {
-			turn = 0;
-		}
+		currentBet = bigBlind;
 	}
 
 	/**
 	 * End the round, and determine the round winner.
 	 */
-	public void endRound() {
+	public void showdown() {
 		// if n players have same score, split the plot n ways
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < 4; i++) {
+			if (!players.get(i).hasFolded()) {
+				if (players.get(i).getHand().getScore() > max) {
+					max = players.get(i).getHand().getScore();
+				}
+			}
+		}
+
+		int countMax = 0;
+		for (int i = 0; i < 4; i++) {
+			if (!players.get(i).hasFolded()) {
+				if (players.get(i).getHand().getScore() == max) {
+					countMax++;
+				}
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			if (!players.get(i).hasFolded()) {
+				if (players.get(i).getHand().getScore() == max) {
+					players.get(i).setMoney(players.get(i).getMoney() + pot / countMax);
+				}
+			}
+		}
+		pot = 0;
 	}
 
 	/**
 	 * End the game, and determine the game winner.
 	 */
 	public void endGame() {
-		JOptionPane.showMessageDialog(null, "Game complete.");
+		ArrayList<String> winners = new ArrayList<String>();
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < 4; i++) {
+			if (players.get(i).getMoney() > max) {
+				max = players.get(i).getMoney();
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			if (players.get(i).getMoney() == max) {
+				winners.add(players.get(i).getName());
+			}
+		}
+
+		if (winners.size() == 1) {
+			JOptionPane.showMessageDialog(null, "Game complete. The winner is " + winners.get(0) + ".");
+
+		} else if (winners.size() == 2) {
+			JOptionPane.showMessageDialog(null,
+					"Game complete. The winners are " + winners.get(0) + " and " + winners.get(1) + ".");
+
+		} else if (winners.size() == 3) {
+			JOptionPane.showMessageDialog(null, "Game complete. The winners are " + winners.get(0) + ", "
+					+ winners.get(1) + ", and " + winners.get(2) + ".");
+
+		} else if (winners.size() == 4) {
+			JOptionPane.showMessageDialog(null, "Game complete. All four players tied.");
+		}
+
 		table.setVisible(false);
 		System.exit(0);
 	}
