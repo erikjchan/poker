@@ -80,7 +80,7 @@ public abstract class Player {
 	 *            the new bet of the player
 	 */
 	public void setBet(int bet) {
-		if (bet < this.money) {
+		if (bet < this.bet + this.money) {
 			if (bet >= this.bet) {
 				int tempBet = this.bet;
 				this.bet = bet;
@@ -91,7 +91,7 @@ public abstract class Player {
 			}
 
 		} else {
-			this.bet = money;
+			this.bet = this.bet + money;
 			money = 0;
 		}
 	}
