@@ -59,7 +59,7 @@ public class Game {
 			table.updateButtons(players.get(0), currentBet, true);
 			table.awaitNextPhase();
 
-			// reveal three cards and run bet phase
+			// reveal three cards and run flop round
 			reveal(3);
 			betPhase();
 			table.updateRound(i + 1, n, "Flop", false);
@@ -68,7 +68,7 @@ public class Game {
 			table.updateButtons(players.get(0), currentBet, true);
 			table.awaitNextPhase();
 
-			// reveal one more card and run another bet round
+			// reveal one more card and run turn round
 			reveal(1);
 			betPhase();
 			table.updateRound(i + 1, n, "Turn", false);
@@ -77,7 +77,7 @@ public class Game {
 			table.updateButtons(players.get(0), currentBet, true);
 			table.awaitNextPhase();
 
-			// reveal one more card and run another bet round
+			// reveal one more card and run river round
 			reveal(1);
 			betPhase();
 			table.updateRound(i + 1, n, "River", false);
@@ -86,7 +86,7 @@ public class Game {
 			table.updateButtons(players.get(0), currentBet, true);
 			table.awaitNextPhase();
 
-			// determine the round winner
+			// determine the round winner and distribute the pot
 			table.updateRound(i + 1, n, "Showdown", true);
 			table.getContentPane().repaint();
 			table.awaitNextPhase();
@@ -102,17 +102,8 @@ public class Game {
 		endGame();
 	}
 
-	public void pause(int time) {
-		try {
-			Thread.sleep(time);
-
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
-		}
-	}
-
 	/**
-	 * Start a new round with new deck and hands.
+	 * Start a new round with a new deck and hands.
 	 */
 	public void startPhase() {
 		deck = new Deck();
@@ -267,6 +258,21 @@ public class Game {
 
 		table.setVisible(false);
 		System.exit(0);
+	}
+
+	/**
+	 * Pause the game for a certain number of seconds.
+	 * 
+	 * @param time
+	 *            the number of seconds to pause the game
+	 */
+	public void pause(int time) {
+		try {
+			Thread.sleep(time * 1000);
+
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
 	}
 
 }
