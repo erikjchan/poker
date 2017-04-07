@@ -276,7 +276,7 @@ public class Game {
 		// thus don't match bet; currently stuck when money = 0
 		while (currentBet == 0
 				|| ((players.get(0).getBet() != currentBet && !players.get(0).isBankrupt()
-						&& !players.get(0).hasFolded()) || players.get(0).isBankrupt()  || players.get(0).isBankrupt())
+						&& !players.get(0).hasFolded()) || players.get(0).isBankrupt())
 				|| ((players.get(1).getBet() != currentBet && !players.get(1).isBankrupt()
 						&& !players.get(1).hasFolded()) || players.get(1).isBankrupt())
 				|| ((players.get(2).getBet() != currentBet && !players.get(2).isBankrupt()
