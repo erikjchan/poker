@@ -18,14 +18,14 @@ public class DefensivePlayer extends ComputerPlayer {
 		super(name);
 	}
 	
-	public String getDecisionPreFlop(ArrayList<Player> players, Player name, double probWin) {
+	public String getDecisionPreFlop(ArrayList<Player> players, Player name) {
 		int pmoney = name.getMoney();
 		int current_bet = getMaxBet(players);
 		int nplayers = getNumPlayers(players);
-		
 		if (shouldFold(name)) {
 			return "fold";
 		}
+		double probWin = (double) (name.getHand().getScore()/300 - (nplayers-1)*0.10);
 		if (probWin > 0.90) {
 			int betmoney = current_bet + (int) (0.50 * pmoney);
 			return "raise " + betmoney;
