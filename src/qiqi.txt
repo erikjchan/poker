@@ -6,8 +6,9 @@ Important
 	but 2AKQJ is not a straight
 	must account for this. 
 	-How Aces work...
-	if all other players have folded except for you, you should not be able to fold.
 	raise increases bet rather than replaces bet
+	game gets stuck when just two active players: you and steve at start of pre-flop round,
+	   where you have bet 0, steve has bet 0, and current bet is 0
 	
 
 
@@ -17,6 +18,7 @@ Non-important
 	raise enter value: have options of all-in
 	graphics: If bet is 0, then could change call -> check in gui.
 	split pots
+	end round early under certain conditions, like three players folded/bankrupt
 
 
 

@@ -108,7 +108,7 @@ public class TablePanel extends JPanel {
 					g.drawImage(ImageIO.read(new File(players.get(0).getFirstCard().getPath())), 40, 25 + 25, this);
 					g.drawImage(ImageIO.read(new File(players.get(0).getSecondCard().getPath())), 140, 25 + 25, this);
 				}
-				if (!communityCards.isEmpty()) {
+				if (!communityCards.isEmpty() && players.get(0).getHand().getHandType() != null) {
 					g.drawString("Hand: " + players.get(0).getHand().getHandType(), 25, 175 + 45);
 					g.drawString("Score: " + players.get(0).getHand().getScore(), 25, 175 + 60);
 				}

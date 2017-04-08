@@ -22,7 +22,23 @@ public class Game {
 		Game game = new Game();
 		table = new Table(players, communityCards, pot, currentBet);
 		table.setTitle("Poker");
-		game.run(5);
+		int numberRounds = 0;
+		boolean numberRoundsValid = false;
+		while (!numberRoundsValid) {
+			try {
+				numberRounds = Integer.parseInt(
+						JOptionPane.showInputDialog("Please enter the number of rounds you would like to play: "));
+				if (numberRounds > 0) {
+					numberRoundsValid = true;
+				} else {
+					JOptionPane.showMessageDialog(null, "The number has to be positive. Please try again.");
+				}
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "The number was invalid. Please try again.");
+			}
+		}
+		game.run(numberRounds);
+
 	}
 
 	/**
@@ -45,50 +61,50 @@ public class Game {
 		for (int i = 0; i < n; i++) {
 			// initialize the round
 			table.updateRound(i + 1, n, "Start Phase", false);
-			table.updateButtons(players.get(0), currentBet, false, false);
+			table.updateButtons(players, currentBet, false, false);
 			updateAndRepaint();
 			startPhase();
 			updateAndRepaint();
-			table.updateButtons(players.get(0), currentBet, true, false);
+			table.updateButtons(players, currentBet, true, false);
 			table.awaitNextPhase();
 
 			// set initial bets
 			table.updateRound(i + 1, n, "Pre-Flop", false);
-			table.updateButtons(players.get(0), currentBet, false, false);
+			table.updateButtons(players, currentBet, false, false);
 			updateAndRepaint();
 			preFlop();
 			updateAndRepaint();
-			table.updateButtons(players.get(0), currentBet, true, false);
+			table.updateButtons(players, currentBet, true, false);
 			table.awaitNextPhase();
 
 			// reveal three cards and run flop round
 			reveal(3);
 			table.updateRound(i + 1, n, "Flop", false);
-			table.updateButtons(players.get(0), currentBet, false, false);
+			table.updateButtons(players, currentBet, false, false);
 			updateAndRepaint();
 			betPhase();
 			updateAndRepaint();
-			table.updateButtons(players.get(0), currentBet, true, false);
+			table.updateButtons(players, currentBet, true, false);
 			table.awaitNextPhase();
 
 			// reveal one more card and run turn round
 			reveal(1);
 			table.updateRound(i + 1, n, "Turn", false);
-			table.updateButtons(players.get(0), currentBet, false, false);
+			table.updateButtons(players, currentBet, false, false);
 			updateAndRepaint();
 			betPhase();
 			updateAndRepaint();
-			table.updateButtons(players.get(0), currentBet, true, false);
+			table.updateButtons(players, currentBet, true, false);
 			table.awaitNextPhase();
 
 			// reveal one more card and run river round
 			reveal(1);
 			table.updateRound(i + 1, n, "River", false);
-			table.updateButtons(players.get(0), currentBet, false, false);
+			table.updateButtons(players, currentBet, false, false);
 			updateAndRepaint();
 			betPhase();
 			updateAndRepaint();
-			table.updateButtons(players.get(0), currentBet, true, false);
+			table.updateButtons(players, currentBet, true, false);
 			table.awaitNextPhase();
 
 			// determine the round winner and distribute the pot
@@ -99,13 +115,13 @@ public class Game {
 			}
 			currentBet = 0;
 			updateAndRepaint();
-			table.updateButtons(players.get(0), currentBet, true, false);
+			table.updateButtons(players, currentBet, true, false);
 			table.awaitNextPhase();
 			table.updateRound(i + 1, n, "Distribute Pot", true);
 			updateAndRepaint();
 			showdown();
 			updateAndRepaint();
-			table.updateButtons(players.get(0), currentBet, true, false);
+			table.updateButtons(players, currentBet, true, false);
 			table.awaitNextPhase();
 		}
 
@@ -157,7 +173,7 @@ public class Game {
 				updateAndRepaint();
 				pause(1);
 			}
-			turn++;
+			updateAndRepaint();
 		}
 
 		// second active player pays big blind
@@ -173,7 +189,7 @@ public class Game {
 		}
 
 		// each active player draws two cards
-		table.updateButtons(players.get(0), currentBet, false, false);
+		table.updateButtons(players, currentBet, false, false);
 		for (int i = 0; i < 4; i++) {
 			if (!players.get(i).isBankrupt()) {
 				players.get(i).setFirstCard(deck.drawCard());
@@ -198,9 +214,9 @@ public class Game {
 			if (!players.get(turn % 4).isBankrupt() || turn % 4 == 0) {
 				if (turn % 4 == 0) {
 					if (!players.get(0).isBankrupt()) {
-						table.updateButtons(players.get(0), currentBet, false, true);
+						table.updateButtons(players, currentBet, false, true);
 						String decision = table.getDecision();
-						table.updateButtons(players.get(0), currentBet, false, false);
+						table.updateButtons(players, currentBet, false, false);
 						if (decision.equals("call")) {
 							players.get(0).setBet(currentBet);
 
@@ -240,7 +256,7 @@ public class Game {
 						players.get(1).setBet(raisedBet);
 						currentBet = players.get(1).getBet();
 					}
-				} else if (turn %4 == 3) {
+				} else if (turn % 4 == 3) {
 					String decision = ((DefensivePlayer) players.get(3)).getDecision(players, currentBet, true);
 					if (decision.equals("call")) {
 						players.get(3).setBet(currentBet);
@@ -259,6 +275,7 @@ public class Game {
 				pause(1);
 			}
 			turn++;
+			updateAndRepaint();
 		}
 	}
 
@@ -309,9 +326,9 @@ public class Game {
 			if ((!players.get(turn % 4).isBankrupt() && !players.get(turn % 4).hasFolded()) || turn % 4 == 0) {
 				if (turn % 4 == 0) {
 					if (!players.get(0).isBankrupt() && !players.get(0).hasFolded()) {
-						table.updateButtons(players.get(0), currentBet, false, true);
+						table.updateButtons(players, currentBet, false, true);
 						String decision = table.getDecision();
-						table.updateButtons(players.get(0), currentBet, false, false);
+						table.updateButtons(players, currentBet, false, false);
 						if (decision.equals("call")) {
 							players.get(0).setBet(currentBet);
 						} else if (decision.equals("fold")) {
@@ -349,7 +366,7 @@ public class Game {
 						players.get(1).setBet(raisedBet);
 						currentBet = players.get(1).getBet();
 					}
-				} else if (turn %4 == 3) {
+				} else if (turn % 4 == 3) {
 					String decision = ((DefensivePlayer) players.get(3)).getDecision(players, currentBet, false);
 					if (decision.equals("call")) {
 						players.get(3).setBet(currentBet);
@@ -373,6 +390,7 @@ public class Game {
 				pause(1);
 			}
 			turn++;
+			updateAndRepaint();
 		}
 
 	}
@@ -466,6 +484,9 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Update the table panel and repaint it.
+	 */
 	public void updateAndRepaint() {
 		table.updateTablePanel(players, communityCards, pot, currentBet, turn);
 		table.getContentPane().repaint();

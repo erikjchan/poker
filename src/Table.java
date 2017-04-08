@@ -76,7 +76,22 @@ public class Table extends JFrame implements ActionListener {
 		}
 	}
 
-	public void updateTablePanel(ArrayList<Player> players, ArrayList<Card> communityCards, int pot, int currentBet, int turn) {
+	/**
+	 * Update the table panel.
+	 * 
+	 * @param players
+	 *            the players in the table
+	 * @param communityCards
+	 *            the community cards in the table
+	 * @param pot
+	 *            the pot in the table
+	 * @param currentBet
+	 *            the current bet in the table
+	 * @param turn
+	 *            the turn in the table
+	 */
+	public void updateTablePanel(ArrayList<Player> players, ArrayList<Card> communityCards, int pot, int currentBet,
+			int turn) {
 		this.tablePanel.update(players, communityCards, pot, currentBet, turn);
 	}
 
@@ -85,10 +100,14 @@ public class Table extends JFrame implements ActionListener {
 		this.tablePanel.updateRoundOver(roundOver);
 	}
 
-	public void updateButtons(Player player, int currentBet, boolean roundOver, boolean playerTurn) {
+	public void updateButtons(ArrayList<Player> players, int currentBet, boolean roundOver, boolean playerTurn) {
 		callButton.setEnabled(!roundOver && playerTurn);
-		foldButton.setEnabled(!roundOver && playerTurn);
-		raiseButton.setEnabled(!roundOver && playerTurn && player.getMoney() > currentBet);
+		foldButton.setEnabled(
+				!roundOver && playerTurn && !(players.get(0).getMoney() == 0 && !players.get(0).isBankrupt())
+						&& !((players.get(1).hasFolded() || players.get(1).isBankrupt())
+								&& (players.get(2).hasFolded() || players.get(2).isBankrupt())
+								&& (players.get(3).hasFolded() || players.get(3).isBankrupt())));
+		raiseButton.setEnabled(!roundOver && playerTurn && players.get(0).getMoney() > currentBet);
 		nextButton.setEnabled(roundOver);
 	}
 
