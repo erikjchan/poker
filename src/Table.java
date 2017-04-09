@@ -95,6 +95,18 @@ public class Table extends JFrame implements ActionListener {
 		this.tablePanel.update(players, communityCards, pot, currentBet, turn);
 	}
 
+	/**
+	 * Update the round information.
+	 * 
+	 * @param currentRound
+	 *            the current round of the game
+	 * @param numberRounds
+	 *            the total number of rounds of the game
+	 * @param phase
+	 *            the current phase of the round
+	 * @param roundOver
+	 *            whether the round is over
+	 */
 	public void updateRound(int currentRound, int numberRounds, String phase, boolean roundOver) {
 		this.roundPanel.updateRounds(currentRound, numberRounds, phase);
 		this.tablePanel.updateRoundOver(roundOver);
