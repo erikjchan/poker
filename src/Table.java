@@ -112,6 +112,18 @@ public class Table extends JFrame implements ActionListener {
 		this.tablePanel.updateRoundOver(roundOver);
 	}
 
+	/**
+	 * Update the clickable buttons.
+	 * 
+	 * @param players
+	 *            the players in the table
+	 * @param currentBet
+	 *            the current bet amount of the round
+	 * @param roundOver
+	 *            whether the current round is over
+	 * @param playerTurn
+	 *            whether it is the user player's turn
+	 */
 	public void updateButtons(ArrayList<Player> players, int currentBet, boolean roundOver, boolean playerTurn) {
 		callButton.setEnabled(!roundOver && playerTurn);
 		foldButton.setEnabled(
