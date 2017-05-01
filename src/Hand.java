@@ -144,7 +144,7 @@ public class Hand {
 	public void setHandType(String handType) {
 		this.handType = handType;
 	}
-	
+
 	/**
 	 * Get the score of the hand.
 	 * 
@@ -211,26 +211,71 @@ public class Hand {
 	 * Searches for a straight flush (five cards of sequential rank, all of the
 	 * same suit) in the set of cards from both the hand and the community.
 	 */
-	// TODO: fails for case like 6, 5, 5, 4, 3, 2
 	public void straightFlush() {
-		for (int i = 0; i < allCards.size() - 4; i++) {
-			int rank = allCards.get(i).getRank();
-			// checks if hand is straight
-			if (allCards.get(i + 1).getRank() == rank - 1 && allCards.get(i + 2).getRank() == rank - 2
-					&& allCards.get(i + 3).getRank() == rank - 3 && allCards.get(i + 4).getRank() == rank - 4) {
-				// checks if hand is flush
-				if (allCards.get(i + 1).getSuit() == allCards.get(i + 2).getSuit()
-						&& allCards.get(i + 3).getSuit() == allCards.get(i + 4).getSuit()
-						&& allCards.get(i + 1).getSuit() == allCards.get(i + 4).getSuit()) {
+		ArrayList<Integer> allRanks = new ArrayList<Integer>();
+		for (int i = 0; i < allCards.size(); i++) {
+			allRanks.add(allCards.get(i).getRank());
+		}
+		// checks if hand is a royal straight
+		if (allRanks.contains(1) && allRanks.contains(13) && allRanks.contains(12) && allRanks.contains(11)
+				&& allRanks.contains(10)) {
+			// checks if hand is a flush
+			ArrayList<Card> aces = new ArrayList<Card>();
+			for (int i = 0; i < 4; i++) {
+				if (allCards.get(i).getRank() == 1) {
+					aces.add(allCards.get(i));
+				}
+			}
+			for (int i = 0; i < aces.size(); i++) {
+				if ((allCards.get(i).getSuit() == allCards.get(allCards.indexOf(13)).getSuit()
+						|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(13)).getSuit())
+						&& (allCards.get(i).getSuit() == allCards.get(allCards.indexOf(12)).getSuit()
+								|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(12)).getSuit())
+						&& (allCards.get(i).getSuit() == allCards.get(allCards.indexOf(11)).getSuit()
+								|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(11)).getSuit())
+						&& (allCards.get(i).getSuit() == allCards.get(allCards.indexOf(10)).getSuit()
+								|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(10)).getSuit())) {
 					score = 900;
-					ranks.add(rank);
-					ranks.add(rank - 1);
-					ranks.add(rank - 2);
-					ranks.add(rank - 3);
-					ranks.add(rank - 4);
-					handType = "Straight Flush";
+					ranks.add(1);
+					ranks.add(13);
+					ranks.add(12);
+					ranks.add(11);
+					ranks.add(10);
+					handType = "Straight";
 					scoreCalculated = true;
 					break;
+				}
+			}
+
+		} else {
+			// not a royal straight flush, but could still be straight flush
+			for (int i = 0; i < allCards.size() - 4; i++) {
+				int rank = allCards.get(i).getRank();
+				// checks if hand is straight
+				if (allRanks.contains(rank - 1) && allRanks.contains(rank - 2) && allRanks.contains(rank - 3)
+						&& allRanks.contains(rank - 4)) {
+					// checks if hand is flush
+					if ((allCards.get(i).getSuit() == allCards.get(allCards.indexOf(rank - 1)).getSuit()
+							|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(rank - 1)).getSuit())
+							&& (allCards.get(i).getSuit() == allCards.get(allCards.indexOf(rank - 2)).getSuit()
+									|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(rank - 2))
+											.getSuit())
+							&& (allCards.get(i).getSuit() == allCards.get(allCards.indexOf(rank - 3)).getSuit()
+									|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(rank - 3))
+											.getSuit())
+							&& (allCards.get(i).getSuit() == allCards.get(allCards.indexOf(rank - 4)).getSuit()
+									|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(rank - 4))
+											.getSuit())) {
+						score = 900;
+						ranks.add(rank);
+						ranks.add(rank - 1);
+						ranks.add(rank - 2);
+						ranks.add(rank - 3);
+						ranks.add(rank - 4);
+						handType = "Straight Flush";
+						scoreCalculated = true;
+						break;
+					}
 				}
 			}
 		}
@@ -335,19 +380,36 @@ public class Hand {
 	 */
 	// TODO: fails for case like 6, 5, 5, 4, 3, 2
 	public void straight() {
-		for (int i = 0; i < allCards.size() - 4; i++) {
-			int rank = allCards.get(i).getRank();
-			if (allCards.get(i + 1).getRank() == rank - 1 && allCards.get(i + 2).getRank() == rank - 2
-					&& allCards.get(i + 3).getRank() == rank - 3 && allCards.get(i + 4).getRank() == rank - 4) {
-				score = 500;
-				ranks.add(rank);
-				ranks.add(rank - 1);
-				ranks.add(rank - 2);
-				ranks.add(rank - 3);
-				ranks.add(rank - 4);
-				handType = "Straight";
-				scoreCalculated = true;
-				break;
+		ArrayList<Integer> allRanks = new ArrayList<Integer>();
+		for (int i = 0; i < allCards.size(); i++) {
+			allRanks.add(allCards.get(i).getRank());
+		}
+		if (allRanks.contains(1) && allRanks.contains(13) && allRanks.contains(12) && allRanks.contains(11)
+				&& allRanks.contains(10)) {
+			score = 500;
+			ranks.add(1);
+			ranks.add(13);
+			ranks.add(12);
+			ranks.add(11);
+			ranks.add(10);
+			handType = "Straight";
+			scoreCalculated = true;
+
+		} else {
+			for (int i = 0; i < allCards.size() - 4; i++) {
+				int rank = allCards.get(i).getRank();
+				if (allRanks.contains(rank - 1) && allRanks.contains(rank - 2) && allRanks.contains(rank - 3)
+						&& allRanks.contains(rank - 4)) {
+					score = 500;
+					ranks.add(rank);
+					ranks.add(rank - 1);
+					ranks.add(rank - 2);
+					ranks.add(rank - 3);
+					ranks.add(rank - 4);
+					handType = "Straight";
+					scoreCalculated = true;
+					break;
+				}
 			}
 		}
 	}
@@ -377,8 +439,7 @@ public class Hand {
 	 */
 	public void twoPair() {
 		// checks if hand has pair
-		outerloop:
-		for (int i = 0; i < allCards.size() - 3; i++) {
+		outerloop: for (int i = 0; i < allCards.size() - 3; i++) {
 			int firstRank = allCards.get(i).getRank();
 			if (allCards.get(i + 1).getRank() == firstRank) {
 				// checks if hand has second pair
