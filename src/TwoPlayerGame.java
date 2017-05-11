@@ -290,10 +290,17 @@ public class TwoPlayerGame {
 
 		} else if (players.get(i) instanceof RandomPlayer) {
 			decision = ((RandomPlayer) players.get(i)).getDecision(players, currentBet);
+			
 		} else if (players.get(i) instanceof ConfidentPlayer) {
 			decision = ((ConfidentPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
+			
+		} else if (players.get(i) instanceof ScaredPlayer) {
+			decision = ((ScaredPlayer) players.get(i)).getDecision(players, currentBet, isPreflop, pot);
+		
+		} else if (players.get(i) instanceof CallingPlayer) {
+			decision = ((CallingPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
+			
 		}
-
 		players.get(i).setLastDecision(decision);
 
 		if (decision.equals("call")) {
