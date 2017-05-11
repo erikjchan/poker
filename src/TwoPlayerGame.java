@@ -290,6 +290,8 @@ public class TwoPlayerGame {
 
 		} else if (players.get(i) instanceof RandomPlayer) {
 			decision = ((RandomPlayer) players.get(i)).getDecision(players, currentBet);
+		} else if (players.get(i) instanceof ConfidentPlayer) {
+//			decision = ((ConfidentPlayer) players.get(i).getDecision(players, currentBet);
 		}
 
 		players.get(i).setLastDecision(decision);
