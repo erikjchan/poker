@@ -22,10 +22,10 @@ public class SmartPlayerGame {
 
 	public static void main(String args[]) {
 		int numberGames = 10000;
-		SmartPlayerGame game = new SmartPlayerGame();
+		SmartPlayerGame game = new SmartPlayerGame(false);
 		for (int i = 0; i < numberGames; i++) {
 			System.out.println(i);
-			game = new SmartPlayerGame();
+			game = new SmartPlayerGame(false);
 			int numberRounds = 5;
 			game.run(numberRounds);
 		}
@@ -34,10 +34,13 @@ public class SmartPlayerGame {
 
 	/**
 	 * Constructor class.
+	 * 
+	 * @param trained
+	 *            whether the player has learned yet
 	 */
-	public SmartPlayerGame() {
+	public SmartPlayerGame(boolean trained) {
 		gameOver = false;
-		players.add(new RationalPlayer("Steve"));
+		players.add(new SmartPlayer("Steve", false));
 		players.add(new ScaredPlayer("Bruce"));
 	}
 

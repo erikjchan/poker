@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * @author erik
  */
 public class SmartPlayer extends ComputerPlayer {
+	boolean trained = false;
 	private Deck deck;
 	private static int postRaiseFolds;
 	private static int notPostRaiseFolds;
@@ -18,14 +19,27 @@ public class SmartPlayer extends ComputerPlayer {
 	 * @param name
 	 *            the name of the computer player
 	 */
-	public SmartPlayer(String name) {
+	public SmartPlayer(String name, boolean trained) {
 		super(name);
+		this.trained = trained;
 	}
 
 	public String getDecision(ArrayList<Player> players, int currentBet, boolean isPreFlop) {
 
 		if (isPreFlop) {
 			return "call";
+
+		} else if (trained && postRaiseFolds > notPostRaiseFolds) {
+			// recognize as scared player
+			return null;
+
+		} else if (trained) {
+			// recognize as confident player
+			return null;
+
+		} else if (trained) {
+			// recognize as calling player
+			return null;
 
 		} else {
 			if (getHand().getScore() > getAverageScore() + 100) {

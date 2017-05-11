@@ -25,7 +25,7 @@ public class RationalPlayer extends ComputerPlayer {
 
 		} else {
 			if (getHand().getScore() > getAverageScore() + 100) {
-				return "raise " + (currentBet + getHand().getScore() - getAverageScore() - 100);
+				return "raise " + (currentBet * 1.2);
 
 			} else if (getHand().getScore() > getAverageScore() - 100) {
 				return "call";
@@ -47,7 +47,7 @@ public class RationalPlayer extends ComputerPlayer {
 		// remove own cards from deck
 		deck.removeCard(getFirstCard());
 		deck.removeCard(getSecondCard());
-		
+
 		ArrayList<Card> temp = getCommunityCards();
 		for (int i = 0; i < temp.size(); i++) {
 			deck.removeCard(temp.get(i));

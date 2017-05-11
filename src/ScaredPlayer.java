@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * @author qiqi
  */
 public class ScaredPlayer extends ComputerPlayer {
-	
+
 	/**
 	 * Constructor class.
 	 * 
@@ -16,12 +16,11 @@ public class ScaredPlayer extends ComputerPlayer {
 	public ScaredPlayer(String name) {
 		super(name);
 	}
-	
+
 	public String getDecision(ArrayList<Player> players, int currentBet, boolean isPreFlop, int pot) {
-		int pmoney = getMoney();
-		int nplayers = getNumPlayers(players);
 		if (isPreFlop) {
 			return "call";
+
 		} else {
 			if (currentBet > 1.2 * pot) {
 				return "fold";
@@ -30,5 +29,5 @@ public class ScaredPlayer extends ComputerPlayer {
 			}
 		}
 	}
-	
+
 }
