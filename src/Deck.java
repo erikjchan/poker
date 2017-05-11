@@ -90,4 +90,24 @@ public class Deck {
 		}
 		return drawnCards;
 	}
+
+	/**
+	 * Remove a specific card from the deck.
+	 * 
+	 * @param card
+	 *            the card to be removed from the deck
+	 */
+	public void removeCard(Card card) {
+		cards.remove(card);
+	}
+
+	/**
+	 * Remove a list of specific cards from the deck.
+	 * 
+	 * @param cards
+	 *            the cards to be removed from the deck
+	 */
+	public void removeCards(ArrayList<Card> cards) {
+		cards.removeAll(cards);
+	}
 }

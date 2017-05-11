@@ -1,5 +1,4 @@
 Important
-	Also at start of Game, we can define number of rounds. 
 	NOTE:
 	10JQKA is a straight
 	A2345 is a straight
@@ -19,6 +18,4 @@ Non-important
 	graphics: If bet is 0, then could change call -> check in gui.
 	split pots
 	end round early under certain conditions, like three players folded/bankrupt
-
-
 
