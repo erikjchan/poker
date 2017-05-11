@@ -20,7 +20,7 @@ public class TwoPlayerGame {
 	private ArrayList<Card> communityCards = new ArrayList<Card>();
 
 	public static void main(String args[]) {
-		int numberGames = 1000;
+		int numberGames = 10000;
 		TwoPlayerGame game = new TwoPlayerGame();
 		for (int i = 0; i < numberGames; i++) {
 			game = new TwoPlayerGame();
@@ -35,8 +35,8 @@ public class TwoPlayerGame {
 	 */
 	public TwoPlayerGame() {
 		gameOver = false;
-		players.add(new DefensivePlayer("Steve"));
-		players.add(new DefensivePlayer("Bucky"));
+		players.add(new RandomPlayer("Steve"));
+		players.add(new RandomPlayer("Bruce"));
 	}
 
 	/**
@@ -145,18 +145,15 @@ public class TwoPlayerGame {
 				&& players.get(0).getMoney() != 0))
 				|| ((players.get(1).getBet() != currentBet && !players.get(1).hasFolded()
 						&& players.get(1).getMoney() != 0))) {
-			System.out.println("while");
+
 			if (turn % 2 == 0) {
-				// TODO: bet or set as folded
-				String decision = ((DefensivePlayer) players.get(0)).getDecision(players, currentBet, true);
-				makeDecision(0, decision);
+				makeDecision(0, true);
 
 			} else if (turn % 2 == 1) {
-				String decision = ((DefensivePlayer) players.get(1)).getDecision(players, currentBet, true);
-				makeDecision(1, decision);
+				makeDecision(1, true);
 			}
+			turn++;
 		}
-		turn++;
 	}
 
 	/**
@@ -200,13 +197,10 @@ public class TwoPlayerGame {
 			}
 			if (!players.get(turn % 2).hasFolded()) {
 				if (turn % 2 == 0) {
-					// TODO: bet or set as folded
-					String decision = ((DefensivePlayer) players.get(0)).getDecision(players, currentBet, false);
-					makeDecision(0, decision);
+					makeDecision(0, false);
 
 				} else if (turn % 2 == 1) {
-					String decision = ((DefensivePlayer) players.get(1)).getDecision(players, currentBet, false);
-					makeDecision(1, decision);
+					makeDecision(1, false);
 				}
 			}
 			turn++;
@@ -287,12 +281,21 @@ public class TwoPlayerGame {
 	 * @param decision
 	 *            the decision the player is making
 	 */
-	public void makeDecision(int i, String decision) {
+	public void makeDecision(int i, boolean isPreflop) {
+		String decision = "";
+		if (players.get(i) instanceof DefensivePlayer) {
+			decision = ((DefensivePlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
+
+		} else if (players.get(i) instanceof RandomPlayer) {
+			decision = ((RandomPlayer) players.get(i)).getDecision(players, currentBet);
+		}
+
 		if (decision.equals("call")) {
 			players.get(i).setBet(currentBet);
 
 		} else if (decision.equals("fold")) {
 			players.get(i).setFolded(true);
+
 		} else {
 			String[] decisionArray = decision.split(" ");
 			int raisedBet = Integer.parseInt(decisionArray[1]);

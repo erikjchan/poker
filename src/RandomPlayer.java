@@ -25,13 +25,15 @@ public class RandomPlayer extends ComputerPlayer {
 		int x = random.nextInt(max - min + 1) + min;
 		if (x == 1 && getNumPlayers(players) > 1) {
 			return "fold";
+			
 		} else if (x == 1 && getNumPlayers(players) == 1) {
 			return "call";
+			
 		} else if (x == 2) {
 			return "call";
 		} else {
 			int max_raise = getMoney() + getBet();
-			int min_raise = currentBet+1;
+			int min_raise = currentBet + 1;
 			if (min_raise < max_raise) {
 				int raise = random.nextInt(max_raise - min_raise + 1) + min_raise;
 				return "raise " + raise;
