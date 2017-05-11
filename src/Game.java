@@ -77,7 +77,7 @@ public class Game {
 			table.updateButtons(players, currentBet, true, false);
 			table.awaitNextPhase();
 
-			// reveal three cards and run flop round
+			// reveal three cards and run flop phase
 			reveal(3);
 			table.updateRound(i + 1, n, "Flop", false);
 			table.updateButtons(players, currentBet, false, false);
@@ -87,7 +87,7 @@ public class Game {
 			table.updateButtons(players, currentBet, true, false);
 			table.awaitNextPhase();
 
-			// reveal one more card and run turn round
+			// reveal one more card and run turn phase
 			reveal(1);
 			table.updateRound(i + 1, n, "Turn", false);
 			table.updateButtons(players, currentBet, false, false);
@@ -97,7 +97,7 @@ public class Game {
 			table.updateButtons(players, currentBet, true, false);
 			table.awaitNextPhase();
 
-			// reveal one more card and run river round
+			// reveal one more card and run river phase
 			reveal(1);
 			table.updateRound(i + 1, n, "River", false);
 			table.updateButtons(players, currentBet, false, false);
@@ -245,29 +245,12 @@ public class Game {
 				} else if (turn % 4 == 1) {
 					// TODO: bet or set as folded
 					String decision = ((RandomPlayer) players.get(1)).getDecision(players, currentBet);
-					if (decision.equals("call")) {
-						players.get(1).setBet(currentBet);
+					makeDecision(1, decision);
 
-					} else if (decision.equals("fold")) {
-						players.get(1).setFolded(true);
-					} else {
-						String[] decisionArray = decision.split(" ");
-						int raisedBet = Integer.parseInt(decisionArray[1]);
-						players.get(1).setBet(raisedBet);
-						currentBet = players.get(1).getBet();
-					}
 				} else if (turn % 4 == 3) {
 					String decision = ((DefensivePlayer) players.get(3)).getDecision(players, currentBet, true);
-					if (decision.equals("call")) {
-						players.get(3).setBet(currentBet);
-					} else if (decision.equals("fold")) {
-						players.get(3).setFolded(true);
-					} else {
-						String[] decisionArray = decision.split(" ");
-						int raisedBet = Integer.parseInt(decisionArray[1]);
-						players.get(3).setBet(raisedBet);
-						currentBet = players.get(3).getBet();
-					}
+					makeDecision(3, decision);
+
 				} else {
 					players.get(turn % 4).setBet(currentBet);
 				}
@@ -355,29 +338,12 @@ public class Game {
 				} else if (turn % 4 == 1) {
 					// TODO: bet or set as folded
 					String decision = ((RandomPlayer) players.get(1)).getDecision(players, currentBet);
-					if (decision.equals("call")) {
-						players.get(1).setBet(currentBet);
+					makeDecision(1, decision);
 
-					} else if (decision.equals("fold")) {
-						players.get(1).setFolded(true);
-					} else {
-						String[] decisionArray = decision.split(" ");
-						int raisedBet = Integer.parseInt(decisionArray[1]);
-						players.get(1).setBet(raisedBet);
-						currentBet = players.get(1).getBet();
-					}
 				} else if (turn % 4 == 3) {
 					String decision = ((DefensivePlayer) players.get(3)).getDecision(players, currentBet, false);
-					if (decision.equals("call")) {
-						players.get(3).setBet(currentBet);
-					} else if (decision.equals("fold")) {
-						players.get(3).setFolded(true);
-					} else {
-						String[] decisionArray = decision.split(" ");
-						int raisedBet = Integer.parseInt(decisionArray[1]);
-						players.get(3).setBet(raisedBet);
-						currentBet = players.get(3).getBet();
-					}
+					makeDecision(3, decision);
+
 				} else {
 					if (currentBet == 0) {
 						players.get(turn % 4).setBet(bigBlind);
@@ -490,6 +456,28 @@ public class Game {
 	public void updateAndRepaint() {
 		table.updateTablePanel(players, communityCards, pot, currentBet, turn);
 		table.getContentPane().repaint();
+	}
+
+	/**
+	 * Make the player's decision.
+	 * 
+	 * @param i
+	 *            the player making the decision
+	 * @param decision
+	 *            the decision the player is making
+	 */
+	public void makeDecision(int i, String decision) {
+		if (decision.equals("call")) {
+			players.get(i).setBet(currentBet);
+
+		} else if (decision.equals("fold")) {
+			players.get(i).setFolded(true);
+		} else {
+			String[] decisionArray = decision.split(" ");
+			int raisedBet = Integer.parseInt(decisionArray[1]);
+			players.get(i).setBet(raisedBet);
+			currentBet = players.get(i).getBet();
+		}
 	}
 
 }
