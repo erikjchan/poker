@@ -141,18 +141,25 @@ public class TwoPlayerGame {
 		// additional players pay big blind (or eventually choose to call or
 		// fold)
 		// TODO: figure out while loop logic
-		while (((players.get(0).getBet() != currentBet && !players.get(0).hasFolded()
-				&& players.get(0).getMoney() != 0))
-				|| ((players.get(1).getBet() != currentBet && !players.get(1).hasFolded()
-						&& players.get(1).getMoney() != 0))) {
+		int nturns = 0;
+		while (((players.get(0).getBet() != currentBet && !players.get(0).hasFolded() && players.get(0).getMoney() != 0)
+				|| (players.get(1).getBet() != currentBet && !players.get(1).hasFolded()
+						&& players.get(1).getMoney() != 0))
+				|| nturns < 3) {
+			nturns++;
 
-			if (turn % 2 == 0) {
-				makeDecision(0, true);
+			// if bet has not changed for more than 2 turns
+			if (nturns > 2 && currentBet == 0) {
+				break;
+			} else {
+				if (turn % 2 == 0) {
+					makeDecision(0, true);
 
-			} else if (turn % 2 == 1) {
-				makeDecision(1, true);
+				} else if (turn % 2 == 1) {
+					makeDecision(1, true);
+				}
+				turn++;
 			}
-			turn++;
 		}
 	}
 
@@ -186,13 +193,13 @@ public class TwoPlayerGame {
 		int nturns = 0;
 		// TODO: fix if all players have no money or if some went all in and
 		// thus don't match bet; currently stuck when money = 0
-		while (((players.get(0).getBet() != currentBet && !players.get(0).hasFolded()
-				&& players.get(0).getMoney() != 0))
-				|| ((players.get(1).getBet() != currentBet && !players.get(1).hasFolded()
+
+		while (((players.get(0).getBet() != currentBet && !players.get(0).hasFolded() && players.get(0).getMoney() != 0)
+				|| (players.get(1).getBet() != currentBet && !players.get(1).hasFolded()
 						&& players.get(1).getMoney() != 0))
-				|| nturns < 5) {
+				|| nturns < 3) {
 			nturns++;
-			if (nturns > 4 && currentBet == 0) {
+			if (nturns > 2 && currentBet == 0) {
 				break;
 			}
 			if (!players.get(turn % 2).hasFolded()) {
@@ -290,17 +297,20 @@ public class TwoPlayerGame {
 
 		} else if (players.get(i) instanceof RandomPlayer) {
 			decision = ((RandomPlayer) players.get(i)).getDecision(players, currentBet);
-			
+
 		} else if (players.get(i) instanceof ConfidentPlayer) {
 			decision = ((ConfidentPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
-			
+
 		} else if (players.get(i) instanceof ScaredPlayer) {
 			decision = ((ScaredPlayer) players.get(i)).getDecision(players, currentBet, isPreflop, pot);
-		
+
 		} else if (players.get(i) instanceof CallingPlayer) {
 			decision = ((CallingPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
-			
+
+		} else if (players.get(i) instanceof RationalPlayer) {
+			decision = ((RationalPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
 		}
+
 		players.get(i).setLastDecision(decision);
 
 		if (decision.equals("call")) {
@@ -318,5 +328,3 @@ public class TwoPlayerGame {
 	}
 
 }
-
-// one pair tie breaker is to look at the kicker card.

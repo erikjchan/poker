@@ -25,7 +25,7 @@ public class RationalPlayer extends ComputerPlayer {
 
 		} else {
 			if (getHand().getScore() > getAverageScore() + 100) {
-				return "raise " + (getHand().getScore() - getAverageScore() - 100);
+				return "raise " + (currentBet + getHand().getScore() - getAverageScore() - 100);
 
 			} else if (getHand().getScore() > getAverageScore() - 100) {
 				return "call";

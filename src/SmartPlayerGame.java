@@ -37,8 +37,8 @@ public class SmartPlayerGame {
 	 */
 	public SmartPlayerGame() {
 		gameOver = false;
-		players.add(new RandomPlayer("Steve"));
-		players.add(new RationalPlayer("Bruce"));
+		players.add(new RationalPlayer("Steve"));
+		players.add(new ScaredPlayer("Bruce"));
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class SmartPlayerGame {
 		while (((players.get(0).getBet() != currentBet && !players.get(0).hasFolded() && players.get(0).getMoney() != 0)
 				|| (players.get(1).getBet() != currentBet && !players.get(1).hasFolded()
 						&& players.get(1).getMoney() != 0))
-				&& nturns < 3) {
+				|| nturns < 3) {
 			nturns++;
 
 			// if bet has not changed for more than 2 turns
@@ -195,12 +195,12 @@ public class SmartPlayerGame {
 		int nturns = 0;
 		// TODO: fix if all players have no money or if some went all in and
 		// thus don't match bet; currently stuck when money = 0
+
 		while (((players.get(0).getBet() != currentBet && !players.get(0).hasFolded() && players.get(0).getMoney() != 0)
 				|| (players.get(1).getBet() != currentBet && !players.get(1).hasFolded()
 						&& players.get(1).getMoney() != 0))
-				&& nturns < 3) {
+				|| nturns < 3) {
 			nturns++;
-			System.out.println("turn" + nturns);
 			if (nturns > 2 && currentBet == 0) {
 				break;
 			}

@@ -23,14 +23,13 @@ public class SmartPlayer extends ComputerPlayer {
 	}
 
 	public String getDecision(ArrayList<Player> players, int currentBet, boolean isPreFlop) {
-		this.opponent = players.get(1);
 
 		if (isPreFlop) {
 			return "call";
 
 		} else {
 			if (getHand().getScore() > getAverageScore() + 100) {
-				return "raise " + (getHand().getScore() - getHand().getScore() - 100);
+				return "raise " + (currentBet + getHand().getScore() - getAverageScore() - 100);
 
 			} else if (getHand().getScore() > getAverageScore() - 100) {
 				return "call";
@@ -52,7 +51,11 @@ public class SmartPlayer extends ComputerPlayer {
 		// remove own cards from deck
 		deck.removeCard(getFirstCard());
 		deck.removeCard(getSecondCard());
-		deck.removeCards(getCommunityCards());
+
+		ArrayList<Card> temp = getCommunityCards();
+		for (int i = 0; i < temp.size(); i++) {
+			deck.removeCard(temp.get(i));
+		}
 
 		Hand opponentHand;
 		int totalScore = 0;
