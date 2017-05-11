@@ -22,7 +22,7 @@ public class ConfidentPlayer extends ComputerPlayer {
 			return "call";
 		} else {
 			if (getHand().getScore() > 300) {
-				return "raise " + (currentBet + getHand().getScore()*0.10);  
+				return "raise " + (currentBet + (int) (getHand().getScore()*0.10));  
 			} else {
 				return "call";
 			}

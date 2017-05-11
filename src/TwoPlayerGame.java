@@ -35,8 +35,8 @@ public class TwoPlayerGame {
 	 */
 	public TwoPlayerGame() {
 		gameOver = false;
-		players.add(new RandomPlayer("Steve"));
-		players.add(new RandomPlayer("Bruce"));
+		players.add(new ConfidentPlayer("Steve"));
+		players.add(new ConfidentPlayer("Bruce"));
 	}
 
 	/**
@@ -291,7 +291,7 @@ public class TwoPlayerGame {
 		} else if (players.get(i) instanceof RandomPlayer) {
 			decision = ((RandomPlayer) players.get(i)).getDecision(players, currentBet);
 		} else if (players.get(i) instanceof ConfidentPlayer) {
-//			decision = ((ConfidentPlayer) players.get(i).getDecision(players, currentBet);
+			decision = ((ConfidentPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
 		}
 
 		players.get(i).setLastDecision(decision);
