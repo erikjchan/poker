@@ -227,13 +227,13 @@ public class Hand {
 				}
 			}
 			for (int i = 0; i < aces.size(); i++) {
-				if ((allCards.get(i).getSuit() == allCards.get(allCards.indexOf(13)).getSuit()
-						|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(13)).getSuit())
-						&& (allCards.get(i).getSuit() == allCards.get(allCards.indexOf(12)).getSuit()
+				if ((allCards.get(i).getSuit() == allCards.get(allRanks.indexOf(13)).getSuit()
+						|| allCards.get(i).getSuit() == allCards.get(allRanks.lastIndexOf(13)).getSuit())
+						&& (allCards.get(i).getSuit() == allCards.get(allRanks.indexOf(12)).getSuit()
 								|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(12)).getSuit())
-						&& (allCards.get(i).getSuit() == allCards.get(allCards.indexOf(11)).getSuit()
+						&& (allCards.get(i).getSuit() == allCards.get(allRanks.indexOf(11)).getSuit()
 								|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(11)).getSuit())
-						&& (allCards.get(i).getSuit() == allCards.get(allCards.indexOf(10)).getSuit()
+						&& (allCards.get(i).getSuit() == allCards.get(allRanks.indexOf(10)).getSuit()
 								|| allCards.get(i).getSuit() == allCards.get(allCards.lastIndexOf(10)).getSuit())) {
 					score = 900;
 					ranks.add(1);
@@ -254,7 +254,7 @@ public class Hand {
 				// checks if hand is straight
 				if (allRanks.contains(rank - 1) && allRanks.contains(rank - 2) && allRanks.contains(rank - 3)
 						&& allRanks.contains(rank - 4)) {
-					
+
 					// checks if hand is flush
 					if ((allCards.get(i).getSuit() == allCards.get(allRanks.indexOf(rank - 1)).getSuit()
 							|| allCards.get(i).getSuit() == allCards.get(allRanks.lastIndexOf(rank - 1)).getSuit())
