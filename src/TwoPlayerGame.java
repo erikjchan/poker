@@ -280,6 +280,8 @@ public class TwoPlayerGame {
 	 *            the player making the decision
 	 * @param decision
 	 *            the decision the player is making
+	 * @param isPreflop
+	 *            whether the round is in preflop
 	 */
 	public void makeDecision(int i, boolean isPreflop) {
 		String decision = "";
@@ -289,6 +291,8 @@ public class TwoPlayerGame {
 		} else if (players.get(i) instanceof RandomPlayer) {
 			decision = ((RandomPlayer) players.get(i)).getDecision(players, currentBet);
 		}
+
+		players.get(i).setLastDecision(decision);
 
 		if (decision.equals("call")) {
 			players.get(i).setBet(currentBet);

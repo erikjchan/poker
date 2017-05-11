@@ -244,12 +244,10 @@ public class Game {
 					}
 				} else if (turn % 4 == 1) {
 					// TODO: bet or set as folded
-					String decision = ((RandomPlayer) players.get(1)).getDecision(players, currentBet);
-					makeDecision(1, decision);
+					makeDecision(1, true);
 
 				} else if (turn % 4 == 3) {
-					String decision = ((DefensivePlayer) players.get(3)).getDecision(players, currentBet, true);
-					makeDecision(3, decision);
+					makeDecision(3, true);
 
 				} else {
 					players.get(turn % 4).setBet(currentBet);
@@ -336,13 +334,10 @@ public class Game {
 						}
 					}
 				} else if (turn % 4 == 1) {
-					// TODO: bet or set as folded
-					String decision = ((RandomPlayer) players.get(1)).getDecision(players, currentBet);
-					makeDecision(1, decision);
+					makeDecision(1, false);
 
 				} else if (turn % 4 == 3) {
-					String decision = ((DefensivePlayer) players.get(3)).getDecision(players, currentBet, false);
-					makeDecision(3, decision);
+					makeDecision(3, false);
 
 				} else {
 					if (currentBet == 0) {
@@ -465,13 +460,26 @@ public class Game {
 	 *            the player making the decision
 	 * @param decision
 	 *            the decision the player is making
+	 * @param isPreflop
+	 *            whether the round is in preflop
 	 */
-	public void makeDecision(int i, String decision) {
+	public void makeDecision(int i, boolean isPreflop) {
+		String decision = "";
+		if (players.get(i) instanceof DefensivePlayer) {
+			decision = ((DefensivePlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
+
+		} else if (players.get(i) instanceof RandomPlayer) {
+			decision = ((RandomPlayer) players.get(i)).getDecision(players, currentBet);
+		}
+
+		players.get(i).setLastDecision(decision);
+
 		if (decision.equals("call")) {
 			players.get(i).setBet(currentBet);
 
 		} else if (decision.equals("fold")) {
 			players.get(i).setFolded(true);
+
 		} else {
 			String[] decisionArray = decision.split(" ");
 			int raisedBet = Integer.parseInt(decisionArray[1]);

@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class SmartPlayer extends ComputerPlayer {
 	private Deck deck;
-	private ArrayList<Player> players;
+	private Player opponent;
 
 	/**
 	 * Constructor class.
@@ -20,27 +20,16 @@ public class SmartPlayer extends ComputerPlayer {
 	}
 
 	public String getDecision(ArrayList<Player> players, int currentBet) {
-		this.players = players;
+		this.opponent = players.get(1);
 
-		int pmoney = getMoney();
-		int nplayers = getNumPlayers(players);
+		if (getHand().getScore() > getAverageScore() + 100) {
+			return "raise" + (getHand().getScore() - getHand().getScore() - 100);
 
-		double probWin = (double) (getHand().getScore() / 100 - (nplayers - 1) * 0.10);
-		if (probWin > 0.90) {
-			int betmoney = currentBet + (int) (0.50 * pmoney);
-			return "raise " + betmoney;
-		} else if (probWin > 0.60) {
-			int betmoney = currentBet + (int) (0.10 * pmoney);
-			return "raise " + betmoney;
-		} else if (probWin > 0.50) {
+		} else if (getHand().getScore() > getAverageScore() - 100) {
 			return "call";
-			// amt should be current_bet - name.getBet()
+
 		} else {
-			if (getNumPlayers(players) > 1) {
-				return "fold";
-			} else {
-				return "fold";
-			}
+			return "fold";
 		}
 	}
 

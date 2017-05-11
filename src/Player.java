@@ -15,6 +15,7 @@ public abstract class Player {
 	private Hand hand;
 	private boolean isBankrupt;
 	private boolean hasFolded;
+	private String lastDecision;
 
 	/**
 	 * Constructor class.
@@ -225,5 +226,24 @@ public abstract class Player {
 	 */
 	public void setFolded(boolean hasFolded) {
 		this.hasFolded = hasFolded;
+	}
+
+	/**
+	 * Get the last decision of the player.
+	 * 
+	 * @return the last decision of the player
+	 */
+	public String getLastDecision() {
+		return this.lastDecision;
+	}
+
+	/**
+	 * Set the last decision of the player.
+	 * 
+	 * @param lastDecision
+	 *            the new decision of the player
+	 */
+	public void setLastDecision(String lastDecision) {
+		this.lastDecision = lastDecision;
 	}
 }
