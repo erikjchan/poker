@@ -1,16 +1,12 @@
 import java.util.ArrayList;
 
 /**
- * Class that represents a smart player of the game.
+ * Class that represents a rational player of the game.
  * 
  * @author erik
  */
-public class SmartPlayer extends ComputerPlayer {
+public class RationalPlayer extends ComputerPlayer {
 	private Deck deck;
-	private static int postRaiseFolds;
-	private static int notPostRaiseFolds;
-
-	private Player opponent;
 
 	/**
 	 * Constructor class.
@@ -18,19 +14,18 @@ public class SmartPlayer extends ComputerPlayer {
 	 * @param name
 	 *            the name of the computer player
 	 */
-	public SmartPlayer(String name) {
+	public RationalPlayer(String name) {
 		super(name);
 	}
 
 	public String getDecision(ArrayList<Player> players, int currentBet, boolean isPreFlop) {
-		this.opponent = players.get(1);
 
 		if (isPreFlop) {
 			return "call";
 
 		} else {
 			if (getHand().getScore() > getAverageScore() + 100) {
-				return "raise " + (getHand().getScore() - getHand().getScore() - 100);
+				return "raise " + (getHand().getScore() - getAverageScore() - 100);
 
 			} else if (getHand().getScore() > getAverageScore() - 100) {
 				return "call";
@@ -52,7 +47,11 @@ public class SmartPlayer extends ComputerPlayer {
 		// remove own cards from deck
 		deck.removeCard(getFirstCard());
 		deck.removeCard(getSecondCard());
-		deck.removeCards(getCommunityCards());
+		
+		ArrayList<Card> temp = getCommunityCards();
+		for (int i = 0; i < temp.size(); i++) {
+			deck.removeCard(temp.get(i));
+		}
 
 		Hand opponentHand;
 		int totalScore = 0;
