@@ -38,8 +38,10 @@ public class ConfidentPlayer extends ComputerPlayer {
 				return "raise " + (currentBet + (int) (getHand().getScore()*0.20));  
 			} else if (getHand().getScore() > 300) {
 				return "raise " + (currentBet + (int) (getHand().getScore()*0.10));
-			} else {
+			} else if (getHand().getScore() > 200) {
 				return "call";
+			} else {
+				return "fold";
 			}
 		}
 	}
