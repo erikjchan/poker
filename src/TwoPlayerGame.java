@@ -302,7 +302,7 @@ public class TwoPlayerGame {
 			decision = ((ConfidentPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
 
 		} else if (players.get(i) instanceof ScaredPlayer) {
-			decision = ((ScaredPlayer) players.get(i)).getDecision(players, currentBet, isPreflop, pot);
+			decision = ((ScaredPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
 
 		} else if (players.get(i) instanceof CallingPlayer) {
 			decision = ((CallingPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);

@@ -17,6 +17,7 @@ public class SmartPlayerGame {
 	private int pot;
 	private int smallBlind = 15;
 	private int bigBlind = 30;
+	private String currentPhase;
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Card> communityCards = new ArrayList<Card>();
 
@@ -27,13 +28,13 @@ public class SmartPlayerGame {
 
 		SmartPlayerGame game = new SmartPlayerGame(false);
 		for (int i = 0; i < trainingGames; i++) {
-			System.out.println(i);
+			System.out.println("Game " + i + "----------");
 			game = new SmartPlayerGame(false);
 			game.run(numberRounds);
 		}
 
 		for (int i = trainingGames; i < numberGames; i++) {
-			System.out.println(i);
+			System.out.println("Game " + i + "----------");
 			game = new SmartPlayerGame(true);
 			game.run(numberRounds);
 			System.out.println(playerOneWins + " " + playerTwoWins);
@@ -49,7 +50,7 @@ public class SmartPlayerGame {
 	 */
 	public SmartPlayerGame(boolean trained) {
 		gameOver = false;
-		players.add(new SmartPlayer("Steve", false));
+		players.add(new SmartPlayer("Steve", trained));
 		players.add(new ScaredPlayer("Bruce"));
 	}
 
@@ -65,17 +66,21 @@ public class SmartPlayerGame {
 			startPhase();
 
 			// set initial bets in the pre-flop phase
+			currentPhase = "preflop";
 			preFlop();
 
 			// reveal three cards and run flop phase
+			currentPhase = "flop";
 			reveal(3);
 			betPhase();
 
 			// reveal one more card and run turn phase
+			currentPhase = "turn";
 			reveal(1);
 			betPhase();
 
 			// reveal one more card and run river phase
+			currentPhase = "river";
 			reveal(1);
 			betPhase();
 
@@ -316,7 +321,7 @@ public class SmartPlayerGame {
 			decision = ((ConfidentPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
 
 		} else if (players.get(i) instanceof ScaredPlayer) {
-			decision = ((ScaredPlayer) players.get(i)).getDecision(players, currentBet, isPreflop, pot);
+			decision = ((ScaredPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
 
 		} else if (players.get(i) instanceof CallingPlayer) {
 			decision = ((CallingPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
@@ -325,7 +330,7 @@ public class SmartPlayerGame {
 			decision = ((RationalPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
 
 		} else if (players.get(i) instanceof SmartPlayer) {
-			decision = ((SmartPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
+			decision = ((SmartPlayer) players.get(i)).getDecision(players, currentBet, isPreflop, currentPhase);
 		}
 
 		players.get(i).setLastDecision(decision);

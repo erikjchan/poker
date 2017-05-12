@@ -17,16 +17,16 @@ public class ScaredPlayer extends ComputerPlayer {
 		super(name);
 	}
 
-	public String getDecision(ArrayList<Player> players, int currentBet, boolean isPreFlop, int pot) {
+	public String getDecision(ArrayList<Player> players, int currentBet, boolean isPreFlop) {
 		Player opponent = players.get(0);
-		
+
 		if (isPreFlop) {
 			return "call";
 
 		} else {
 			if (!opponent.getLastDecision().equals("call") && !opponent.getLastDecision().equals("fold")) {
 				return "fold";
-				
+
 			} else {
 				return "call";
 			}
