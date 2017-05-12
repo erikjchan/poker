@@ -22,7 +22,7 @@ public class SmartPlayerGame {
 	private ArrayList<Card> communityCards = new ArrayList<Card>();
 
 	public static void main(String args[]) {
-		int numberGames = 10000;
+		int numberGames = 1000;
 		int trainingGames = 100;
 		int numberRounds = 5;
 
@@ -334,7 +334,6 @@ public class SmartPlayerGame {
 		}
 
 		players.get(i).setLastDecision(decision);
-		// System.out.println(players.get(i).getName() + decision);
 
 		if (decision.equals("call")) {
 			players.get(i).setBet(currentBet);

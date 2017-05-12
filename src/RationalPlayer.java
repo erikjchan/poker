@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * @author erik
  */
 public class RationalPlayer extends ComputerPlayer {
-	private Deck deck;
+	private Player opponent;
 
 	/**
 	 * Constructor class.
@@ -19,15 +19,24 @@ public class RationalPlayer extends ComputerPlayer {
 	}
 
 	public String getDecision(ArrayList<Player> players, int currentBet, boolean isPreFlop) {
+		opponent = players.get(1);
 
 		if (isPreFlop) {
 			return "call";
 
 		} else {
-			if (getHand().getScore() > getAverageScore() + 100) {
-				return "raise " + (currentBet * 1.2);
+			int opponentScore = getAverageScore();
+			if (!opponent.getLastDecision().equals("fold") && !opponent.getLastDecision().equals("call")) {
+				opponentScore += 200;
 
-			} else if (getHand().getScore() > getAverageScore() - 100) {
+			} else if (opponent.getLastDecision().equals("call")) {
+				opponentScore += 25;
+			}
+
+			if (getHand().getScore() > opponentScore + 50) {
+				return "raise " + (currentBet + getHand().getScore() - opponentScore - 50);
+
+			} else if (getHand().getScore() > opponentScore - 50) {
 				return "call";
 
 			} else {
@@ -42,24 +51,37 @@ public class RationalPlayer extends ComputerPlayer {
 	 * @return the average score of your opponent
 	 */
 	public int getAverageScore() {
-		deck = new Deck();
+		ArrayList<Card> tempCards = new ArrayList<Card>();
+		for (Card.Suit suit : Card.Suit.values()) {
+			for (int i = 1; i < 14; i++) {
+				boolean shouldAdd = true;
 
-		// remove own cards from deck
-		deck.removeCard(getFirstCard());
-		deck.removeCard(getSecondCard());
+				if ((suit == getFirstCard().getSuit() && i == getFirstCard().getRank())
+						|| (suit == getSecondCard().getSuit() && i == getSecondCard().getRank())) {
+					shouldAdd = false;
+				}
 
-		ArrayList<Card> temp = getCommunityCards();
-		for (int i = 0; i < temp.size(); i++) {
-			deck.removeCard(temp.get(i));
+				for (int j = 0; j < getCommunityCards().size(); j++) {
+					if (suit == getCommunityCards().get(j).getSuit() && i == getCommunityCards().get(j).getRank()) {
+						shouldAdd = false;
+					}
+				}
+
+				if (shouldAdd) {
+					tempCards.add(new Card(i, suit));
+				}
+			}
 		}
 
 		Hand opponentHand;
 		int totalScore = 0;
-		for (int i = 0; i < deck.getCards().size() - 1; i++) {
-			opponentHand = new Hand(deck.getCards().get(i), deck.getCards().get(i), getCommunityCards());
-			opponentHand.calculateScore();
-			totalScore += opponentHand.getScore();
+		for (int i = 0; i < tempCards.size() - 1; i++) {
+			for (int j = i; j < tempCards.size(); j++) {
+				opponentHand = new Hand(tempCards.get(i), tempCards.get(j), getCommunityCards());
+				opponentHand.calculateScore();
+				totalScore += opponentHand.getScore();
+			}
 		}
-		return totalScore / ((deck.getCards().size() - 1) * deck.getCards().size());
+		return totalScore / ((tempCards.size() - 1) * tempCards.size());
 	}
 }
