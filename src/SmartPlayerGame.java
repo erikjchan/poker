@@ -56,8 +56,10 @@ public class SmartPlayerGame {
 	 */
 	public SmartPlayerGame(boolean trained) {
 		gameOver = false;
-		players.add(new SmartPlayer("Steve", trained));
-		players.add(new CallingPlayer("Bruce"));
+//		players.add(new SmartPlayer("Steve", trained));
+//		players.add(new RandomPlayer("Bruce"));
+		players.add(new RationalPlayer("Steve"));
+		players.add(new DefensivePlayer("Bruce"));
 	}
 
 	/**

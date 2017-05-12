@@ -35,8 +35,8 @@ public class TwoPlayerGame {
 	 */
 	public TwoPlayerGame() {
 		gameOver = false;
-		players.add(new ConfidentPlayer("Steve"));
-		players.add(new ConfidentPlayer("Bruce"));
+		players.add(new ScaredPlayer("Steve"));
+		players.add(new ScaredPlayer("Bruce"));
 	}
 
 	/**
