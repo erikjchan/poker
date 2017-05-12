@@ -27,11 +27,17 @@ public class SmartPlayerGame {
 		int numberRounds = 5;
 
 		SmartPlayerGame game = new SmartPlayerGame(false);
-		for (int i = 0; i < trainingGames; i++) {
+		for (int i = 0; i < trainingGames - 1; i++) {
 			System.out.println("Game " + i + "----------");
 			game = new SmartPlayerGame(false);
 			game.run(numberRounds);
 		}
+
+		System.out.println("Game " + trainingGames + "----------");
+		game = new SmartPlayerGame(false);
+		game.run(numberRounds);
+		System.out.println(playerOneWins + " " + playerTwoWins);
+		pause(5);
 
 		for (int i = trainingGames; i < numberGames; i++) {
 			System.out.println("Game " + i + "----------");
@@ -296,6 +302,21 @@ public class SmartPlayerGame {
 		} else if (players.get(1).getMoney() == max) {
 			playerTwoWins++;
 			winners.add(players.get(1).getName());
+		}
+	}
+
+	/**
+	 * Pause the game for a certain number of seconds.
+	 * 
+	 * @param time
+	 *            the number of seconds to pause the game
+	 */
+	public static void pause(double time) {
+		try {
+			Thread.sleep((int) time * 1000);
+
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
 		}
 	}
 

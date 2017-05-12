@@ -9,6 +9,8 @@ public class SmartPlayer extends ComputerPlayer {
 	boolean trained = false;
 	private static int postRaiseFolds;
 	private static int notPostRaiseFolds;
+	private static int confidentRaises;
+	private static int notConfidentRaises;
 
 	private Player opponent;
 
@@ -34,9 +36,23 @@ public class SmartPlayer extends ComputerPlayer {
 				notPostRaiseFolds++;
 			}
 		}
+
+		if (!opponent.getLastDecision().equals("call") && !opponent.getLastDecision().equals("fold")
+				&& currentPhase.equals("river")) {
+			String[] decisionArray = opponent.getLastDecision().split(" ");
+			int raisedBet = Integer.parseInt(decisionArray[1]);
+			if (raisedBet > 50) {
+				if (opponent.getHand().getScore() > 300) {
+					confidentRaises++;
+
+				} else {
+					notConfidentRaises++;
+				}
+			}
+		}
 		// check for priority between three
 
-		if (trained && postRaiseFolds > notPostRaiseFolds) {
+		if (trained && postRaiseFolds > 2 * notPostRaiseFolds) {
 			// recognize as scared player
 
 			if (isPreFlop) {
@@ -49,22 +65,32 @@ public class SmartPlayer extends ComputerPlayer {
 				return "raise " + (int) (currentBet * 1.2);
 			}
 
-		} else if (trained) {
+		} else if (trained && confidentRaises > notConfidentRaises) {
 			// recognize as confident player
-			return null;
-
-		} else if (trained) {
-			// recognize as calling player
-			int opponentScore = getAverageScore();
-			if (!opponent.getLastDecision().equals("fold") && !opponent.getLastDecision().equals("call")) {
-				opponentScore += 200;
-
-			} else if (opponent.getLastDecision().equals("call")) {
-				opponentScore += 25;
+			if (isPreFlop) {
+				return "call";
 			}
 
-			if (getHand().getScore() > opponentScore + 50) {
-				return "raise " + (currentBet + getHand().getScore() - opponentScore - 50);
+			int opponentScore = getAverageScore();
+
+			if (!opponent.getLastDecision().equals("call") && !opponent.getLastDecision().equals("fold")) {
+				String[] decisionArray = opponent.getLastDecision().split(" ");
+				int raisedBet = Integer.parseInt(decisionArray[1]);
+				if (getHand().getScore() < 300) {
+					return "fold";
+
+				} else {
+					if (getHand().getScore() > raisedBet * 0.9) {
+						return "raise " + (currentBet + (int) (getHand().getScore() * 0.20));
+
+					} else {
+						return "call";
+					}
+				}
+			}
+
+			if (getHand().getScore() > opponentScore + 100) {
+				return "raise " + (currentBet + getHand().getScore() - opponentScore);
 
 			} else if (getHand().getScore() > opponentScore - 50) {
 				return "call";
@@ -73,10 +99,28 @@ public class SmartPlayer extends ComputerPlayer {
 				return "fold";
 			}
 
-		} else if (isPreFlop) {
-			return "call";
+		} else if (trained) {
+			// recognize as calling player
+			if (isPreFlop) {
+				return "call";
+			}
+
+			int opponentScore = getAverageScore();
+
+			if (getHand().getScore() > opponentScore + 100) {
+				return "raise " + (currentBet + getHand().getScore() - opponentScore);
+
+			} else if (getHand().getScore() > opponentScore - 50) {
+				return "call";
+
+			} else {
+				return "fold";
+			}
 
 		} else {
+			if (isPreFlop) {
+				return "call";
+			}
 			int opponentScore = getAverageScore();
 			if (!opponent.getLastDecision().equals("fold") && !opponent.getLastDecision().equals("call")) {
 				opponentScore += 200;
