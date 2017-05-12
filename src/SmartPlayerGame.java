@@ -22,12 +22,21 @@ public class SmartPlayerGame {
 
 	public static void main(String args[]) {
 		int numberGames = 10000;
+		int trainingGames = 100;
+		int numberRounds = 5;
+
 		SmartPlayerGame game = new SmartPlayerGame(false);
-		for (int i = 0; i < numberGames; i++) {
+		for (int i = 0; i < trainingGames; i++) {
 			System.out.println(i);
 			game = new SmartPlayerGame(false);
-			int numberRounds = 5;
 			game.run(numberRounds);
+		}
+
+		for (int i = trainingGames; i < numberGames; i++) {
+			System.out.println(i);
+			game = new SmartPlayerGame(true);
+			game.run(numberRounds);
+			System.out.println(playerOneWins + " " + playerTwoWins);
 		}
 		System.out.println("P1: " + playerOneWins + ", P2: " + playerTwoWins + ", Ties: " + ties);
 	}
@@ -314,9 +323,13 @@ public class SmartPlayerGame {
 
 		} else if (players.get(i) instanceof RationalPlayer) {
 			decision = ((RationalPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
+
+		} else if (players.get(i) instanceof SmartPlayer) {
+			decision = ((SmartPlayer) players.get(i)).getDecision(players, currentBet, isPreflop);
 		}
 
 		players.get(i).setLastDecision(decision);
+		// System.out.println(players.get(i).getName() + decision);
 
 		if (decision.equals("call")) {
 			players.get(i).setBet(currentBet);

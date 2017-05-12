@@ -15,7 +15,7 @@ public abstract class Player {
 	private Hand hand;
 	private boolean isBankrupt;
 	private boolean hasFolded;
-	private String lastDecision;
+	private String lastDecision = "call";
 
 	/**
 	 * Constructor class.

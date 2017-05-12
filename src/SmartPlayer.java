@@ -25,13 +25,19 @@ public class SmartPlayer extends ComputerPlayer {
 	}
 
 	public String getDecision(ArrayList<Player> players, int currentBet, boolean isPreFlop) {
+		opponent = players.get(1);
+		if (!getLastDecision().equals("call") && !getLastDecision().equals("fold")) {
+			if (opponent.getLastDecision().equals("fold")) {
+				postRaiseFolds++;
 
-		if (isPreFlop) {
-			return "call";
+			} else {
+				notPostRaiseFolds++;
+			}
+		}
 
-		} else if (trained && postRaiseFolds > notPostRaiseFolds) {
+		if (trained && postRaiseFolds > notPostRaiseFolds * 2) {
 			// recognize as scared player
-			return null;
+			return "raise " + (currentBet * 1.2);
 
 		} else if (trained) {
 			// recognize as confident player
@@ -41,11 +47,14 @@ public class SmartPlayer extends ComputerPlayer {
 			// recognize as calling player
 			return null;
 
-		} else {
-			if (getHand().getScore() > getAverageScore() + 100) {
-				return "raise " + (currentBet + getHand().getScore() - getAverageScore() - 100);
+		} else if (isPreFlop) {
+			return "call";
 
-			} else if (getHand().getScore() > getAverageScore() - 100) {
+		} else {
+			if (getHand().getScore() > getAverageScore() + 50) {
+				return "raise " + (currentBet + getHand().getScore() - getAverageScore() - 50);
+
+			} else if (getHand().getScore() > getAverageScore() - 50) {
 				return "call";
 
 			} else {

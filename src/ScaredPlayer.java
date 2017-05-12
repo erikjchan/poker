@@ -18,12 +18,15 @@ public class ScaredPlayer extends ComputerPlayer {
 	}
 
 	public String getDecision(ArrayList<Player> players, int currentBet, boolean isPreFlop, int pot) {
+		Player opponent = players.get(0);
+		
 		if (isPreFlop) {
 			return "call";
 
 		} else {
-			if (currentBet > 1.2 * pot) {
+			if (!opponent.getLastDecision().equals("call") && !opponent.getLastDecision().equals("fold")) {
 				return "fold";
+				
 			} else {
 				return "call";
 			}
