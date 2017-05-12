@@ -57,7 +57,7 @@ public class SmartPlayerGame {
 	public SmartPlayerGame(boolean trained) {
 		gameOver = false;
 		players.add(new SmartPlayer("Steve", trained));
-		players.add(new ScaredPlayer("Bruce"));
+		players.add(new ConfidentPlayer("Bruce"));
 	}
 
 	/**
