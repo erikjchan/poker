@@ -23,7 +23,7 @@ public class SmartPlayerGame {
 
 	public static void main(String args[]) {
 		int numberGames = 1000;
-		int trainingGames = 100;
+		int trainingGames = 10;
 		int numberRounds = 5;
 
 		SmartPlayerGame game = new SmartPlayerGame(false);
@@ -56,10 +56,8 @@ public class SmartPlayerGame {
 	 */
 	public SmartPlayerGame(boolean trained) {
 		gameOver = false;
-//		players.add(new SmartPlayer("Steve", trained));
-//		players.add(new RandomPlayer("Bruce"));
-		players.add(new RationalPlayer("Steve"));
-		players.add(new DefensivePlayer("Bruce"));
+		players.add(new SmartPlayer("Steve", trained));
+		players.add(new RandomPlayer("Bruce"));
 	}
 
 	/**
