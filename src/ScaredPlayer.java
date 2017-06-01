@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 
 /**
- * Class that represents a computer player of the game.
+ * This computer player plays normally, but it feels threatened on how confident
+ * the opponent player is. If the opponent player plays really aggressively and
+ * confidently, then the ScaredPlayer will increasingly decide to fold before it
+ * loses too much. ScaredPlayer will likely call less when its opponent is more
+ * aggressive.
  * 
  * @author qiqi
  */
@@ -39,17 +43,18 @@ public class ScaredPlayer extends ComputerPlayer {
 			}
 		}
 	}
-	
-	//Big pocket pairs: AA-TT
-	//Big suited connectors: AK, AQ, AJ, KQ
-	//Big connectors: AK, AQ, AJ, KQ
-	
+
+	// Big pocket pairs: AA-TT
+	// Big suited connectors: AK, AQ, AJ, KQ
+	// Big connectors: AK, AQ, AJ, KQ
+
 	public Boolean shouldRaisePF() {
 		Card first = getFirstCard();
 		Card second = getSecondCard();
 		int rank1 = first.getRank();
 		int rank2 = second.getRank();
-		if ((rank1 == 1 && rank2 == 1) || (rank1 == 10 && rank2 == 10) || (rank1 == 11 && rank2 == 11) || (rank1 == 12 && rank2 == 12) || (rank1 == 13 && rank2 == 13)) {
+		if ((rank1 == 1 && rank2 == 1) || (rank1 == 10 && rank2 == 10) || (rank1 == 11 && rank2 == 11)
+				|| (rank1 == 12 && rank2 == 12) || (rank1 == 13 && rank2 == 13)) {
 			return true;
 		} else if (rank1 == 1) {
 			if (rank2 == 13 || rank2 == 12 || rank2 == 11) {
@@ -66,36 +71,54 @@ public class ScaredPlayer extends ComputerPlayer {
 		} else {
 			return false;
 		}
-		//sort first and second in terms of rank, 
-		//http://www.rakebackpros.net/texas-holdem-starting-hands/
-//		if ((rank1 == 1 &&  (rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 13 && (rank2 == 8 || rank2 == 7 || rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 12 && (rank2 == 8 || rank2 == 7 || rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 11 && (rank2 == 7 || rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 10 && (rank2 == 7 || rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 9  && (rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 8  && (rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 7  && (rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 6  && (rank2 == 5 || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 5  && (rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 4  && (rank2 == 3 || rank2 == 2)) ||
-//			(rank1 == 3  && rank2 == 2)) {
-//			return true;
-//		} else if ((rank2 == 1 &&  (rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 13 && (rank1 == 8 || rank1 == 7 || rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 12 && (rank1 == 8 || rank1 == 7 || rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 11 && (rank1 == 7 || rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 10 && (rank1 == 7 || rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 9  && (rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 8  && (rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 7  && (rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 6  && (rank1 == 5 || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 5  && (rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 4  && (rank1 == 3 || rank1 == 2)) ||
-//				  (rank2 == 3  && rank1 == 2)) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-		}
+		// sort first and second in terms of rank,
+		// http://www.rakebackpros.net/texas-holdem-starting-hands/
+		// if ((rank1 == 1 && (rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2
+		// == 3 || rank2 == 2)) ||
+		// (rank1 == 13 && (rank2 == 8 || rank2 == 7 || rank2 == 6 || rank2 == 5
+		// || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
+		// (rank1 == 12 && (rank2 == 8 || rank2 == 7 || rank2 == 6 || rank2 == 5
+		// || rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
+		// (rank1 == 11 && (rank2 == 7 || rank2 == 6 || rank2 == 5 || rank2 == 4
+		// || rank2 == 3 || rank2 == 2)) ||
+		// (rank1 == 10 && (rank2 == 7 || rank2 == 6 || rank2 == 5 || rank2 == 4
+		// || rank2 == 3 || rank2 == 2)) ||
+		// (rank1 == 9 && (rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3
+		// || rank2 == 2)) ||
+		// (rank1 == 8 && (rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3
+		// || rank2 == 2)) ||
+		// (rank1 == 7 && (rank2 == 6 || rank2 == 5 || rank2 == 4 || rank2 == 3
+		// || rank2 == 2)) ||
+		// (rank1 == 6 && (rank2 == 5 || rank2 == 4 || rank2 == 3 || rank2 ==
+		// 2)) ||
+		// (rank1 == 5 && (rank2 == 4 || rank2 == 3 || rank2 == 2)) ||
+		// (rank1 == 4 && (rank2 == 3 || rank2 == 2)) ||
+		// (rank1 == 3 && rank2 == 2)) {
+		// return true;
+		// } else if ((rank2 == 1 && (rank1 == 6 || rank1 == 5 || rank1 == 4 ||
+		// rank1 == 3 || rank1 == 2)) ||
+		// (rank2 == 13 && (rank1 == 8 || rank1 == 7 || rank1 == 6 || rank1 == 5
+		// || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
+		// (rank2 == 12 && (rank1 == 8 || rank1 == 7 || rank1 == 6 || rank1 == 5
+		// || rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
+		// (rank2 == 11 && (rank1 == 7 || rank1 == 6 || rank1 == 5 || rank1 == 4
+		// || rank1 == 3 || rank1 == 2)) ||
+		// (rank2 == 10 && (rank1 == 7 || rank1 == 6 || rank1 == 5 || rank1 == 4
+		// || rank1 == 3 || rank1 == 2)) ||
+		// (rank2 == 9 && (rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3
+		// || rank1 == 2)) ||
+		// (rank2 == 8 && (rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3
+		// || rank1 == 2)) ||
+		// (rank2 == 7 && (rank1 == 6 || rank1 == 5 || rank1 == 4 || rank1 == 3
+		// || rank1 == 2)) ||
+		// (rank2 == 6 && (rank1 == 5 || rank1 == 4 || rank1 == 3 || rank1 ==
+		// 2)) ||
+		// (rank2 == 5 && (rank1 == 4 || rank1 == 3 || rank1 == 2)) ||
+		// (rank2 == 4 && (rank1 == 3 || rank1 == 2)) ||
+		// (rank2 == 3 && rank1 == 2)) {
+		// return true;
+		// } else {
+		// return false;
+		// }
+	}
 }

@@ -2,7 +2,8 @@ import java.util.Random;
 import java.util.ArrayList;
 
 /**
- * Class that represents a computer player of the game.
+ * This computer player sometimes plays moves that are not entirely based on
+ * strategy and more on random number generation.
  * 
  * @author qiqi
  */
@@ -25,10 +26,10 @@ public class RandomPlayer extends ComputerPlayer {
 		int x = random.nextInt(max - min + 1) + min;
 		if (x == 1 && getNumPlayers(players) > 1) {
 			return "fold";
-			
+
 		} else if (x == 1 && getNumPlayers(players) == 1) {
 			return "call";
-			
+
 		} else if (x == 2) {
 			return "call";
 		} else {

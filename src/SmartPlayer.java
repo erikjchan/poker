@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 
 /**
- * Class that represents a smart player of the game.
+ * This computer player starts playing normally, but learns to infer the
+ * strategy of the other computer players in a number of training games before
+ * it can start to counter the opponent effectively.
  * 
  * @author erik
  */

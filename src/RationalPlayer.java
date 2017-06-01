@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 
 /**
- * Class that represents a rational player of the game.
+ * This computer player plays heavily basing its choices on its hand strength
+ * and how strong the opponent's hand strength likely is. It can choose to fold,
+ * call, and raise more rationally.
  * 
  * @author erik
  */
